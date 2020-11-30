@@ -1,0 +1,49 @@
+* {
+	font-family: 'Open Sans';
+	max-width: 100%;
+	box-sizing: border-box;
+}
+
+body {
+	width: 100vw;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+h1, h2, h3, h4, h5 {
+	font-family: 'Montserrat'
+}
+
+h1 {
+	font-size: 72px;
+	font-weight: 700;
+	line-height: 1em;
+}
+
+h2 {
+	font-size: 32px;
+}
+
+h3 {
+	font-size: 24px;
+}
+
+a {
+	color: val(--color-dark);
+	text-decoration: none;
+}
+
+p {
+	font-size: 18px;
+}
+
+@media (min-width: 760px) {
+	h1 {
+		font-size: 96px;
+	}
+
+	h2 {
+		font-size: 48px;
+	}
+}

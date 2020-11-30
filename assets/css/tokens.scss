@@ -1,0 +1,52 @@
+/* Variables y constantes de diseño */
+
+// Variables CSS (nativas)
+:root {
+	/* Colores para elementos base */
+	--color-light: #fff;
+	--color-dark: #222;
+
+	/* Escalas de grises */
+	--color-gray-light: #e5e5e5;
+	--color-gray-lighten: #C4C4C4;
+	--color-gray-middle: #565656;
+	--color-gray-darken: #222;
+	--color-gray-dark: #fff;
+
+	/* Colores de fondo */
+	--color-background-light: #e5e5e5;
+	--color-background-dark: #0a0a0a;
+
+	/* Colores por temáticas */
+	--color-topic-1: #FFC312;
+	--color-topic-2: #B9D835;
+	--color-topic-3: #12CBC4;
+	--color-topic-4: #D980FA;
+	--color-topic-5: #0652DD;
+	--color-topic-6: #A916DF;
+	--color-topic-7: #E66E00;
+	--color-topic-8: #B53471;
+	--color-topic-9: #009432;
+	--color-topic-10: #84AAF4;
+	--color-topic-11: #1B1464;
+	--color-topic-12: #697B77;
+
+	/* Colores de marca */
+	--color-brand-green: #0C231E;
+	--color-brand-dark: #2F2E5B;
+
+	/* Bordes redondeados */
+	--border-rounded: 8px;
+	--border-round: 40px;
+	--border-circle: 50%;
+
+	/* Sombras */
+	--shadow-base: 0 0 8px rgba(0, 0, 0, 0.25);
+}
+
+// Variables SCSS
+$layout-breakpoint-xs: 460px;
+$layout-breakpoint-sm: 960px;
+$layout-breakpoint-md: 1080px;
+$layout-breakpoint-lg: 1440px;
+$layout-breakpoint-xl: 2480px;

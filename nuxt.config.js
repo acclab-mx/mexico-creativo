@@ -25,6 +25,7 @@ export default {
     '@nuxtjs/eslint-module',
     // https://go.nuxtjs.dev/stylelint
     '@nuxtjs/stylelint-module',
+    '@nuxtjs/google-fonts',
   ],
 
   // Modules (https://go.nuxtjs.dev/config-modules)
@@ -48,6 +49,13 @@ export default {
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {},
+
+  googleFonts: {
+    families: {
+      Montserrat: [400, 500, 600, 700, 800],
+      'Open+Sans': [200, 300, 400, 500, 600, 700, 800],
+    },
+  },
 
   extend(config, ctx) {
     // Force eslint autofix on save
