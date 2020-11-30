@@ -1,59 +1,89 @@
 <template>
   <div class="container">
     <MXNavbar></MXNavbar>
-    <div class="container">
-      <main class="content">
-        <section class="brand-logos">
-          <img
-            class="logo-pnud"
-            src="@/assets/img/logo-pnud.png"
-            alt="Logo de la PNUD"
-          />
-          <img
-            class="logo-cultura"
-            src="@/assets/img/logo-cultura.png"
-            alt="Logo de la secretaría de cultura"
-          />
-        </section>
-        <section id="hero">
-          <div class="content">
-            <div class="title">
-              <h1>México</h1>
-              <h1>Creativo</h1>
-            </div>
-            <div class="subtitle">
-              <h2>Desarrollo cultural</h2>
-              <h2>sostenible</h2>
-            </div>
-            <p class="description-desktop">
-              México Creativo, es un programa que tiene el propósito de trazar
-              líneas estratégicas y generar espacios para la convergencia de
-              ideas y saberes relacionados a temas estructurales de las
-              economías culturales y creativas.
-            </p>
+    <main class="content">
+      <section class="brand-logos">
+        <img
+          class="logo-pnud"
+          src="@/assets/img/logo-pnud.png"
+          alt="Logo de la PNUD"
+        />
+        <img
+          class="logo-cultura"
+          src="@/assets/img/logo-cultura.png"
+          alt="Logo de la secretaría de cultura"
+        />
+      </section>
+      <section id="hero">
+        <div class="content">
+          <div class="title">
+            <h1>México</h1>
+            <h1>Creativo</h1>
           </div>
-          <div class="blob-container">
-            <lottie id="shape1" :animation-data="animationData" />
+          <div class="subtitle">
+            <h2>Desarrollo cultural</h2>
+            <h2>sostenible</h2>
           </div>
-        </section>
-        <section id="description">
-          <p>
+          <p class="description-desktop">
             México Creativo, es un programa que tiene el propósito de trazar
             líneas estratégicas y generar espacios para la convergencia de ideas
             y saberes relacionados a temas estructurales de las economías
             culturales y creativas.
           </p>
-        </section>
-        <section id="details">
-          <h2>Explorar información</h2>
-          <p>
-            Explora la información recopilada por México Creativo.<br />
-            Puedes filtrar por cáda una de las 12 temáticas, o por las
-            diferentes categorías.
-          </p>
-        </section>
-      </main>
-    </div>
+        </div>
+        <div class="blob-container">
+          <lottie id="shape1" :animation-data="animationData" />
+        </div>
+      </section>
+      <section id="description">
+        <p>
+          México Creativo, es un programa que tiene el propósito de trazar
+          líneas estratégicas y generar espacios para la convergencia de ideas y
+          saberes relacionados a temas estructurales de las economías culturales
+          y creativas.
+        </p>
+      </section>
+      <section id="details">
+        <h2>Explorar información</h2>
+        <p>
+          Explora la información recopilada por México Creativo.<br />
+          Puedes filtrar por cáda una de las 12 temáticas, o por las diferentes
+          categorías.
+        </p>
+      </section>
+      <section id="topics">
+        <h3>Por temática</h3>
+        <div class="topic-list">
+          <CategoryCard
+            v-for="(card, c) in $store.state.topics"
+            :key="card.id"
+            :color="card.id"
+            :counter="c + 1"
+            :title="card.title"
+            :path="card.path"
+          />
+          <div class="end-space"></div>
+        </div>
+      </section>
+      <section id="categories">
+        <h3>Por categoría</h3>
+        <div class="category-list">
+          <nuxt-link class="category-btn" to="/playground?category=propuestas"
+            >Propuestas</nuxt-link
+          >
+          <nuxt-link class="category-btn" to="/playground?category=citas"
+            >Citas</nuxt-link
+          >
+          <nuxt-link class="category-btn" to="/playground?category=conceptos"
+            >Conceptos</nuxt-link
+          >
+          <nuxt-link class="category-btn" to="/playground?category=estudios"
+            >Estudios</nuxt-link
+          >
+        </div>
+      </section>
+    </main>
+    <MXFooter />
   </div>
 </template>
 
@@ -61,23 +91,19 @@
 import MXNavbar from '@/components/MXNavbar'
 import Lottie from '@/components/Lottie.vue'
 import animationData from '@/assets/animations/blob.json'
+import CategoryCard from '@/components/CategoryCard'
+import MXFooter from '@/components/MXFooter'
 
 export default {
   components: {
     MXNavbar,
     Lottie,
-  },
-  async fetch() {
-    const { data } = await this.$axios('/api/tematicas')
-    console.log('data: ', data)
-    const { records } = data
-    console.log('records: ', records)
-    this.tematicas = records.map((r) => r.fields.TEMA)
+    CategoryCard,
+    MXFooter,
   },
   data() {
     return {
       animationData,
-      tematicas: [],
     }
   },
 }
@@ -86,14 +112,15 @@ export default {
 <style lang="scss" scoped>
 .container {
   display: flex;
-  justify-content: center;
-  padding-top: 38px;
+  align-items: center;
+  flex-direction: column;
   width: 100vw;
   box-sizing: border-box;
   > .content {
     width: 100%;
-    max-width: 1440px;
-    padding: 24px;
+    margin-top: 100px;
+    margin-bottom: 48px;
+    max-width: 1220px;
     box-sizing: border-box;
   }
 }
@@ -103,8 +130,9 @@ export default {
   justify-content: start;
   align-items: center;
   column-gap: 16px;
+  padding: 0 24px;
   .logo-pnud {
-    height: 100px;
+    height: 80px;
   }
   .logo-cultura {
     max-width: 70%;
@@ -115,13 +143,14 @@ export default {
 #hero {
   display: flex;
   justify-content: space-between;
+  padding: 0 24px;
   .content,
   .blob-container {
     max-width: 100%;
     padding: 0;
   }
   .content {
-    min-width: 60%;
+    min-width: 50%;
     max-width: 60%;
   }
   .blob-container {
@@ -150,12 +179,14 @@ export default {
 #description {
   margin-top: 24px;
   max-width: 32rem;
+  padding: 0 24px;
   p {
     font-size: 24px;
   }
 }
 
 #details {
+  padding: 0 24px;
   h2 {
     margin-top: 24px;
   }
@@ -164,15 +195,64 @@ export default {
   }
 }
 
+#topics {
+  h3 {
+    margin-top: 48px;
+    margin-bottom: 24px;
+    padding: 0 24px;
+  }
+  .topic-list {
+    z-index: 20;
+    width: 100%;
+    max-width: inherit;
+    padding: 0 24px;
+    padding-right: 24px;
+    display: flex;
+    column-gap: 16px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-color: transparent;
+    scrollbar-width: none;
+    .end-space {
+      display: block;
+      width: 1px;
+      height: 1px;
+      border: 1px solid transparent;
+    }
+  }
+}
+
+#categories {
+  padding: 24px;
+  h3 {
+    margin-bottom: 24px;
+  }
+  .category-list {
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  a.category-btn {
+    display: inline-block;
+    font-size: 24px;
+    padding: 8px 16px;
+    margin-bottom: 6px;
+    text-decoration: none;
+    color: var(--color-light);
+    background-color: var(--color-dark);
+    border-radius: 8px;
+    border: none;
+  }
+}
+
 @media (min-width: 760px) {
-  .container {
-    padding-top: 48px;
+  .container > .content {
+    margin-top: 122px;
   }
 
   .brand-logos {
     column-gap: 32px;
     .logo-pnud {
-      height: 120px;
+      height: 100px;
     }
     .logo-cultura {
       height: 80px;
@@ -180,7 +260,7 @@ export default {
   }
 
   #hero {
-    padding: 0;
+    padding: 24px;
 
     .subtitle {
       margin-top: 8px;
@@ -193,6 +273,22 @@ export default {
 
   #description {
     display: none;
+  }
+
+  #topics {
+    .topic-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      max-width: calc(4 * 280px + 24px * 4);
+      column-gap: 24px;
+      grid-row-gap: 24px;
+    }
+  }
+
+  #categories {
+    .category-list {
+      flex-direction: column;
+    }
   }
 }
 </style>

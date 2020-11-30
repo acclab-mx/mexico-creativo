@@ -55,7 +55,7 @@ export default {
   .container {
     display: flex;
     justify-content: space-between;
-    max-width: 1440px;
+    max-width: 1220px;
     width: 100%;
     padding: 16px 24px;
   }
