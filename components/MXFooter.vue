@@ -5,29 +5,75 @@
         <div class="grupo">
           <h3>Enlaces de interés</h3>
           <ul>
-            <li><a href="#">Participa</a></li>
-            <li><a href="#">Publicaciones oficiales</a></li>
-            <li><a href="#">Marco jurídico</a></li>
-            <li><a href="#">Plataforma nacional de transparencia</a></li>
+            <li>
+              <a href="https://participa.gob.mx/" target="_blank">Participa</a>
+            </li>
+            <li>
+              <a href="https://www.gob.mx/publicaciones" target="_blank"
+                >Publicaciones oficiales</a
+              >
+            </li>
+            <li>
+              <a href="http://www.ordenjuridico.gob.mx/" target="_blank"
+                >Marco jurídico</a
+              >
+            </li>
+            <li>
+              <a
+                href="https://consultapublicamx.inai.org.mx/vut-web/"
+                target="_blank"
+                >Plataforma nacional de transparencia</a
+              >
+            </li>
           </ul>
         </div>
         <div class="grupo">
           <h3>Recursos</h3>
           <ul>
-            <li><a href="#">Descargar reporte</a></li>
-            <li><a href="#">Descargar base de datos</a></li>
+            <li><a href="#" target="_blank">Descargar reporte</a></li>
+            <li><a href="#" target="_blank">Descargar base de datos</a></li>
           </ul>
         </div>
         <div class="grupo">
           <h3>Legal</h3>
           <ul>
-            <li><a href="#">Portal de datos abiertos</a></li>
-            <li><a href="#">Declaración de accesibilidad</a></li>
-            <li><a href="#">Aviso de privacidad integral</a></li>
-            <li><a href="#">Aviso de privacidad simplificado</a></li>
-            <li><a href="#">Términos y condiciones</a></li>
-            <li><a href="#">Política de seguridad</a></li>
-            <li><a href="#">Nosotros</a></li>
+            <li>
+              <a href="https://datos.gob.mx/" target="_blank"
+                >Portal de datos abiertos</a
+              >
+            </li>
+            <li>
+              <a href="https://www.gob.mx/accesibilidad" target="_blank"
+                >Declaración de accesibilidad</a
+              >
+            </li>
+            <li>
+              <a href="https://www.gob.mx/privacidadintegral" target="_blank"
+                >Aviso de privacidad integral</a
+              >
+            </li>
+            <li>
+              <a
+                href="https://www.gob.mx/privacidadsimplificado"
+                target="_blank"
+                >Aviso de privacidad simplificado</a
+              >
+            </li>
+            <li>
+              <a href="https://www.gob.mx/terminos" target="_blank"
+                >Términos y condiciones</a
+              >
+            </li>
+            <li>
+              <a
+                href="https://www.gob.mx/terminos#medidas-seguridad-informacion"
+                target="_blank"
+                >Política de seguridad</a
+              >
+            </li>
+            <li>
+              <a href="https://www.gob.mx/sitemap" target="_blank">Nosotros</a>
+            </li>
           </ul>
         </div>
       </section>
