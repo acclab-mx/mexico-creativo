@@ -1,13 +1,285 @@
 <template>
-  <div id="playground">
-    <div>Playground</div>
+  <div id="playground" class="container">
+    <PlaygroundNavbar />
+    <div class="head-spacer"></div>
+    <section v-show="$route.query.topicId" class="topic-description">
+      <div>
+        <p class="label">Temática</p>
+        <p>
+          {{ topic.title }}
+        </p>
+      </div>
+    </section>
+    <main v-if="$store.state.cards.length" class="content">
+      <CardContent
+        v-for="(card, c) in $store.state.cards"
+        :id="card.id"
+        :key="c"
+        :topic-id="card.topicId"
+        :category="card.category"
+        :title="card.title"
+        :description="card.description"
+        :image="card.image"
+      />
+    </main>
+    <div class="scroll-top">
+      <div class="content">
+        <div class="scroll" @click="scrollTop">
+          <img class="arrow-up" src="@/assets/icons/arrow-up.svg" />
+          <p>Subir</p>
+        </div>
+      </div>
+    </div>
+    <div
+      v-waypoint="{
+        active: true,
+        callback: onWaypoint,
+        options: intersectionOptions,
+      }"
+      class="loader-container"
+    >
+      <img
+        class="loader-icon"
+        :class="[{ invisible: !loading }]"
+        src="@/assets/icons/loader.svg"
+      />
+      <p v-if="!loading && isEndList">{{ endListMessage }}</p>
+    </div>
   </div>
 </template>
 
 <script>
+import PlaygroundNavbar from '@/components/PlaygroundNavbar'
+import CardContent from '@/components/CardContent'
+import { mapMutations } from 'vuex'
+
 export default {
+  components: {
+    PlaygroundNavbar,
+    CardContent,
+  },
+  async fetch() {
+    await this.fetchData()
+  },
   data() {
-    return {}
+    return {
+      loading: false,
+      endListMessage: 'No hay mas elementos para mostrar',
+      isEndList: false,
+      intersectionOptions: {
+        root: null,
+        rootMargin: '0px 0px 0px 0px',
+        threshold: [0, 1],
+      },
+      waypoint: {
+        going: 'out',
+      },
+    }
+  },
+  computed: {
+    isMobile() {
+      return process.client ? window.screen.width < 760 : true
+    },
+    offsets() {
+      return this.$store.state.offsets
+    },
+    topicId() {
+      return this.$route.query.topicId || null
+    },
+    topic() {
+      return this.$store.state.topicSelected || { title: '' }
+    },
+    categoryList() {
+      const list = Object.keys(this.$route.query)
+        .map((q) => {
+          return q === 'propuestas' ||
+            q === 'citas' ||
+            q === 'estudios' ||
+            q === 'conceptos'
+            ? q
+            : false
+        })
+        .filter((f) => f)
+      return list.length
+        ? list
+        : ['propuestas', 'citas', 'estudios', 'conceptos']
+    },
+  },
+  watch: {
+    $route(to, from) {
+      if (to !== from) {
+        console.log('buscar items!!!')
+        window.location.reload()
+        this.offsets = {
+          propuestas: '',
+          citas: '',
+          estudios: '',
+          conceptos: '',
+        }
+        this.setOffsets(this.offsets)
+        this.isEndList = false
+      }
+    },
+    waypoint(to, from) {
+      if (to.going === 'in' && from.going === 'out') {
+        console.log('cargar más items...')
+        this.fetchData(true)
+      }
+    },
+  },
+  mounted() {
+    // this.fetchData()
+    this.isEndList = false
+    this.setOffsets({
+      propuestas: '',
+      citas: '',
+      estudios: '',
+      conceptos: '',
+    })
+    this.setCards({ cards: [], trasponer: !this.isMobile })
+    this.fetchData()
+  },
+  methods: {
+    ...mapMutations(['setTopicSelected', 'setCards', 'addCards', 'setOffsets']),
+    scrollTop() {
+      console.log('scroll-top')
+      if (process.client) {
+        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
+      }
+    },
+    onWaypoint(e) {
+      // console.log('onWaypoint: ', e)
+      this.waypoint = e
+    },
+    async fetchData(append) {
+      console.log('fetch offsets: ', this.offsets)
+      console.log('fetch topicId: ', this.topicId)
+      console.log('fetch categoryList: ', this.categoryList)
+      this.loading = true
+      let url = `/api/playground?`
+      url = `${url}categoryList=${this.categoryList}`
+      if (this.topicId) {
+        url = `${url}&topicId=${this.topicId}`
+      }
+      if (this.offsets.propuestas) {
+        url = `${url}&offsetPropuestas=${this.offsets.propuestas}`
+      }
+      if (this.offsets.citas) {
+        url = `${url}&offsetCitas=${this.offsets.citas}`
+      }
+      if (this.offsets.estudios) {
+        url = `${url}&offsetEstudios=${this.offsets.estudios}`
+      }
+      if (this.offsets.conceptos) {
+        url = `${url}&offsetConceptos=${this.offsets.conceptos}`
+      }
+      const { data } = await this.$axios(url)
+      this.loading = false
+      console.log('data: ', data)
+      if (data.cards.length) {
+        if (append) {
+          this.addCards({ cards: data.cards, trasponer: !this.isMobile })
+        } else {
+          this.setCards({ cards: data.cards, trasponer: !this.isMobile })
+        }
+        console.log('offsets: ', data.offsets)
+        this.setOffsets(data.offsets)
+      } else {
+        this.isEndList = true
+      }
+    },
   },
 }
 </script>
+
+<style lang="scss" scoped>
+.container {
+  min-height: 100vh;
+  background-color: #e5e5e5;
+  main.content {
+    margin: 0 auto;
+    max-width: 1220px;
+    padding: 24px;
+    > * {
+      width: 100%;
+      display: inline-flex;
+      margin-bottom: 24px;
+    }
+  }
+  .scroll-top {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .content {
+      display: flex;
+      justify-content: flex-end;
+      padding: 24px;
+      width: 100%;
+      max-width: 1220px;
+      .scroll {
+        padding: 16px 24px;
+        background-color: var(--color-light);
+        box-shadow: 0 0 8px var(--color-dark);
+        border-radius: 8px;
+        > * {
+          margin: 0;
+          padding: 0;
+        }
+      }
+    }
+  }
+  .loader-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding-bottom: 48px;
+    .loader-icon {
+      display: block;
+      width: 64px;
+      &.invisible {
+        visibility: hidden;
+      }
+    }
+  }
+}
+.head-spacer {
+  display: block;
+  width: 100%;
+  height: 120px;
+}
+.topic-description {
+  display: flex;
+  justify-content: center;
+  background-color: var(--color-light);
+  > div {
+    padding: 24px;
+    width: 100%;
+    max-width: 1220px;
+    p {
+      margin: 0;
+      &.label {
+        margin-bottom: 8px;
+        font-size: 18px;
+        font-style: italic;
+      }
+    }
+  }
+}
+
+@media (min-width: 760px) {
+  .head-spacer {
+    height: 134px;
+  }
+  .container {
+    main.content {
+      columns: 3;
+      column-gap: 24px;
+    }
+  }
+}
+</style>

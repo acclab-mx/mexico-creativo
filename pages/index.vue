@@ -68,16 +68,16 @@
       <section id="categories">
         <h3>Por categoría</h3>
         <div class="category-list">
-          <nuxt-link class="category-btn" to="/playground?category=propuestas"
+          <nuxt-link class="category-btn" to="/playground?propuestas"
             >Propuestas</nuxt-link
           >
-          <nuxt-link class="category-btn" to="/playground?category=citas"
+          <nuxt-link class="category-btn" to="/playground?citas"
             >Citas</nuxt-link
           >
-          <nuxt-link class="category-btn" to="/playground?category=conceptos"
+          <nuxt-link class="category-btn" to="/playground?conceptos"
             >Conceptos</nuxt-link
           >
-          <nuxt-link class="category-btn" to="/playground?category=estudios"
+          <nuxt-link class="category-btn" to="/playground?estudios"
             >Estudios</nuxt-link
           >
         </div>

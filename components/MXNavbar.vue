@@ -4,22 +4,15 @@
       <div class="brand">
         <img src="@/assets/img/logo-mexico.png" />
       </div>
-      <div class="navmenu" :class="[{ white: showMenu }]">
+      <div class="navmenu">
         <div class="burger-button">
           <img
-            v-if="showMenu"
-            class="cross"
-            src="@/assets/icons/cross.svg"
-            @click="toggle"
-          />
-          <img
-            v-else
             class="burger"
             src="@/assets/icons/bars-white.svg"
-            @click="toggle"
+            @click="open"
           />
         </div>
-        <ul :class="{ hidden: !showMenu }">
+        <ul>
           <li><a class="button" href="#">Descargar reportes</a></li>
           <li><a class="button" href="#">Descargar base de datos</a></li>
         </ul>
@@ -29,16 +22,20 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
+
 export default {
-  data() {
-    return {
-      showMenu: false,
-    }
+  watch: {
+    '$store.state.showOverlay'(val) {
+      // console.log('watch showOverlay: ', val)
+      this.setShowMXNavbarMenu(val)
+    },
   },
   methods: {
-    toggle() {
-      console.log('toggle!')
-      this.showMenu = !this.showMenu
+    ...mapMutations(['setShowMXNavbarMenu']),
+    open() {
+      // console.log('toggle!')
+      this.setShowMXNavbarMenu(!this.$store.state.showMXNavbarMenu)
     },
   },
 }
@@ -76,18 +73,19 @@ export default {
   }
 }
 .navmenu {
+  display: flex;
   position: absolute;
   top: 4px;
   right: 4px;
   margin-left: 4px;
   margin-bottom: 4px;
-  z-index: 40;
-  display: flex;
+  z-index: 99999999;
   flex-direction: column;
   align-items: center;
   padding: 16px;
   border-radius: 8px;
   ul {
+    display: none;
     margin-top: 8px;
     padding: 0;
     column-gap: 16px;

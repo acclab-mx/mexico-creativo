@@ -14,7 +14,7 @@ export default {
   css: ['~/assets/css/main.scss'],
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
-  plugins: [],
+  plugins: ['~/plugins/waypoint.js'],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
   components: true,
@@ -45,6 +45,7 @@ export default {
   serverMiddleware: {
     '': '~/api/logger.js',
     '/api/tematicas': '~/api/tematicas.js',
+    '/api/playground': '~/api/playground.js',
   },
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)

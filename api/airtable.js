@@ -19,7 +19,7 @@ class Airtable {
     this.apiKey = args.apiKey ? args.apiKey : this.apiKey
   }
 
-  request(endpoint, config = {}) {
+  request(endpoint, config = {}, stringify) {
     return new Promise((resolve, reject) => {
       let url = `${this.baseURL}${this.appId}`
 
@@ -30,7 +30,14 @@ class Airtable {
       console.log('baseURL: ', url)
 
       if (Object.keys(config).length) {
-        url = `${url}/${encodeURIComponent(JSON.stringify(config))}`
+        let urlConfig = ''
+        if (config.pageSize) {
+          urlConfig = `pageSize=${config.pageSize}&filterByFormula=PUBLICO`
+        }
+        if (config.offset) {
+          urlConfig = `${urlConfig}&offset=${config.offset}`
+        }
+        url = `${url}?${urlConfig}`
       }
 
       if (this.apiKey !== '') {
@@ -49,9 +56,13 @@ class Airtable {
           reject(result)
         })
         .then((data) => {
-          const stringData = JSON.stringify(data)
-          console.log('data: ', stringData)
-          resolve(stringData)
+          if (stringify) {
+            const stringData = JSON.stringify(data)
+            console.log('data: ', stringData)
+            resolve(stringData)
+          } else {
+            resolve(data)
+          }
         })
         .catch((error) => {
           console.error('Error: ', error)

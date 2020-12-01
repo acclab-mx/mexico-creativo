@@ -1,44 +1,46 @@
 <template>
   <div class="mx-navbar">
-    <div class="container">
-      <div class="brand">
-        <img src="@/assets/img/logo-mexico.png" />
+    <div class="container header">
+      <div class="brand" @click="$router.push('/')">
+        <h3>México Creativo</h3>
+        <h2>Playground</h2>
       </div>
-      <div class="navmenu" :class="[{ white: showMenu }]">
-        <div class="burger-button">
-          <img
-            v-if="showMenu"
-            class="cross"
-            src="@/assets/icons/cross.svg"
-            @click="toggle"
-          />
-          <img
-            v-else
-            class="burger"
-            src="@/assets/icons/bars-white.svg"
-            @click="toggle"
-          />
-        </div>
-        <ul :class="{ hidden: !showMenu }">
-          <li><a class="button" href="#">Descargar reportes</a></li>
-          <li><a class="button" href="#">Descargar base de datos</a></li>
-        </ul>
+      <div class="burger-button">
+        <img class="burger" src="@/assets/icons/filter.svg" @click="open" />
       </div>
+    </div>
+    <div class="container navigation">
+      <nuxt-link to="/" class="back">
+        <img class="arrow-left" src="@/assets/icons/arrow-left.svg" />
+        <p>Volver</p>
+      </nuxt-link>
     </div>
   </div>
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
+
 export default {
   data() {
     return {
       showMenu: false,
     }
   },
+  watch: {
+    '$store.state.showOverlay'(val) {
+      // console.log('watch showOverlay: ', val)
+      if (!val) {
+        this.setShowPlaygroundNavbarMenu(false)
+        this.setShowCardModal(false)
+      }
+    },
+  },
   methods: {
-    toggle() {
-      console.log('toggle!')
-      this.showMenu = !this.showMenu
+    ...mapMutations(['setShowPlaygroundNavbarMenu', 'setShowCardModal']),
+    open() {
+      // console.log('toggle!')
+      this.setShowPlaygroundNavbarMenu(true)
     },
   },
 }
@@ -48,16 +50,39 @@ export default {
 .mx-navbar {
   position: fixed;
   display: flex;
-  width: 100vw;
-  color: var(--color-light);
-  background-color: var(--color-brand-green);
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
+  width: 100vw;
+  color: var(--color-dark);
+  background-color: var(--color-light);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
   .container {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     max-width: 1220px;
     width: 100%;
-    padding: 16px 24px;
+    &.header {
+      padding: 16px 24px 0 16px;
+    }
+    &.navigation {
+      padding: 8px 16px 8px 16px;
+    }
+    .back {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      .arrow-left {
+        width: 32px;
+      }
+      p {
+        display: inline-block;
+        margin: 0;
+        margin-left: 8px;
+        color: var(--color-dark);
+      }
+    }
   }
 }
 
@@ -70,89 +95,19 @@ export default {
 }
 
 .brand {
-  img {
-    max-height: 40px;
+  h2,
+  h3 {
+    margin: 0;
+    padding: 0;
+    line-height: 1;
   }
 }
-.navmenu {
-  position: absolute;
-  top: 4px;
-  right: 4px;
-  margin-left: 4px;
-  margin-bottom: 4px;
-  z-index: 40;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 16px;
-  border-radius: 8px;
-  ul {
-    margin-top: 8px;
-    padding: 0;
-    column-gap: 16px;
-    li {
-      display: flex;
-      flex-direction: column;
-      list-style: none;
-      margin-top: 8px;
-      a {
-        display: block;
-        font-size: 18px;
-        color: var(--color-dark);
-        text-decoration: none;
-        &.button {
-          padding: 8px 16px;
-          border-radius: 8px;
-          color: white;
-          background-color: var(--color-brand-dark);
-        }
-      }
-    }
-  }
-  .burger-button {
-    display: flex;
-    justify-content: flex-end;
-    width: 100%;
-  }
-  .burger {
-    display: block;
-    height: 32px;
-  }
-  .cross {
-    display: block;
-    height: 24px;
-  }
+.burger {
+  display: block;
+  height: 32px;
 }
 
 @media (min-width: 760px) {
-  .brand img {
-    max-height: 60px;
-  }
-  .navmenu {
-    display: flex;
-    justify-content: center;
-    position: inherit;
-    background-color: inherit;
-    padding: 0;
-    ul {
-      margin-top: 0;
-      display: flex;
-      align-items: center;
-      li {
-        margin-top: 0;
-        a {
-          color: white;
-          &.button {
-            padding: 4px;
-            background-color: inherit;
-          }
-        }
-      }
-    }
-    .burger,
-    .cross {
-      display: none;
-    }
-  }
+  /* ljhad */
 }
 </style>
