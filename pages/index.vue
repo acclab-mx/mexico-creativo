@@ -17,18 +17,13 @@
       <section id="hero">
         <div class="content">
           <div class="title">
-            <h1>México</h1>
-            <h1>Creativo</h1>
+            <h1>Almacén de ideas</h1>
           </div>
-          <div class="subtitle">
-            <h2>Desarrollo cultural</h2>
-            <h2>sostenible</h2>
-          </div>
+          <div class="subtitle"></div>
           <p class="description-desktop">
-            México Creativo, es un programa que tiene el propósito de trazar
-            líneas estratégicas y generar espacios para la convergencia de ideas
-            y saberes relacionados a temas estructurales de las economías
-            culturales y creativas.
+            Repositorio vivo dónde confluyen, visualizan, articulan y
+            distribuyen ideas y propuestas sobre las economías culturales y
+            creativas.
           </p>
         </div>
         <div class="blob-container">
@@ -37,10 +32,8 @@
       </section>
       <section id="description">
         <p>
-          México Creativo, es un programa que tiene el propósito de trazar
-          líneas estratégicas y generar espacios para la convergencia de ideas y
-          saberes relacionados a temas estructurales de las economías culturales
-          y creativas.
+          Repositorio vivo dónde confluyen, visualizan, articulan y distribuyen
+          ideas y propuestas sobre las economías culturales y creativas.
         </p>
       </section>
       <section id="details">
