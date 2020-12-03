@@ -142,6 +142,7 @@ export default {
       .pill {
         display: inline-block;
         margin-top: 8px;
+        margin-right: 8px;
         padding: 4px 16px;
         border-radius: 16px;
         color: var(--color-light);

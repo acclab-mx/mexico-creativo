@@ -43,10 +43,10 @@ const mapCitas = (c) => {
   }
 
   if (c.fields.FUENTE_TXT && c.fields.FUENTE_TXT.length)
-    r.autoras = c.fields.FUENTE_TXT.split(',').filter((i) => i && i.length)
+    r.fuentes = c.fields.FUENTE_TXT.split(',').filter((i) => i && i.length)
 
   if (c.fields.ORGANIZACION_TXT && c.fields.ORGANIZACION_TXT.length)
-    r.organizacion = c.fields.ORGANIZACION_TXT.split(',').filter(
+    r.organizaciones = c.fields.ORGANIZACION_TXT.split(',').filter(
       (i) => i && i.length
     )
 
