@@ -10,6 +10,22 @@ const mapPropuestas = (p) => {
     description: p.fields.DESCRIPCION_CORTA,
   }
 
+  if (p.fields.AUTORA_TXT && p.fields.AUTORA_TXT.length)
+    r.autoras = p.fields.AUTORA_TXT.split(',').filter((i) => i && i.length)
+
+  if (p.fields.ORGANIZACION_TXT && p.fields.ORGANIZACION_TXT.length)
+    r.organizacion = p.fields.ORGANIZACION_TXT.split(',').filter(
+      (i) => i && i.length
+    )
+
+  if (
+    p.fields.CONCEPTOS_RELACIONADOS_TXT &&
+    p.fields.CONCEPTOS_RELACIONADOS_TXT.length
+  )
+    r.conceptos = p.fields.CONCEPTOS_RELACIONADOS_TXT.split(',').filter(
+      (i) => i && i.length
+    )
+
   if (p.fields.FOTOGRAFIA && p.fields.FOTOGRAFIA.length)
     r.image = p.fields.FOTOGRAFIA[0].url
 
@@ -26,6 +42,22 @@ const mapCitas = (c) => {
     description: c.fields.AUTORA,
   }
 
+  if (c.fields.FUENTE_TXT && c.fields.FUENTE_TXT.length)
+    r.autoras = c.fields.FUENTE_TXT.split(',').filter((i) => i && i.length)
+
+  if (c.fields.ORGANIZACION_TXT && c.fields.ORGANIZACION_TXT.length)
+    r.organizacion = c.fields.ORGANIZACION_TXT.split(',').filter(
+      (i) => i && i.length
+    )
+
+  if (
+    c.fields.CONCEPTOS_RELACIONADOS_TXT &&
+    c.fields.CONCEPTOS_RELACIONADOS_TXT.length
+  )
+    r.conceptos = c.fields.CONCEPTOS_RELACIONADOS_TXT.split(',').filter(
+      (i) => i && i.length
+    )
+
   if (c.fields.FOTO && c.fields.FOTO.length) r.image = c.fields.FOTO[0].url
 
   return r
@@ -38,6 +70,22 @@ const mapEstudios = (e) => {
     title: e.fields.ESTUDIO,
     description: e.fields.DESCRIPCION,
   }
+
+  if (e.fields.FUENTE_TXT && e.fields.FUENTE_TXT.length)
+    r.autoras = e.fields.FUENTE_TXT.split(',').filter((i) => i && i.length)
+
+  if (e.fields.ORGANIZACION_TXT && e.fields.ORGANIZACION_TXT.length)
+    r.organizacion = e.fields.ORGANIZACION_TXT.split(',').filter(
+      (i) => i && i.length
+    )
+
+  if (
+    e.fields.CONCEPTOS_RELACIONADOS_TXT &&
+    e.fields.CONCEPTOS_RELACIONADOS_TXT.length
+  )
+    r.conceptos = e.fields.CONCEPTOS_RELACIONADOS_TXT.split(',').filter(
+      (i) => i && i.length
+    )
 
   if (e.fields.FOTOGRAFIA && e.fields.FOTOGRAFIA.length)
     r.image = e.fields.FOTOGRAFIA[0].url
@@ -54,6 +102,15 @@ const mapConceptos = (c) => {
     title: c.fields.CONCEPTO,
     description: c.fields.DEFINICION,
   }
+
+  if (c.fields.FUENTE_TXT && c.fields.FUENTE_TXT.length)
+    r.fuentes = c.fields.FUENTE_TXT.split(',').filter((i) => i && i.length)
+
+  if (c.fields.AUTORA_TXT && c.fields.AUTORA_TXT.length)
+    r.autoras = c.fields.AUTORA_TXT.split(',').filter((i) => i && i.length)
+
+  /* if (c.fields.ORGANIZACION_TXT && c.fields.ORGANIZACION_TXT.length)
+    r.organizacion = c.fields.ORGANIZACION_TXT.split(',').filter(i => i && i.length) */
 
   if (c.fields.FOTOGRAFIA && c.fields.FOTOGRAFIA.length)
     r.image = c.fields.FOTOGRAFIA[0].url

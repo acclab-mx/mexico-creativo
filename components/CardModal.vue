@@ -19,6 +19,30 @@
           <p>Enlaces:</p>
           <a :href="card.link" target="_blank">{{ card.link }}</a>
         </div>
+        <div v-if="card.fuentes" class="pill-group">
+          <p>Fuente:</p>
+          <div v-for="(label, l) in card.fuentes" :key="l" class="pill">
+            {{ label }}
+          </div>
+        </div>
+        <div v-if="card.autoras" class="pill-group">
+          <p>Autores:</p>
+          <div v-for="(label, l) in card.autoras" :key="l" class="pill">
+            {{ label }}
+          </div>
+        </div>
+        <div v-if="card.organizaciones" class="pill-group">
+          <p>Organización:</p>
+          <div v-for="(label, l) in card.organizaciones" :key="l" class="pill">
+            {{ label }}
+          </div>
+        </div>
+        <div v-if="card.conceptos" class="pill-group">
+          <p>Conceptos relacionados:</p>
+          <div v-for="(label, l) in card.conceptos" :key="l" class="pill">
+            {{ label }}
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -109,6 +133,19 @@ export default {
       a {
         word-wrap: break-word;
         display: inline-block;
+      }
+    }
+    .pill-group {
+      p {
+        margin: 0;
+      }
+      .pill {
+        display: inline-block;
+        margin-top: 8px;
+        padding: 4px 16px;
+        border-radius: 16px;
+        color: var(--color-light);
+        background-color: gray;
       }
     }
     .action {
