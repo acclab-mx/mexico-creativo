@@ -283,9 +283,6 @@ export default {
 
   .brand-logos {
     column-gap: 32px;
-    .logo-pnud {
-      height: 100px;
-    }
     .logo-cultura {
       height: 80px;
     }
@@ -320,6 +317,13 @@ export default {
   #categories {
     .category-list {
       flex-direction: column;
+    }
+  }
+
+  .pnud-logo {
+    .logo-pnud {
+      margin-top: 16px;
+      height: 120px;
     }
   }
 }
