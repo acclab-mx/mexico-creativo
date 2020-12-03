@@ -20,7 +20,7 @@
             <a class="button" href="https://www.gob.mx/gobierno">Gobierno</a>
           </li>
           <li>
-            <a class="button" href="https://www.gob.mx/gobierno">
+            <a class="button" href="https://www.gob.mx/busqueda">
               <img height="18px" src="@/assets/icons/search-white.svg" />
             </a>
           </li>
