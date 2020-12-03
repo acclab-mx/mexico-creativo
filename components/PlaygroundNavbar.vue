@@ -2,8 +2,14 @@
   <div class="mx-navbar">
     <div class="container header">
       <div class="brand" @click="$router.push('/')">
-        <h3>México Creativo</h3>
-        <h2>Playground</h2>
+        <h3>Almacén de Ideas</h3>
+        <p class="description">
+          Los primeros diez temas de este Almacén, junto con sus propuestas,
+          conceptos y estudios, surgen de diez encuentros, en tiempos de
+          pandemia, entre profesionales de la cultura que forman parte de
+          instituciones públicas, organismos internacionales y el sector
+          independiente.
+        </p>
       </div>
       <div class="burger-button">
         <img class="burger" src="@/assets/icons/filter.svg" @click="open" />
@@ -65,6 +71,9 @@ export default {
     width: 100%;
     &.header {
       padding: 16px 24px 0 16px;
+      .description {
+        max-width: 40em;
+      }
     }
     &.navigation {
       padding: 8px 16px 8px 16px;
