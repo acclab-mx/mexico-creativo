@@ -18,7 +18,12 @@
           <p class="description-desktop">
             Repositorio vivo dónde confluyen, visualizan, articulan y
             distribuyen ideas y propuestas sobre las economías culturales y
-            creativas.
+            creativas.<br /><br />
+            Los primeros diez temas de este Almacén, junto con sus propuestas,
+            conceptos y estudios, surgen de diez encuentros, en tiempos de
+            pandemia, entre profesionales de la cultura que forman parte de
+            instituciones públicas, organismos internacionales y el sector
+            independiente.
           </p>
         </div>
         <div class="blob-container">
@@ -28,15 +33,33 @@
       <section id="description">
         <p>
           Repositorio vivo dónde confluyen, visualizan, articulan y distribuyen
-          ideas y propuestas sobre las economías culturales y creativas.
+          ideas y propuestas sobre las economías culturales y creativas.<br /><br />
+          Los primeros diez temas de este Almacén, junto con sus propuestas,
+          conceptos y estudios, surgen de diez encuentros, en tiempos de
+          pandemia, entre profesionales de la cultura que forman parte de
+          instituciones públicas, organismos internacionales y el sector
+          independiente.
         </p>
       </section>
       <section id="details">
-        <h2>Explorar información</h2>
+        <h2>Guía para usar el Almacén</h2>
         <p>
-          Explora la información recopilada por México Creativo.<br />
-          Puedes filtrar por cáda una de las 12 temáticas, o por las diferentes
-          categorías.
+          Este <b><i>Almacén</i></b> está conformado por muchas tarjetas que
+          reúnen distintos saberes surgidos de los Diálogos Públicos, y como
+          todo buen Almacén siempre está dispuesto a recibir nuevas
+          propuestas.<br /><br />
+          Puedes explorar las ideas a partir de temas centrales y por medio de
+          las distintas categorías. Encontrarás textos, pero también
+          infografías, gráficas, imágenes, audios y videos.<br /><br />
+          Cada tarjeta guarda relación con otras tarjetas porque comparten el
+          mismo tema, la misma categoría o una serie de conceptos
+          relacionados.<br /><br />
+          Al ser un repositorio vivo, nos interesa que crezca y enriquezca de
+          enfoques diversos, así que siempre estará abierta la posibilidad de
+          que nos propongas una
+          <b
+            ><i><a href="#" target="_blank">nueva tarjeta</a></i></b
+          >.<br /><br />
         </p>
       </section>
       <section id="topics">
@@ -186,6 +209,7 @@ export default {
   }
   p {
     margin-top: 16px;
+    max-width: 40em;
   }
 }
 
