@@ -12,7 +12,7 @@
       :class="[category.toLowerCase()]"
       v-html="descriptionMD"
     ></div>
-    <div class="action">Abrir</div>
+    <div class="action">{{ openText }}</div>
   </div>
 </template>
 
@@ -51,8 +51,18 @@ export default {
     },
   },
   computed: {
+    descriptionLimited() {
+      return this.description.length > 141
+        ? this.description.substring(0, 140) + '...'
+        : this.description
+    },
     descriptionMD() {
-      return md.render(this.description)
+      return md.render(this.descriptionLimited)
+    },
+    openText() {
+      return this.description.length > 140
+        ? 'Abrir para continuar leyendo'
+        : 'Abrir'
     },
   },
   methods: {
