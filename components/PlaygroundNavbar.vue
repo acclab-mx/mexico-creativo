@@ -72,7 +72,9 @@ export default {
     &.header {
       padding: 16px 24px 0 16px;
       .description {
+        margin: 0;
         max-width: 40em;
+        font-size: 16px;
       }
     }
     &.navigation {

@@ -259,7 +259,7 @@ export default {
 .head-spacer {
   display: block;
   width: 100%;
-  height: 182px;
+  height: 224px;
 }
 .topic-description {
   display: flex;
@@ -285,7 +285,7 @@ export default {
     margin-top: 68px;
   }
   .head-spacer {
-    height: 204px;
+    height: 240px;
   }
   .container {
     main.content {
