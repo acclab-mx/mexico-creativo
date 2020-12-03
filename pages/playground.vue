@@ -1,6 +1,7 @@
 <template>
   <div id="playground" class="container">
-    <PlaygroundNavbar />
+    <PlaygroundNavbar class="playground-spacer" />
+    <MXNavbar />
     <div class="head-spacer"></div>
     <section v-show="$route.query.topicId" class="topic-description">
       <div>
@@ -45,18 +46,23 @@
       />
       <p v-if="!loading && isEndList">{{ endListMessage }}</p>
     </div>
+    <MXFooter />
   </div>
 </template>
 
 <script>
+import MXNavbar from '@/components/MXNavbar'
 import PlaygroundNavbar from '@/components/PlaygroundNavbar'
 import CardContent from '@/components/CardContent'
+import MXFooter from '@/components/MXFooter'
 import { mapMutations } from 'vuex'
 
 export default {
   components: {
+    MXNavbar,
     PlaygroundNavbar,
     CardContent,
+    MXFooter,
   },
   async fetch() {
     await this.fetchData()
@@ -247,10 +253,13 @@ export default {
     }
   }
 }
+.playground-spacer {
+  margin-top: 76px;
+}
 .head-spacer {
   display: block;
   width: 100%;
-  height: 120px;
+  height: 196px;
 }
 .topic-description {
   display: flex;
@@ -272,8 +281,11 @@ export default {
 }
 
 @media (min-width: 760px) {
+  .playground-spacer {
+    margin-top: 96px;
+  }
   .head-spacer {
-    height: 134px;
+    height: 230px;
   }
   .container {
     main.content {
