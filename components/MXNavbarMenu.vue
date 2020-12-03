@@ -4,8 +4,17 @@
       <img class="burger" src="@/assets/icons/cross.svg" @click="close" />
     </div>
     <ul>
-      <li><a class="button" href="#">Descargar reportes</a></li>
-      <li><a class="button" href="#">Descargar base de datos</a></li>
+      <li>
+        <a class="button" href="https://www.gob.mx/tramites">Trámites</a>
+      </li>
+      <li>
+        <a class="button" href="https://www.gob.mx/gobierno">Gobierno</a>
+      </li>
+      <li>
+        <a class="button" href="https://www.gob.mx/busqueda">
+          <img height="18px" src="@/assets/icons/search-white.svg" />
+        </a>
+      </li>
     </ul>
   </div>
 </template>
