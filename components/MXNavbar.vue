@@ -13,8 +13,17 @@
           />
         </div>
         <ul>
-          <li><a class="button" href="#">Descargar reportes</a></li>
-          <li><a class="button" href="#">Descargar base de datos</a></li>
+          <li>
+            <a class="button" href="https://www.gob.mx/tramites">Trámites</a>
+          </li>
+          <li>
+            <a class="button" href="https://www.gob.mx/gobierno">Gobierno</a>
+          </li>
+          <li>
+            <a class="button" href="https://www.gob.mx/gobierno">
+              <img height="18px" src="@/assets/icons/search-white.svg" />
+            </a>
+          </li>
         </ul>
       </div>
     </div>
@@ -55,7 +64,7 @@ export default {
     justify-content: space-between;
     max-width: 1220px;
     width: 100%;
-    padding: 16px 24px;
+    padding: 16px 48px 8px 48px;
   }
 }
 
@@ -69,7 +78,7 @@ export default {
 
 .brand {
   img {
-    max-height: 40px;
+    height: 38px;
   }
 }
 .navmenu {
@@ -96,8 +105,10 @@ export default {
       margin-top: 8px;
       a {
         display: block;
-        font-size: 18px;
+        font-size: 16px;
         color: var(--color-dark);
+        font-family: 'Montserrat';
+        font-weight: 200;
         text-decoration: none;
         &.button {
           padding: 8px 16px;
@@ -124,9 +135,6 @@ export default {
 }
 
 @media (min-width: 760px) {
-  .brand img {
-    max-height: 60px;
-  }
   .navmenu {
     display: flex;
     justify-content: center;
