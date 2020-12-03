@@ -254,12 +254,12 @@ export default {
   }
 }
 .playground-spacer {
-  margin-top: 76px;
+  margin-top: 68px;
 }
 .head-spacer {
   display: block;
   width: 100%;
-  height: 196px;
+  height: 182px;
 }
 .topic-description {
   display: flex;
@@ -282,10 +282,10 @@ export default {
 
 @media (min-width: 760px) {
   .playground-spacer {
-    margin-top: 96px;
+    margin-top: 68px;
   }
   .head-spacer {
-    height: 230px;
+    height: 204px;
   }
   .container {
     main.content {
