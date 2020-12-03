@@ -39,7 +39,7 @@ export default async function (req, res) {
       Array.isArray(data.records) &&
       data.records.length
     ) {
-      // data.records = orderByORDEN(data.records)
+      data.records = orderByORDEN(data.records)
     }
     res.setHeader('Content-Type', 'application/json')
     res.statusCode = 200
