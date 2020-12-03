@@ -4,14 +4,9 @@
     <main class="content">
       <section class="brand-logos">
         <img
-          class="logo-pnud"
-          src="@/assets/img/logo-pnud.png"
-          alt="Logo de la PNUD"
-        />
-        <img
           class="logo-cultura"
           src="@/assets/img/logo-cultura.png"
-          alt="Logo de la secretaría de cultura"
+          alt="Logo de la PNUD"
         />
       </section>
       <section id="hero">
@@ -75,6 +70,14 @@
           >
         </div>
       </section>
+      <section class="pnud-logo">
+        <p class="text">Este proyecto se realizó con el apoyo de</p>
+        <img
+          class="logo-pnud"
+          src="@/assets/img/logo-pnud.png"
+          alt="Logo de la PNUD"
+        />
+      </section>
     </main>
     <MXFooter />
   </div>
@@ -124,9 +127,7 @@ export default {
   align-items: center;
   column-gap: 16px;
   padding: 0 24px;
-  .logo-pnud {
-    height: 80px;
-  }
+  margin-top: 24px;
   .logo-cultura {
     max-width: 70%;
     max-height: 70px;
@@ -234,6 +235,20 @@ export default {
     background-color: var(--color-dark);
     border-radius: 8px;
     border: none;
+  }
+}
+
+.pnud-logo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  .text {
+    text-align: center;
+    margin: 16px 74px 8px 74px;
+  }
+  .logo-pnud {
+    height: 80px;
   }
 }
 
