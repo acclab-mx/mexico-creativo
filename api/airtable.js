@@ -1,5 +1,19 @@
 import fetch from 'node-fetch'
 
+const filters = (filterBy) => {
+  // Input: [{ field: String, operator: String = '=', value: Any }]
+  const stringFilters = filterBy
+    .map(
+      (filter) => `{${filter.field}}${filter.operator || '='}${filter.value}`
+    )
+    .join(',')
+  return stringFilters // output: 'field1=value1,field2!=value2,...,fieldN=valueN'
+}
+
+const fields = (fieldList) => {
+  return fieldList.map((field) => `fields[]=${field}`).join('&')
+}
+
 class Airtable {
   headers = {
     'Content-Type': 'application/json',
@@ -31,8 +45,25 @@ class Airtable {
 
       if (Object.keys(config).length) {
         let urlConfig = ''
+        if (config.fields) {
+          urlConfig = `${urlConfig}${fields(config.fields)}`
+        }
+        if (config.filterBy) {
+          urlConfig = `${urlConfig}&filterByFormula=AND(${
+            config.onlyPublic ? 'PUBLICO,' : ''
+          }${filters(config.filterBy)})`
+        } else if (config.onlyPublic) {
+          urlConfig = `${urlConfig}&filterByFormula=PUBLICO`
+        }
+        if (config.orderBy) {
+          urlConfig = `${urlConfig}&sort[0][field]=${config.orderBy.field}${
+            config.orderBy.direction
+              ? `&sort[0][direction]=${config.orderBy.direction}`
+              : '&sort[0][direction]=asc'
+          }`
+        }
         if (config.pageSize) {
-          urlConfig = `pageSize=${config.pageSize}&filterByFormula=PUBLICO`
+          urlConfig = `${urlConfig}&pageSize=${config.pageSize}`
         }
         if (config.offset) {
           urlConfig = `${urlConfig}&offset=${config.offset}`
@@ -57,7 +88,7 @@ class Airtable {
         })
         .then((data) => {
           if (stringify) {
-            const stringData = JSON.stringify(data)
+            const stringData = JSON.stringify(data) + '\n'
             console.log('data: ', stringData)
             resolve(stringData)
           } else {

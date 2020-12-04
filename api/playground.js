@@ -1,121 +1,53 @@
 import airtable from './airtable.js'
 
-const pageSize = 50
+const pageSize = 1
 
-const mapPropuestas = (p) => {
-  const r = {
-    id: p.id,
-    topicId: p.fields.TEMATICA[0],
-    title: p.fields.PROPUESTA,
-    description: p.fields.DESCRIPCION_CORTA,
-  }
+const parseTXT = (field, value) =>
+  field.includes('_TXT') ? value.split(',') : value
 
-  if (p.fields.AUTORA_TXT && p.fields.AUTORA_TXT.length)
-    r.autoras = p.fields.AUTORA_TXT.split(',').filter((i) => i && i.length)
-
-  if (p.fields.ORGANIZACION_TXT && p.fields.ORGANIZACION_TXT.length)
-    r.organizacion = p.fields.ORGANIZACION_TXT.split(',').filter(
-      (i) => i && i.length
-    )
-
-  if (
-    p.fields.CONCEPTOS_RELACIONADOS_TXT &&
-    p.fields.CONCEPTOS_RELACIONADOS_TXT.length
+const parseFields = (table, record) => {
+  // console.log('record: ', record)
+  const fields = Object.keys(record.fields).reduce(
+    (fields, field) => ({
+      ...fields,
+      [field.toLowerCase()]: Array.isArray(record.fields[field])
+        ? record.fields[field].flat()
+        : parseTXT(field, record.fields[field]),
+    }),
+    []
   )
-    r.conceptos = p.fields.CONCEPTOS_RELACIONADOS_TXT.split(',').filter(
-      (i) => i && i.length
-    )
-
-  if (p.fields.FOTOGRAFIA && p.fields.FOTOGRAFIA.length)
-    r.image = p.fields.FOTOGRAFIA[0].url
-
-  if (p.fields.LINK) r.link = p.fields.LINK
-
-  return r
+  // console.log('fields: ', JSON.stringify(fields, null, 2))
+  const parsedRecord = {
+    table,
+    id: record.id,
+    ...fields,
+    createdTime: record.createdTime,
+  }
+  return parsedRecord
 }
 
-const mapCitas = (c) => {
-  const r = {
-    id: c.id,
-    topicId: c.fields.TEMATICA[0],
-    title: c.fields.CITA,
-    description: c.fields.AUTORA,
-  }
+const mapPropuesta = (table, record) => {
+  const parsedRecord = parseFields(table, record)
 
-  if (c.fields.FUENTE_TXT && c.fields.FUENTE_TXT.length)
-    r.fuentes = c.fields.FUENTE_TXT.split(',').filter((i) => i && i.length)
-
-  if (c.fields.ORGANIZACION_TXT && c.fields.ORGANIZACION_TXT.length)
-    r.organizaciones = c.fields.ORGANIZACION_TXT.split(',').filter(
-      (i) => i && i.length
-    )
-
-  if (
-    c.fields.CONCEPTOS_RELACIONADOS_TXT &&
-    c.fields.CONCEPTOS_RELACIONADOS_TXT.length
-  )
-    r.conceptos = c.fields.CONCEPTOS_RELACIONADOS_TXT.split(',').filter(
-      (i) => i && i.length
-    )
-
-  if (c.fields.FOTO && c.fields.FOTO.length) r.image = c.fields.FOTO[0].url
-
-  return r
+  return parsedRecord
 }
 
-const mapEstudios = (e) => {
-  const r = {
-    id: e.id,
-    topicId: e.fields.TEMATICA[0],
-    title: e.fields.ESTUDIO,
-    description: e.fields.DESCRIPCION,
-  }
+const mapCita = (table, record) => {
+  const parsedRecord = parseFields(table, record)
 
-  if (e.fields.FUENTE_TXT && e.fields.FUENTE_TXT.length)
-    r.autoras = e.fields.FUENTE_TXT.split(',').filter((i) => i && i.length)
-
-  if (e.fields.ORGANIZACION_TXT && e.fields.ORGANIZACION_TXT.length)
-    r.organizacion = e.fields.ORGANIZACION_TXT.split(',').filter(
-      (i) => i && i.length
-    )
-
-  if (
-    e.fields.CONCEPTOS_RELACIONADOS_TXT &&
-    e.fields.CONCEPTOS_RELACIONADOS_TXT.length
-  )
-    r.conceptos = e.fields.CONCEPTOS_RELACIONADOS_TXT.split(',').filter(
-      (i) => i && i.length
-    )
-
-  if (e.fields.FOTOGRAFIA && e.fields.FOTOGRAFIA.length)
-    r.image = e.fields.FOTOGRAFIA[0].url
-
-  if (e.fields.LINK) r.link = e.fields.LINK
-
-  return r
+  return parsedRecord
 }
 
-const mapConceptos = (c) => {
-  const r = {
-    id: c.id,
-    topicId: c.fields.TEMATICA[0],
-    title: c.fields.CONCEPTO,
-    description: c.fields.DEFINICION,
-  }
+const mapEstudio = (table, record) => {
+  const parsedRecord = parseFields(table, record)
 
-  if (c.fields.FUENTE_TXT && c.fields.FUENTE_TXT.length)
-    r.fuentes = c.fields.FUENTE_TXT.split(',').filter((i) => i && i.length)
+  return parsedRecord
+}
 
-  if (c.fields.AUTORA_TXT && c.fields.AUTORA_TXT.length)
-    r.autoras = c.fields.AUTORA_TXT.split(',').filter((i) => i && i.length)
+const mapConcepto = (table, record) => {
+  const parsedRecord = parseFields(table, record)
 
-  /* if (c.fields.ORGANIZACION_TXT && c.fields.ORGANIZACION_TXT.length)
-    r.organizacion = c.fields.ORGANIZACION_TXT.split(',').filter(i => i && i.length) */
-
-  if (c.fields.FOTOGRAFIA && c.fields.FOTOGRAFIA.length)
-    r.image = c.fields.FOTOGRAFIA[0].url
-
-  return r
+  return parsedRecord
 }
 
 // Obtener la lista de temáticas
@@ -130,109 +62,139 @@ export default async function (req, res) {
           .map((el) => el.split('='))
           .map((el) => ({ [el[0]]: el[1] }))
           .reduce((el, list) => ({ ...list, ...el }), [])
-      : {
-          categoryList: [],
-        }
+      : {}
 
     console.log('parsedQuery: ', parsedQuery)
 
-    let propuestasList = []
-    let propuestasOffset = parsedQuery.offsetPropuestas
-    if (
-      parsedQuery.categoryList.includes('propuestas') &&
-      parsedQuery.offsetPropuestas !== 'end'
-    ) {
-      const propuestas = await airtable.request('propuestas', {
+    const propuestas = await airtable.request(
+      'propuestas',
+      {
+        onlyPublic: false,
+        fields: [
+          'PROPUESTA',
+          'DESCRIPCION_CORTA',
+          'AUTORA_TXT',
+          'FUENTE_TXT',
+          'CONCEPTOS_RELACIONADOS_TXT',
+          'LINKS',
+          'FOTOGRAFIA',
+          'NUMERO_DE_TEMATICA',
+        ],
+        filterBy:
+          'topicId' in parsedQuery
+            ? [{ field: 'NUMERO_DE_TEMATICA', value: parsedQuery.topicId }]
+            : null,
+        orderBy: {
+          field: 'ORDEN',
+        },
         pageSize,
-        offset: parsedQuery.offsetPropuestas,
-        topicId: parsedQuery.topicId,
-      })
-      propuestasList = propuestas.records.map(mapPropuestas) || []
-      propuestasOffset = propuestas.offset || 'end'
-    }
-
-    let citasList = []
-    let citasOffset = parsedQuery.offsetCitas
-    if (
-      parsedQuery.categoryList.includes('citas') &&
-      parsedQuery.offsetCitas !== 'end'
-    ) {
-      const citas = await airtable.request('citas', {
-        pageSize,
-        offset: parsedQuery.offsetCitas,
-        topicId: parsedQuery.topicId,
-      })
-      citasList = citas.records.map(mapCitas) || []
-      citasOffset = citas.offset || 'end'
-    }
-
-    let estudiosList = []
-    let estudiosOffset = parsedQuery.offsetEstudios
-    if (
-      parsedQuery.categoryList.includes('estudios') &&
-      parsedQuery.offsetEstudios !== 'end'
-    ) {
-      const estudios = await airtable.request('estudios', {
-        pageSize,
-        offset: parsedQuery.offsetEstudios,
-        topicId: parsedQuery.topicId,
-      })
-      estudiosList = estudios.records.map(mapEstudios) || []
-      estudiosOffset = estudios.offset || 'end'
-    }
-
-    let conceptosList = []
-    let conceptosOffset = parsedQuery.offsetConceptos
-    if (
-      parsedQuery.categoryList.includes('conceptos') &&
-      parsedQuery.offsetConceptos !== 'end'
-    ) {
-      const conceptos = await airtable.request('conceptos', {
-        pageSize,
-        offset: parsedQuery.offsetConceptos,
-        topicId: parsedQuery.topicId,
-      })
-      conceptosList = conceptos.records.map(mapConceptos) || []
-      conceptosOffset = conceptos.offset || 'end'
-    }
-
-    const cards = []
-
-    const maxLen = Math.max(
-      propuestasList.length,
-      citasList.length,
-      estudiosList.length,
-      conceptosList.length
+      },
+      false
     )
 
-    console.log('maxLen: ', maxLen)
+    const citas = await airtable.request(
+      'citas',
+      {
+        onlyPublic: false,
+        fields: [
+          'CITA',
+          'AUTORA',
+          'LINK',
+          'FOTO',
+          'FUENTE_TXT',
+          'CONCEPTOS_RELACIONADOS_TXT',
+          'ORGANIZACION_TXT',
+          'NUMERO_DE_TEMATICA',
+        ],
+        filterBy:
+          'topicId' in parsedQuery
+            ? [{ field: 'NUMERO_DE_TEMATICA', value: parsedQuery.topicId }]
+            : null,
+        orderBy: {
+          field: 'ORDEN',
+        },
+        pageSize,
+      },
+      false
+    )
 
-    for (let i = 0; i < maxLen; i++) {
-      if (propuestasList[i])
-        cards.push({ ...propuestasList[i], category: 'Propuestas' })
-      if (citasList[i]) cards.push({ ...citasList[i], category: 'Citas' })
-      if (estudiosList[i])
-        cards.push({ ...estudiosList[i], category: 'Estudios' })
-      if (conceptosList[i])
-        cards.push({ ...conceptosList[i], category: 'Conceptos' })
-    }
+    const estudios = await airtable.request(
+      'estudios',
+      {
+        onlyPublic: false,
+        fields: [
+          'ESTUDIO',
+          'DESCRIPCION',
+          'FUENTE_TXT',
+          'FOTOGRAFIA',
+          'LINK',
+          'CONCEPTOS_RELACIONADOS_TXT',
+          'ORGANIZACION_TXT',
+          'NUMERO_DE_TEMATICA',
+        ],
+        filterBy:
+          'topicId' in parsedQuery
+            ? [{ field: 'NUMERO_DE_TEMATICA', value: parsedQuery.topicId }]
+            : null,
+        orderBy: {
+          field: 'ORDEN',
+        },
+        pageSize,
+      },
+      false
+    )
 
-    const lastCards = parsedQuery.topicId
-      ? cards.filter((c) => c.topicId === parsedQuery.topicId)
-      : cards
+    const conceptos = await airtable.request(
+      'conceptos',
+      {
+        onlyPublic: false,
+        fields: [
+          'CONCEPTO',
+          'DEFINICION',
+          'URL',
+          'FOTOGRAFIA',
+          'AUTORA_TXT',
+          'FUENTE_TXT',
+          'CITAS_TXT',
+          'PROPUESTAS_TXT',
+          'NUMERO_DE_TEMATICA',
+        ],
+        filterBy:
+          'topicId' in parsedQuery
+            ? [{ field: 'NUMERO_DE_TEMATICA', value: parsedQuery.topicId }]
+            : null,
+        orderBy: {
+          field: 'ORDEN',
+        },
+        pageSize,
+      },
+      false
+    )
+
+    console.log('propuestas.offset: ', propuestas.offset)
+    console.log('citas.offset: ', citas.offset)
+    console.log('estudios.offset: ', estudios.offset)
+    console.log('conceptos.offset: ', conceptos.offset)
+
+    const cards = [
+      ...propuestas.records.map((record) => mapPropuesta('propuestas', record)),
+      ...citas.records.map((record) => mapCita('citas', record)),
+      ...estudios.records.map((record) => mapEstudio('estudios', record)),
+      ...conceptos.records.map((record) => mapConcepto('conceptos', record)),
+    ]
 
     const response = {
-      cards: lastCards,
+      cards,
       offsets: {
-        propuestas: propuestasOffset,
-        citas: citasOffset,
-        estudios: estudiosOffset,
-        conceptos: conceptosOffset,
+        propuestas: propuestas.offset,
+        citas: citas.offset,
+        estudios: estudios.offset,
+        conceptos: conceptos.offset,
       },
-      count: lastCards.length,
+      count: cards.length,
     }
 
-    console.log('response: ', response)
+    // console.log('response: ', response)
 
     res.setHeader('Content-Type', 'application/json')
     res.statusCode = 200
