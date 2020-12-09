@@ -4,10 +4,10 @@
     <MXNavbar />
     <div class="head-spacer"></div>
     <section v-show="$route.query.topic" class="topic-description">
-      <div>
+      <div v-if="topicSelected && topicSelected.tema">
         <p class="label">Temática</p>
         <p>
-          {{ topicSelected.title }}
+          {{ topicSelected.tema }}
         </p>
       </div>
     </section>
@@ -90,7 +90,7 @@ export default {
       return this.$route.query.topic || null
     },
     topicSelected() {
-      return this.$store.state.topicSelected || { title: '' }
+      return this.$store.state.topicSelected
     },
     categoryList() {
       const list = Object.keys(this.$route.query)

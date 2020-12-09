@@ -70,10 +70,13 @@ export default {
       console.log('topics: ', this.topics)
       if (this.topics.length) {
         this.setTopics(this.topics)
-        if (this.$route.query.topic) {
-          const topicSelected = this.topics.filter(
-            (t) => t.orden === this.$route.query.topic
-          )[0]
+        const queryTopic = this.$route.query.topic
+        console.log('queryTopic: ', queryTopic)
+        if (queryTopic) {
+          const topicSelected = this.topics.filter((t) => {
+            return parseInt(t.orden) === parseInt(queryTopic)
+          })[0]
+          console.log('topicSelected: ', topicSelected)
           this.setTopicSelected(topicSelected)
         }
       }
