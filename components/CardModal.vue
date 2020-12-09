@@ -191,12 +191,12 @@ export default {
       const cardId = `${pill.category}-${pill.cardId}`
       console.log('open pill: ', cardId)
       if (pill.category === 'concepto') {
-        this.$router.replace({
-          query: {
-            ...this.$route.query,
-            cardId,
-          },
-        })
+        console.log('open: ', cardId)
+        const queryParams = new URLSearchParams(window.location.search)
+        queryParams.set('cardId', cardId)
+        console.log('queryParams: ', queryParams)
+        history.pushState(null, null, `?${queryParams.toString()}`)
+        this.fetchCard(cardId)
       }
     },
   },
