@@ -28,6 +28,9 @@
         </div>
       </div>
     </div>
+    <div v-if="!loading" class="loadMore">
+      <div class="button" @click="fetchData(true)">Cargar más elementos</div>
+    </div>
     <div
       v-waypoint="{
         active: true,
@@ -41,7 +44,9 @@
         :class="[{ invisible: !loading }]"
         src="@/assets/icons/loader.svg"
       />
-      <p v-if="!loading && isEndList">{{ endListMessage }}</p>
+      <div v-if="!loading && isEndList" class="end-list">
+        {{ endListMessage }}
+      </div>
     </div>
     <MXFooter />
   </div>
@@ -246,16 +251,23 @@ export default {
   }
   .loader-container {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 100%;
-    padding-bottom: 48px;
+    margin-bottom: 48px;
     .loader-icon {
       display: block;
       width: 64px;
       &.invisible {
-        visibility: hidden;
+        display: none;
       }
+    }
+    .end-list {
+      display: block;
+      text-align: center;
+      width: 100%;
+      margin-top: 24px;
     }
   }
 }
@@ -283,6 +295,21 @@ export default {
         font-style: italic;
       }
     }
+  }
+}
+.loadMore {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  padding-left: 64px;
+  padding-right: 64px;
+  .button {
+    display: block;
+    cursor: pointer;
+    width: auto;
+    padding: 8px 24px;
+    border-radius: 8px;
+    background-color: var(--color-light);
   }
 }
 
