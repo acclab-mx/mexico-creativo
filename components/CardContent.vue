@@ -1,11 +1,11 @@
 <template>
   <div class="card-content" @click="open">
     <p class="label">{{ category }}</p>
-    <div class="separator" :class="[topicId]"></div>
+    <div class="separator" :class="[colorClass]"></div>
     <h3 :class="[category.toLowerCase()]">
       {{ title }}
     </h3>
-    <img v-if="image" :src="image" />
+    <img v-if="visualAttachment" :src="visualAttachment[0].url" />
     <div
       v-if="description"
       class="description"
@@ -28,31 +28,64 @@ export default {
       type: String,
       required: true,
     },
-    topicId: {
-      type: String,
+    orden: {
+      type: Number,
+    },
+    numero_de_tematica: {
+      type: Array,
       required: true,
     },
-    category: {
-      type: String,
-      default: 'Category',
-    },
-    title: {
-      type: String,
-      default: '',
-      required: true,
-    },
-    image: {
-      type: String,
-      default: null,
-    },
-    description: {
-      type: String,
-      default: null,
-    },
+    category: String,
+    cita: String,
+    propuesta: String,
+    concepto: String,
+    estudio: String,
+    image: String,
+    autora: String,
+    definicion: String,
+    descripcion: String,
+    descripcion_corta: String,
+    foto: Array,
+    fotografia: Array,
+    ilustracion: Array,
+    'visualizacion de datos': Array,
   },
   computed: {
+    colorClass() {
+      return `color-topic-${this.numero_de_tematica}`
+    },
+    categoryTag() {
+      return this.category.toLowerCase().substring(0, this.category.length - 1)
+    },
+    visualAttachment() {
+      const attachment =
+        this.foto ||
+        this.fotografia ||
+        this.ilustracion ||
+        this['visualizacion de datos'] ||
+        null
+      return attachment
+    },
+    title() {
+      return this[this.categoryTag]
+    },
+    description() {
+      switch (this.categoryTag) {
+        case 'propuesta':
+          return this.descripcion_corta
+        case 'cita':
+          return this.autora
+        case 'concepto':
+          return this.definicion
+        case 'estudio':
+          return this.descripcion
+        default:
+          return null
+      }
+    },
     descriptionLimited() {
-      return this.description.length > 141
+      return typeof this.description === 'string' &&
+        this.description.length > 141
         ? this.description.substring(0, 140) + '...'
         : this.description
     },
@@ -60,7 +93,8 @@ export default {
       return md.render(this.descriptionLimited)
     },
     openText() {
-      return this.description.length > 140
+      return typeof this.description === 'string' &&
+        this.description.length > 140
         ? 'Abrir para continuar leyendo'
         : 'Abrir'
     },
@@ -68,10 +102,12 @@ export default {
   methods: {
     ...mapMutations(['setShowCardModal', 'setCardModal']),
     open() {
-      console.log('open: ', this.id, this.category)
-      this.setCardModal(
-        this.$store.state.cards.filter((c) => c.id === this.id)[0]
-      )
+      const cardId = `${this.categoryTag}-${this.id}`
+      console.log('open: ', cardId)
+      const queryParams = new URLSearchParams(window.location.search)
+      queryParams.set('cardId', cardId)
+      console.log('queryParams: ', queryParams)
+      history.pushState(null, null, `?${queryParams.toString()}`)
       this.setShowCardModal(true)
     },
   },
@@ -89,6 +125,7 @@ export default {
   grid-row-gap: 8px;
   cursor: pointer;
   .label {
+    margin: 0;
     font-style: italic;
   }
   .separator {

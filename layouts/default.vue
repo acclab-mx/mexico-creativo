@@ -32,9 +32,9 @@ export default {
     const { records } = data
     console.log('records: ', records)
     this.topics = records.map((r) => ({
-      id: r.id,
-      title: r.fields.TEMA,
-      path: `/playground?topicId=${r.id}`,
+      ...r,
+      class: `color-topic-${r.orden}`,
+      path: `/playground?topic=${r.orden}`,
     }))
   },
   data() {
@@ -70,9 +70,9 @@ export default {
       console.log('topics: ', this.topics)
       if (this.topics.length) {
         this.setTopics(this.topics)
-        if (this.$route.query.topicId) {
+        if (this.$route.query.topic) {
           const topicSelected = this.topics.filter(
-            (t) => t.id === this.$route.query.topicId
+            (t) => t.orden === this.$route.query.topic
           )[0]
           this.setTopicSelected(topicSelected)
         }

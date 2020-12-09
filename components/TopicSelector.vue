@@ -3,11 +3,11 @@
     <div
       v-if="!showOptions"
       class="topic-selected"
-      :class="[valor !== null ? 'border-' + valor.id : 'card-default-bg']"
+      :class="[valor !== null ? 'border-' + valor.orden : 'card-default-bg']"
       @click="clear"
     >
       <p class="selected">
-        {{ valor !== null ? valor.title : 'Selecciona una opción' }}
+        {{ valor !== null ? valor.tema : 'Selecciona una opción' }}
       </p>
       <div v-if="valor !== null" class="action">
         <img class="trash" src="@/assets/icons/trash.svg" />
@@ -20,7 +20,7 @@
         class="topic-option"
         @click="select(topic)"
       >
-        <div :class="border(topic.id)">{{ topic.title }}</div>
+        <div :class="border(topic.orden)">{{ topic.tema }}</div>
       </div>
     </div>
   </div>
@@ -41,7 +41,12 @@ export default {
   },
   computed: {
     valor() {
-      return this.$store.state.topicSelected
+      return (
+        this.$store.state.topicSelected || {
+          orden: 0,
+          tema: 'Selecciona una opción',
+        }
+      )
     },
   },
   methods: {
@@ -55,7 +60,7 @@ export default {
       this.showOptions = true
     },
     border(id) {
-      return `border-${id}`
+      return `border-topic-${id}`
     },
   },
 }

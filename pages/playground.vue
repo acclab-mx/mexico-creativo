@@ -3,25 +3,22 @@
     <PlaygroundNavbar class="playground-spacer" />
     <MXNavbar />
     <div class="head-spacer"></div>
-    <section v-show="$route.query.topicId" class="topic-description">
+    <section v-show="$route.query.topic" class="topic-description">
       <div>
         <p class="label">Temática</p>
         <p>
-          {{ topic.title }}
+          {{ topicSelected.title }}
         </p>
       </div>
     </section>
-    <main v-if="$store.state.cards.length" class="content">
-      <CardContent
-        v-for="(card, c) in $store.state.cards"
-        :id="card.id"
-        :key="c"
-        :topic-id="card.topicId"
-        :category="card.category"
-        :title="card.title"
-        :description="card.description"
-        :image="card.image"
-      />
+    <main v-if="$store.state.cards[0]" class="content">
+      <div
+        v-for="(cards, cs) in $store.state.cards"
+        :key="cs"
+        class="cards-column"
+      >
+        <CardContent v-for="(card, c) in cards" :key="c" v-bind="card" />
+      </div>
     </main>
     <div class="scroll-top">
       <div class="content">
@@ -55,7 +52,7 @@ import MXNavbar from '@/components/MXNavbar'
 import PlaygroundNavbar from '@/components/PlaygroundNavbar'
 import CardContent from '@/components/CardContent'
 import MXFooter from '@/components/MXFooter'
-import { mapMutations } from 'vuex'
+import { mapMutations, mapActions } from 'vuex'
 
 export default {
   components: {
@@ -65,7 +62,7 @@ export default {
     MXFooter,
   },
   async fetch() {
-    await this.fetchData()
+    // await this.fetchData()
   },
   data() {
     return {
@@ -89,10 +86,10 @@ export default {
     offsets() {
       return this.$store.state.offsets
     },
-    topicId() {
-      return this.$route.query.topicId || null
-    },
     topic() {
+      return this.$route.query.topic || null
+    },
+    topicSelected() {
       return this.$store.state.topicSelected || { title: '' }
     },
     categoryList() {
@@ -116,37 +113,39 @@ export default {
       if (to !== from) {
         console.log('buscar items!!!')
         window.location.reload()
-        this.offsets = {
-          propuestas: '',
-          citas: '',
-          estudios: '',
-          conceptos: '',
-        }
-        this.setOffsets(this.offsets)
+        this.clearOffsets()
         this.isEndList = false
       }
     },
     waypoint(to, from) {
       if (to.going === 'in' && from.going === 'out') {
-        console.log('cargar más items...')
-        this.fetchData(true)
+        if (this.$store.state.cards[0].length) {
+          console.log('cargar más items...')
+          this.fetchData(true)
+        }
       }
     },
   },
   mounted() {
     // this.fetchData()
     this.isEndList = false
-    this.setOffsets({
-      propuestas: '',
-      citas: '',
-      estudios: '',
-      conceptos: '',
-    })
-    this.setCards({ cards: [], trasponer: !this.isMobile })
+    this.clearOffsets()
     this.fetchData()
+    const queryString = new URLSearchParams(location.search)
+    const cardId = queryString.get('cardId')
+    if (cardId) {
+      this.setShowCardModal(true)
+    }
   },
   methods: {
-    ...mapMutations(['setTopicSelected', 'setCards', 'addCards', 'setOffsets']),
+    ...mapMutations([
+      'setShowCardModal',
+      'setTopicSelected',
+      'setOffsets',
+      'clearOffsets',
+      'clearCards',
+    ]),
+    ...mapActions(['setCards', 'addCards']),
     scrollTop() {
       console.log('scroll-top')
       if (process.client) {
@@ -159,13 +158,13 @@ export default {
     },
     async fetchData(append) {
       console.log('fetch offsets: ', this.offsets)
-      console.log('fetch topicId: ', this.topicId)
+      console.log('fetch topic: ', this.topic)
       console.log('fetch categoryList: ', this.categoryList)
       this.loading = true
       let url = `/api/playground?`
       url = `${url}categoryList=${this.categoryList}`
-      if (this.topicId) {
-        url = `${url}&topicId=${this.topicId}`
+      if (this.topic) {
+        url = `${url}&topic=${this.topic}`
       }
       if (this.offsets.propuestas) {
         url = `${url}&offsetPropuestas=${this.offsets.propuestas}`
@@ -184,9 +183,10 @@ export default {
       console.log('data: ', data)
       if (data.cards.length) {
         if (append) {
-          this.addCards({ cards: data.cards, trasponer: !this.isMobile })
+          this.addCards(data.cards)
         } else {
-          this.setCards({ cards: data.cards, trasponer: !this.isMobile })
+          this.clearOffsets()
+          this.setCards(data.cards)
         }
         console.log('offsets: ', data.offsets)
         this.setOffsets(data.offsets)
@@ -203,13 +203,16 @@ export default {
   min-height: 100vh;
   background-color: #e5e5e5;
   main.content {
+    display: flex;
+    column-gap: 24px;
+    align-items: flex-start;
     margin: 0 auto;
     max-width: 1220px;
     padding: 24px;
-    > * {
-      width: 100%;
-      display: inline-flex;
-      margin-bottom: 24px;
+    .cards-column {
+      > * {
+        margin-bottom: 24px;
+      }
     }
   }
   .scroll-top {
@@ -220,17 +223,20 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+    pointer-events: none;
     .content {
       display: flex;
       justify-content: flex-end;
       padding: 24px;
       width: 100%;
       max-width: 1220px;
+      pointer-events: none;
       .scroll {
         padding: 16px 24px;
         background-color: var(--color-light);
         box-shadow: 0 0 8px var(--color-dark);
         border-radius: 8px;
+        pointer-events: auto;
         > * {
           margin: 0;
           padding: 0;
@@ -289,8 +295,9 @@ export default {
   }
   .container {
     main.content {
-      columns: 3;
-      column-gap: 24px;
+      .cards-column {
+        width: calc(100% / 3);
+      }
     }
   }
 }

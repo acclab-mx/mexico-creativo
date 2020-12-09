@@ -4,43 +4,36 @@
       <div class="close">
         <img class="cross" src="@/assets/icons/cross.svg" @click="close" />
       </div>
-      <div class="content">
+      <div v-if="!card" class="content">
+        <div class="loader">
+          <img class="icon" src="@/assets/icons/loader.svg" />
+        </div>
+      </div>
+      <div v-else class="content">
         <p class="label">{{ card.category }}</p>
-        <div class="separator" :class="[card.topicId]"></div>
-        <h3>{{ card.title }}</h3>
-        <img v-if="card.image" :src="card.image" />
+        <div class="separator" :class="[colorClass]"></div>
+        <h3>{{ title }}</h3>
+        <img v-if="visualAttachment[0].url" :src="visualAttachment[0].url" />
         <div
-          v-if="card.description"
+          v-if="description"
           class="description"
           :class="[card.category.toLowerCase()]"
           v-html="descriptionMD"
         ></div>
+        <div></div>
         <div v-if="card.link" class="enlaces">
           <p>Enlaces:</p>
           <a :href="card.link" target="_blank">{{ card.link }}</a>
         </div>
-        <div v-if="card.fuentes" class="pill-group">
-          <p>Fuente:</p>
-          <div v-for="(label, l) in card.fuentes" :key="l" class="pill">
-            {{ label }}
-          </div>
-        </div>
-        <div v-if="card.autoras" class="pill-group">
-          <p>Autores:</p>
-          <div v-for="(label, l) in card.autoras" :key="l" class="pill">
-            {{ label }}
-          </div>
-        </div>
-        <div v-if="card.organizaciones" class="pill-group">
-          <p>Organización:</p>
-          <div v-for="(label, l) in card.organizaciones" :key="l" class="pill">
-            {{ label }}
-          </div>
-        </div>
-        <div v-if="card.conceptos" class="pill-group">
-          <p>Conceptos relacionados:</p>
-          <div v-for="(label, l) in card.conceptos" :key="l" class="pill">
-            {{ label }}
+        <div v-for="(pillGroup, g) in pillGroups" :key="g" class="pill-group">
+          <p>{{ pillGroup.name }}</p>
+          <div
+            v-for="(pill, p) in pillGroup.value"
+            :key="p"
+            class="pill"
+            @click="openPill(pill)"
+          >
+            {{ pill.label }}
           </div>
         </div>
       </div>
@@ -50,24 +43,166 @@
 
 <script>
 import MarkdownIt from 'markdown-it'
-import { mapMutations } from 'vuex'
+import { mapMutations, mapActions } from 'vuex'
 
 const md = new MarkdownIt()
+
+const zipToObj = (category, cardIds, labels) =>
+  Array.isArray(cardIds)
+    ? cardIds.map((cardId, index) => ({
+        category,
+        cardId,
+        label: labels[index],
+      }))
+    : [{ category, cardId: cardIds, label: labels }]
 
 export default {
   computed: {
     card() {
       return this.$store.state.cardModal
     },
+    colorClass() {
+      return `color-topic-${this.card.numero_de_tematica[0]}`
+    },
+    categoryTag() {
+      return this.card.category
+        .toLowerCase()
+        .substring(0, this.card.category.length - 1)
+    },
+    visualAttachment() {
+      const attachment = this.card.foto ||
+        this.card.fotografia ||
+        this.card.ilustracion ||
+        this.card['visualizacion de datos'] || [{ url: '' }]
+      return attachment
+    },
+    title() {
+      return this.card[this.categoryTag]
+    },
+    description() {
+      switch (this.categoryTag) {
+        case 'propuesta':
+          return this.card.descripcion_corta
+        case 'cita':
+          return this.card.autora
+        case 'concepto':
+          return this.card.definicion
+        case 'estudio':
+          return this.card.descripcion
+        default:
+          return null
+      }
+    },
     descriptionMD() {
-      return md.render(this.card.description)
+      return md.render(this.description)
+    },
+    pillGroups() {
+      // return [{ name: 'Pills #1', value: [{ label: 'pill 1', cardId: 'abc' }] }]
+      let pillGroups = []
+      let tagList = []
+      switch (this.categoryTag) {
+        case 'propuesta':
+          tagList = ['autoras', 'organizaciones', 'conceptos_relacionados']
+          break
+        case 'cita':
+          tagList = ['fuentes', 'organizaciones', 'conceptos_relacionados']
+          break
+        case 'estudio':
+          tagList = ['fuentes', 'organizaciones', 'conceptos_relacionados']
+          break
+        case 'concepto':
+          tagList = ['fuentes', 'autoras']
+          break
+      }
+      pillGroups = tagList
+        .map((tag) => {
+          switch (tag) {
+            case 'autoras':
+              return this.card.autora
+                ? {
+                    name: 'Autores',
+                    value: zipToObj(
+                      'autora',
+                      this.card.autora,
+                      this.card.autora_txt
+                    ),
+                  }
+                : null
+            case 'fuentes':
+              return this.card.fuente
+                ? {
+                    name: 'Fuentes',
+                    value: zipToObj(
+                      'fuente',
+                      this.card.fuente,
+                      this.card.fuente_txt
+                    ),
+                  }
+                : null
+            case 'organizaciones':
+              return this.card.organizacion
+                ? {
+                    name: 'Organizaciones',
+                    value: zipToObj(
+                      'organizacion',
+                      this.card.organizacion,
+                      this.card.organizacion_txt
+                    ),
+                  }
+                : null
+            case 'conceptos_relacionados':
+              return this.card.conceptos_relacionados
+                ? {
+                    name: 'Conceptos relacionados',
+                    value: zipToObj(
+                      'concepto',
+                      this.card.conceptos_relacionados,
+                      this.card.conceptos_relacionados_txt
+                    ),
+                  }
+                : null
+          }
+        })
+        .filter((i) => i)
+      console.log('pillGroups: ', pillGroups)
+      return pillGroups
     },
   },
+  mounted() {
+    console.log('card modal mounted')
+    const queryString = new URLSearchParams(location.search)
+    const cardId = queryString.get('cardId')
+    console.log('queryString: ', cardId)
+    if (cardId) {
+      this.fetchCard(cardId)
+    }
+  },
   methods: {
-    ...mapMutations(['setShowCardModal']),
+    ...mapMutations(['setShowCardModal', 'setCardModal']),
+    ...mapActions(['fetchCard']),
     close() {
+      const queryString = new URLSearchParams(location.search)
+      queryString.delete('cardId')
+      console.log('queryParams: ', queryString)
+      history.pushState(null, null, `?${queryString.toString()}`)
       this.setShowCardModal(false)
     },
+    openPill(pill) {
+      const cardId = `${pill.category}-${pill.cardId}`
+      console.log('open pill: ', cardId)
+      if (pill.category === 'concepto') {
+        this.$router.replace({
+          query: {
+            ...this.$route.query,
+            cardId,
+          },
+        })
+      }
+    },
+  },
+  beforeDestroy() {
+    console.log('clear modal!!!')
+    this.setCardModal(null)
   },
 }
 </script>
@@ -106,6 +241,14 @@ export default {
       justify-content: space-between;
       flex-direction: column;
       grid-row-gap: 16px;
+      .loader {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .icon {
+          max-width: 60px;
+        }
+      }
     }
     .label {
       font-style: italic;

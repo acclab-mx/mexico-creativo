@@ -82,14 +82,12 @@ class Airtable {
         headers: this.headers,
       })
         .then((result) => {
-          console.log('result.status: ', result.status)
           if (result.status === 200) return result.json()
           reject(result)
         })
         .then((data) => {
           if (stringify) {
             const stringData = JSON.stringify(data) + '\n'
-            console.log('data: ', stringData)
             resolve(stringData)
           } else {
             resolve(data)

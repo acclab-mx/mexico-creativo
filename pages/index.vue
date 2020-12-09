@@ -66,11 +66,11 @@
         <h3>Por temática</h3>
         <div class="topic-list">
           <CategoryCard
-            v-for="(card, c) in $store.state.topics"
+            v-for="card in $store.state.topics"
             :key="card.id"
-            :color="card.id"
-            :counter="c + 1"
-            :title="card.title"
+            :color="card.class"
+            :counter="card.orden"
+            :title="card.tema"
             :path="card.path"
           />
           <div class="end-space"></div>

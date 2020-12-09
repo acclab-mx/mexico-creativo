@@ -48,6 +48,7 @@ export default {
     '': '~/api/logger.js',
     '/api/tematicas': '~/api/tematicas.js',
     '/api/playground': '~/api/playground.js',
+    '/api/card': '~/api/card.js',
   },
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)

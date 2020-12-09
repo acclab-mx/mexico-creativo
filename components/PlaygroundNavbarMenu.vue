@@ -70,7 +70,7 @@ export default {
         console.log(val)
         this.setTopicSelected(val)
         this.$router.replace({
-          query: { ...this.$route.query, topicId: val ? val.id : null },
+          query: { ...this.$route.query, topic: val ? val.orden : null },
         })
       },
     },
