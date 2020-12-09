@@ -6,7 +6,7 @@
         <img
           class="logo-cultura"
           src="@/assets/img/logo-cultura.png"
-          alt="Logo de la PNUD"
+          alt="Logo de la Secretaría de Cultura"
         />
       </section>
       <section id="hero">
@@ -97,8 +97,8 @@
         <p class="text">Este proyecto se realizó con el apoyo de</p>
         <img
           class="logo-pnud"
-          src="@/assets/img/logo-pnud.png"
-          alt="Logo de la PNUD"
+          src="@/assets/img/pnud-acclab.jpg"
+          alt="Logo de la PNUD y AccLab"
         />
       </section>
     </main>

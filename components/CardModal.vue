@@ -283,6 +283,7 @@ export default {
         margin: 0;
       }
       .pill {
+        cursor: pointer;
         display: inline-block;
         margin-top: 8px;
         margin-right: 8px;
