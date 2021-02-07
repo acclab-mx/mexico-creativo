@@ -1,7 +1,7 @@
 export default {
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
-    title: 'mexicocreativo',
+    title: 'Resonancias',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -49,6 +49,7 @@ export default {
     '/api/tematicas': '~/api/tematicas.js',
     '/api/playground': '~/api/playground.js',
     '/api/card': '~/api/card.js',
+    '/api/test': '~/api/test.js'
   },
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)

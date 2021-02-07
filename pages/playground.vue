@@ -3,14 +3,14 @@
     <PlaygroundNavbar class="playground-spacer" />
     <MXNavbar />
     <div class="head-spacer"></div>
-    <section v-show="$route.query.topic" class="topic-description">
+    <!--section v-show="$route.query.topic" class="topic-description">
       <div v-if="topicSelected && topicSelected.tema">
         <p class="label">Temática</p>
         <p>
           {{ topicSelected.tema }}
         </p>
       </div>
-    </section>
+    </section-->
     <main v-if="$store.state.cards[0]" class="content">
       <div
         v-for="(cards, cs) in $store.state.cards"

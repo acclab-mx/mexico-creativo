@@ -12,7 +12,7 @@
       <section id="hero">
         <div class="content">
           <div class="title">
-            <h1>Almacén de ideas</h1>
+            <h1>Resonancias</h1>
           </div>
           <div class="subtitle"></div>
           <p class="description-desktop">
@@ -58,7 +58,11 @@
           enfoques diversos, así que siempre estará abierta la posibilidad de
           que nos propongas una
           <b
-            ><i><a href="#" target="_blank">nueva tarjeta</a></i></b
+            ><i
+              ><a href="https://airtable.com/shrVO4h0Y1y1XLpMw" target="_blank"
+                >nueva tarjeta</a
+              ></i
+            ></b
           >.<br /><br />
         </p>
       </section>
@@ -77,20 +81,14 @@
         </div>
       </section>
       <section id="categories">
-        <h3>Por categoría</h3>
+        <h3>Descargar recursos</h3>
         <div class="category-list">
-          <nuxt-link class="category-btn" to="/playground?propuestas"
-            >Propuestas</nuxt-link
-          >
-          <nuxt-link class="category-btn" to="/playground?citas"
-            >Citas</nuxt-link
-          >
-          <nuxt-link class="category-btn" to="/playground?conceptos"
-            >Conceptos</nuxt-link
-          >
-          <nuxt-link class="category-btn" to="/playground?estudios"
-            >Estudios</nuxt-link
-          >
+          <a class="category-btn" href="/files/sondeo.pdf" target="_blank">
+            Base de datos
+          </a>
+          <a class="category-btn" href="/files/sondeo.pdf" target="_blank">
+            PDF del sondeo
+          </a>
         </div>
       </section>
       <section class="pnud-logo">
@@ -99,6 +97,11 @@
           class="logo-pnud"
           src="@/assets/img/pnud-acclab.jpg"
           alt="Logo de la PNUD y AccLab"
+        />
+        <img
+          class="logo-pnud"
+          src="@/assets/img/logo-oei.svg"
+          alt="Logo de la OEI"
         />
       </section>
     </main>
@@ -176,6 +179,9 @@ export default {
   }
   .title {
     margin-top: 24px;
+    h1 {
+      font-size: 32px;
+    }
   }
   .subtitle {
     margin-top: 0;
@@ -249,17 +255,18 @@ export default {
     max-width: 100%;
     box-sizing: border-box;
   }
-  a.category-btn {
-    display: inline-block;
-    font-size: 24px;
-    padding: 8px 16px;
-    margin-bottom: 6px;
-    text-decoration: none;
-    color: var(--color-light);
-    background-color: var(--color-dark);
-    border-radius: 8px;
-    border: none;
-  }
+}
+
+.category-btn {
+  display: inline-block;
+  font-size: 24px;
+  padding: 8px 16px;
+  margin-bottom: 6px;
+  text-decoration: none;
+  color: var(--color-light);
+  background-color: var(--color-dark);
+  border-radius: 8px;
+  border: none;
 }
 
 .pnud-logo {
@@ -290,7 +297,11 @@ export default {
 
   #hero {
     padding: 24px;
-
+    .title {
+      h1 {
+        font-size: 72px;
+      }
+    }
     .subtitle {
       margin-top: 8px;
     }

@@ -87,9 +87,11 @@ class Airtable {
         })
         .then((data) => {
           if (stringify) {
+            console.log('stringify!')
             const stringData = JSON.stringify(data) + '\n'
             resolve(stringData)
           } else {
+            console.log('not stringify')
             resolve(data)
           }
         })
