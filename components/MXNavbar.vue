@@ -2,7 +2,11 @@
   <header class="mx-navbar">
     <div class="container">
       <div class="brand">
-        <img src="@/assets/img/logo-mexico.png" />
+        <img
+          src="@/assets/img/logo-mexico.png"
+          alt="logo de México"
+          @click="$router.push('/')"
+        />
       </div>
       <div class="navmenu">
         <div class="burger-button">
@@ -78,7 +82,7 @@ export default {
 
 .brand {
   img {
-    height: 38px;
+    height: 30px;
   }
 }
 .navmenu {
@@ -107,8 +111,10 @@ export default {
         display: block;
         font-size: 16px;
         color: var(--color-dark);
-        font-family: 'Montserrat';
-        font-weight: 200;
+        font-family: 'asapregular', 'HelveticaNeue-Light',
+          'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial,
+          'Lucida Grande', sans-serif;
+        font-weight: 500;
         text-decoration: none;
         &.button {
           padding: 8px 16px;

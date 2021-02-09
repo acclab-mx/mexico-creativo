@@ -1,14 +1,6 @@
 <template>
-  <div id="layout-default">
-    <header>
-      <MXNavbar />
-    </header>
-    <div class="container">
-      <Nuxt />
-    </div>
-    <footer>
-      <MXFooter />
-    </footer>
+  <div>
+    <Nuxt />
     <div
       v-show="$store.state.showOverlay"
       class="cover"
@@ -23,8 +15,6 @@
 </template>
 
 <script>
-import MXNavbar from '@/components/MXNavbar'
-import MXFooter from '@/components/MXFooter'
 import MXNavbarMenu from '@/components/MXNavbarMenu'
 import PlaygroundNavbarMenu from '@/components/PlaygroundNavbarMenu'
 import CardModal from '@/components/CardModal'
@@ -32,26 +22,24 @@ import { mapMutations } from 'vuex'
 
 export default {
   components: {
-    MXNavbar,
-    MXFooter,
     MXNavbarMenu,
     PlaygroundNavbarMenu,
     CardModal,
   },
   async fetch() {
-    const { data } = await this.$axios('/api/componentes')
+    const { data } = await this.$axios('/api/tematicas')
     console.log('data: ', data)
     const { records } = data
     console.log('records: ', records)
-    this.componentes = records.map((r) => ({
+    this.topics = records.map((r) => ({
       ...r,
       class: `color-topic-${r.orden}`,
-      path: `/playground?componente=${r.orden}`,
+      path: `/playground?topic=${r.orden}`,
     }))
   },
   data() {
     return {
-      componentes: [],
+      topics: [],
     }
   },
   watch: {
@@ -59,7 +47,7 @@ export default {
       if (to !== from) {
         this.closeOverlay()
         if (to.path.includes('playground')) {
-          this.updateComponentes()
+          this.updateTopics()
         }
       }
     },
@@ -74,26 +62,22 @@ export default {
     },
   },
   mounted() {
-    this.updateComponentes()
+    this.updateTopics()
   },
   methods: {
-    ...mapMutations([
-      'setComponentes',
-      'setComponenteSelected',
-      'closeOverlay',
-    ]),
-    updateComponentes() {
-      console.log('componentes: ', this.componentes)
-      if (this.componentes.length) {
-        this.setComponentes(this.componentes)
-        const queryComponente = this.$route.query.componente
-        console.log('queryComponente: ', queryComponente)
-        if (queryComponente) {
-          const componenteSelected = this.componentes.filter((t) => {
-            return parseInt(t.orden) === parseInt(queryComponente)
+    ...mapMutations(['setTopics', 'setTopicSelected', 'closeOverlay']),
+    updateTopics() {
+      console.log('topics: ', this.topics)
+      if (this.topics.length) {
+        this.setTopics(this.topics)
+        const queryTopic = this.$route.query.topic
+        console.log('queryTopic: ', queryTopic)
+        if (queryTopic) {
+          const topicSelected = this.topics.filter((t) => {
+            return parseInt(t.orden) === parseInt(queryTopic)
           })[0]
-          console.log('componenteSelected: ', componenteSelected)
-          this.setComponenteSelected(componenteSelected)
+          console.log('topicSelected: ', topicSelected)
+          this.setTopicSelected(topicSelected)
         }
       }
     },
@@ -102,13 +86,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-#layout-default {
-  min-height: 100vh;
-  .container {
-    width: 100%;
-    padding-bottom: 40px;
-  }
-}
 .cover {
   z-index: 0;
   position: fixed;

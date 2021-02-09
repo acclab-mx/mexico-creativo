@@ -13,11 +13,11 @@
         <p class="label">{{ card.category }}</p>
         <div class="separator" :class="[colorClass]"></div>
         <h3>{{ title }}</h3>
-        <img v-if="visualAttachment[0].url" :src="visualAttachment[0].url" />
+        <img v-if="visualAttachment !== null" :src="visualAttachment" />
         <div
           v-if="description"
           class="description"
-          :class="[card.category.toLowerCase()]"
+          :class="[card.campos_txt[0].toLowerCase()]"
           v-html="descriptionMD"
         ></div>
         <div></div>
@@ -62,7 +62,7 @@ export default {
       return this.$store.state.cardModal
     },
     colorClass() {
-      return `color-topic-${this.card.numero_de_tematica[0]}`
+      return `color-campo-${this.card.campos_orden_txt[0]}`
     },
     categoryTag() {
       return this.card.category
@@ -70,28 +70,14 @@ export default {
         .substring(0, this.card.category.length - 1)
     },
     visualAttachment() {
-      const attachment = this.card.foto ||
-        this.card.fotografia ||
-        this.card.ilustracion ||
-        this.card['visualizacion de datos'] || [{ url: '' }]
+      const attachment = this.card.portada || null
       return attachment
     },
     title() {
-      return this.card[this.categoryTag]
+      return this.card.titulo
     },
     description() {
-      switch (this.categoryTag) {
-        case 'propuesta':
-          return this.card.descripcion_corta
-        case 'cita':
-          return this.card.autora
-        case 'concepto':
-          return this.card.definicion
-        case 'estudio':
-          return this.card.descripcion
-        default:
-          return null
-      }
+      return this.card.descripcion
     },
     descriptionMD() {
       return md.render(this.description)
@@ -99,65 +85,51 @@ export default {
     pillGroups() {
       // return [{ name: 'Pills #1', value: [{ label: 'pill 1', cardId: 'abc' }] }]
       let pillGroups = []
-      let tagList = []
-      switch (this.categoryTag) {
-        case 'propuesta':
-          tagList = ['autoras', 'organizaciones', 'conceptos_relacionados']
-          break
-        case 'cita':
-          tagList = ['fuentes', 'organizaciones', 'conceptos_relacionados']
-          break
-        case 'estudio':
-          tagList = ['fuentes', 'organizaciones', 'conceptos_relacionados']
-          break
-        case 'concepto':
-          tagList = ['fuentes', 'autoras']
-          break
-      }
+      const tagList = ['autoras', 'fuentes', 'organizacion', 'etiquetas']
       pillGroups = tagList
         .map((tag) => {
           switch (tag) {
             case 'autoras':
-              return this.card.autora
+              return this.card.autoras
                 ? {
                     name: 'Autores',
                     value: zipToObj(
                       'autora',
-                      this.card.autora,
-                      this.card.autora_txt
+                      this.card.autoras,
+                      this.card.autoras_txt
                     ),
                   }
                 : null
             case 'fuentes':
-              return this.card.fuente
+              return this.card.fuentes
                 ? {
                     name: 'Fuentes',
                     value: zipToObj(
                       'fuente',
-                      this.card.fuente,
-                      this.card.fuente_txt
+                      this.card.fuentes,
+                      this.card.fuentes_txt
                     ),
                   }
                 : null
             case 'organizaciones':
-              return this.card.organizacion
+              return this.card.organizaciones
                 ? {
                     name: 'Organizaciones',
                     value: zipToObj(
                       'organizacion',
-                      this.card.organizacion,
-                      this.card.organizacion_txt
+                      this.card.organizaciones,
+                      this.card.organizaciones_txt
                     ),
                   }
                 : null
-            case 'conceptos_relacionados':
-              return this.card.conceptos_relacionados
+            case 'etiquetas':
+              return this.card.etiquetas
                 ? {
-                    name: 'Conceptos relacionados',
+                    name: 'Etiquetas',
                     value: zipToObj(
-                      'concepto',
-                      this.card.conceptos_relacionados,
-                      this.card.conceptos_relacionados_txt
+                      'etiqueta',
+                      this.card.etiquetas,
+                      this.card.etiquetas_txt
                     ),
                   }
                 : null

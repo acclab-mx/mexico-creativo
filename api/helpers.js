@@ -24,5 +24,5 @@ const parseFields = (table, record) => {
 
 export default {
   parseTXT,
-  parseFields
+  parseFields,
 }

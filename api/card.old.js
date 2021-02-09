@@ -1,7 +1,30 @@
 import airtable from './airtable.js'
-import helpers from './helpers.js'
 
-const getResourcePath = (category, id) => `${category}/${id}`
+const parseTXT = (field, value) =>
+  field.includes('_TXT') ? value.split(',') : value
+
+const parseFields = (table, record) => {
+  // console.log('record: ', record)
+  const fields = Object.keys(record.fields).reduce(
+    (fields, field) => ({
+      ...fields,
+      [field.toLowerCase()]: Array.isArray(record.fields[field])
+        ? record.fields[field].flat()
+        : parseTXT(field, record.fields[field]),
+    }),
+    []
+  )
+  // console.log('fields: ', JSON.stringify(fields, null, 2))
+  const parsedRecord = {
+    table,
+    id: record.id,
+    ...fields,
+    createdTime: record.createdTime,
+  }
+  return parsedRecord
+}
+
+const getResourcePath = (category, id) => `${category}s/${id}`
 
 // Obtener la lista de temáticas
 export default async function (req, res) {
@@ -22,12 +45,12 @@ export default async function (req, res) {
     console.log('parsedQuery: ', parsedQuery)
 
     const [category, id] = parsedQuery.cardId.split('-')
-    const resourcePath = getResourcePath('contenidos', id)
+    const resourcePath = getResourcePath(category, id)
 
     console.log('resourcePath: ', resourcePath)
 
-    const response = helpers.parseFields(
-      'contenidos',
+    const response = parseFields(
+      category,
       await airtable.request(
         resourcePath,
         {
@@ -37,24 +60,18 @@ export default async function (req, res) {
       )
     )
 
-    console.log('records: ', response)
-
-    if (response.portada) {
-      response.portada = response.portada[0].url
-    }
-
     switch (category) {
-      case 'propuestas':
+      case 'propuesta':
         response.category = 'Propuestas'
         break
-      case 'acciones':
-        response.category = 'Acciones'
+      case 'cita':
+        response.category = 'Citas'
         break
-      case 'estudios':
+      case 'estudio':
         response.category = 'Estudios'
         break
-      case 'retos':
-        response.category = 'Retos'
+      case 'concepto':
+        response.category = 'Conceptos'
         break
       default:
         response.category = ''

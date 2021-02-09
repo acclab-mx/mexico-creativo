@@ -2,102 +2,120 @@
 	background-color: var(--color-dark);
 }
 
+// Clases para los colores de los 4 campos
+
+.color-campo-1 {
+	background-color: var(--color-campo-1);
+}
+
+.color-campo-2 {
+	background-color: var(--color-campo-2);
+}
+
+.color-campo-3 {
+	background-color: var(--color-campo-3);
+}
+
+.color-campo-4 {
+	background-color: var(--color-campo-4);
+}
+
 // Clases para los colores de las 12 temáticas, el nombre de la clase es el ID de airtable
 
-.color-topic-1 {
-	background-color: var(--color-topic-1);
+.color-componente-1 {
+	background-color: var(--color-componente-1);
 }
 
-.color-topic-2 {
-	background-color: var(--color-topic-2);
+.color-componente-2 {
+	background-color: var(--color-componente-2);
 }
 
-.color-topic-3 {
-	background-color: var(--color-topic-3);
+.color-componente-3 {
+	background-color: var(--color-componente-3);
 }
 
-.color-topic-4 {
-	background-color: var(--color-topic-4);
+.color-componente-4 {
+	background-color: var(--color-componente-4);
 }
 
-.color-topic-5 {
-	background-color: var(--color-topic-5);
+.color-componente-5 {
+	background-color: var(--color-componente-5);
 }
 
-.color-topic-6 {
-	background-color: var(--color-topic-6);
+.color-componente-6 {
+	background-color: var(--color-componente-6);
 }
 
-.color-topic-7 {
-	background-color: var(--color-topic-7);
+.color-componente-7 {
+	background-color: var(--color-componente-7);
 }
 
-.color-topic-8 {
-	background-color: var(--color-topic-8);
+.color-componente-8 {
+	background-color: var(--color-componente-8);
 }
 
-.color-topic-9 {
-	background-color: var(--color-topic-9);
+.color-componente-9 {
+	background-color: var(--color-componente-9);
 }
 
-.color-topic-10 {
-	background-color: var(--color-topic-10);
+.color-componente-10 {
+	background-color: var(--color-componente-10);
 }
 
-.color-topic-11 {
-	background-color: var(--color-topic-11);
+.color-componente-11 {
+	background-color: var(--color-componente-11);
 }
 
-.color-topic-12 {
-	background-color: var(--color-topic-12);
+.color-componente-12 {
+	background-color: var(--color-componente-12);
 }
 
 // Como bordes izquierdos
 
-.border-topic-1 {
-	border-left: 16px solid var(--color-topic-1);
+.border-componente-1 {
+	border-left: 16px solid var(--color-componente-1);
 }
 
-.border-topic-2 {
-	border-left: 16px solid var(--color-topic-2);
+.border-componente-2 {
+	border-left: 16px solid var(--color-componente-2);
 }
 
-.border-topic-3 {
-	border-left: 16px solid var(--color-topic-3);
+.border-componente-3 {
+	border-left: 16px solid var(--color-componente-3);
 }
 
-.border-topic-4 {
-	border-left: 16px solid var(--color-topic-4);
+.border-componente-4 {
+	border-left: 16px solid var(--color-componente-4);
 }
 
-.border-topic-5 {
-	border-left: 16px solid var(--color-topic-5);
+.border-componente-5 {
+	border-left: 16px solid var(--color-componente-5);
 }
 
-.border-topic-6 {
-	border-left: 16px solid var(--color-topic-6);
+.border-componente-6 {
+	border-left: 16px solid var(--color-componente-6);
 }
 
-.border-topic-7 {
-	border-left: 16px solid var(--color-topic-7);
+.border-componente-7 {
+	border-left: 16px solid var(--color-componente-7);
 }
 
-.border-topic-8 {
-	border-left: 16px solid var(--color-topic-8);
+.border-componente-8 {
+	border-left: 16px solid var(--color-componente-8);
 }
 
-.border-topic-9 {
-	border-left: 16px solid var(--color-topic-9);
+.border-componente-9 {
+	border-left: 16px solid var(--color-componente-9);
 }
 
-.border-topic-10 {
-	border-left: 16px solid var(--color-topic-10);
+.border-componente-10 {
+	border-left: 16px solid var(--color-componente-10);
 }
 
-.border-topic-11 {
-	border-left: 16px solid var(--color-topic-11);
+.border-componente-11 {
+	border-left: 16px solid var(--color-componente-11);
 }
 
-.border-topic-12 {
-	border-left: 16px solid var(--color-topic-12);
+.border-componente-12 {
+	border-left: 16px solid var(--color-componente-12);
 }

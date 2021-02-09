@@ -47,9 +47,10 @@ export default {
   serverMiddleware: {
     '': '~/api/logger.js',
     '/api/tematicas': '~/api/tematicas.js',
+    '/api/componentes': '~/api/componentes.js',
     '/api/playground': '~/api/playground.js',
     '/api/card': '~/api/card.js',
-    '/api/test': '~/api/test.js'
+    '/api/test': '~/api/test.js',
   },
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)

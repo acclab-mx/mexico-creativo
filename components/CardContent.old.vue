@@ -1,15 +1,15 @@
 <template>
   <div class="card-content" @click="open">
-    <p class="label">{{ campo }}</p>
+    <p class="label">{{ category }}</p>
     <div class="separator" :class="[colorClass]"></div>
-    <h3 :class="[campos_txt[0].toLowerCase()]">
+    <h3 :class="[category.toLowerCase()]">
       {{ title }}
     </h3>
-    <img v-if="visualAttachment !== null" :src="visualAttachment" />
+    <img v-if="visualAttachment" :src="visualAttachment[0].url" />
     <div
-      v-if="descripcion"
+      v-if="description"
       class="description"
-      :class="[campos_txt[0].toLowerCase()]"
+      :class="[category.toLowerCase()]"
       v-html="descriptionMD"
     ></div>
     <div class="action">{{ openText }}</div>
@@ -31,60 +31,70 @@ export default {
     orden: {
       type: Number,
     },
-    campos_orden_txt: {
+    numero_de_tematica: {
       type: Array,
       required: true,
     },
-    campos_txt: Array,
-    accion: String,
+    category: String,
+    cita: String,
     propuesta: String,
-    reto: String,
+    concepto: String,
     estudio: String,
-    portada: String,
-    autora_txt: String,
+    image: String,
+    autora: String,
     definicion: String,
     descripcion: String,
     descripcion_corta: String,
+    foto: Array,
+    fotografia: Array,
+    ilustracion: Array,
+    'visualizacion de datos': Array,
   },
   computed: {
     colorClass() {
-      return `color-campo-${this.campos_orden_txt[0]}`
-    },
-    campo() {
-      let tag = ''
-      const campo = this.campos_txt[0]
-
-      console.log('campo: ', campo)
-
-      if (campo === 'retos') tag = 'Reto'
-      if (campo === 'propuestas') tag = 'Propuesta'
-      if (campo === 'estudios') tag = 'Estudio'
-      if (campo === 'acciones') tag = 'Acción'
-
-      return tag
+      return `color-topic-${this.numero_de_tematica}`
     },
     categoryTag() {
-      return this.campos_txt[0]
+      return this.category.toLowerCase().substring(0, this.category.length - 1)
     },
     visualAttachment() {
-      const attachment = this.portada
+      const attachment =
+        this.foto ||
+        this.fotografia ||
+        this.ilustracion ||
+        this['visualizacion de datos'] ||
+        null
       return attachment
     },
     title() {
       return this[this.categoryTag]
     },
+    description() {
+      switch (this.categoryTag) {
+        case 'propuesta':
+          return this.descripcion_corta
+        case 'cita':
+          return this.autora
+        case 'concepto':
+          return this.definicion
+        case 'estudio':
+          return this.descripcion
+        default:
+          return null
+      }
+    },
     descriptionLimited() {
-      return typeof this.descripcion === 'string' &&
-        this.descripcion.length > 141
-        ? this.descripcion.substring(0, 140) + '...'
-        : this.descripcion
+      return typeof this.description === 'string' &&
+        this.description.length > 141
+        ? this.description.substring(0, 140) + '...'
+        : this.description
     },
     descriptionMD() {
       return md.render(this.descriptionLimited)
     },
     openText() {
-      return typeof this.descripcion === 'string' &&
-        this.descripcion.length > 140
+      return typeof this.description === 'string' &&
+        this.description.length > 140
         ? 'Abrir para continuar leyendo'
         : 'Abrir'
     },

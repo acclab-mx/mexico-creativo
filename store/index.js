@@ -1,22 +1,3 @@
-/* const traspuesta = (list, cols) => {
-  function* chunks(arr, n) {
-    for (let i = 0; i < arr.length; i += n) {
-      yield arr.slice(i, i + n)
-    }
-  }
-
-  const table = [...chunks(list, cols)]
-
-  const output = []
-
-  for (let i = 0; i < cols; i++) {
-    for (let j = 0; j < table.length; j++) {
-      output.push(table[j][i])
-    }
-  }
-
-  return output.filter((i) => i)
-} */
 const isMobile = () => (process.client ? window.screen.width < 760 : true)
 
 const getColumnSizes = (className) => {
@@ -49,14 +30,9 @@ export default {
     showPlaygroundNavbarMenu: false,
     showCardModal: false,
     cardModal: null,
-    topics: [],
-    topicSelected: null,
-    offsets: {
-      propuestas: '',
-      citas: '',
-      estudios: '',
-      conceptos: '',
-    },
+    componentes: [],
+    componenteSelected: null,
+    offset: null,
     cards: [[], [], []],
   },
   mutations: {
@@ -84,11 +60,14 @@ export default {
     setCardModal(state, value) {
       state.cardModal = value
     },
-    setTopics(state, value) {
-      state.topics = value
+    setComponentes(state, value) {
+      state.componentes = value
     },
-    setTopicSelected(state, value) {
-      state.topicSelected = value
+    setComponenteSelected(state, value) {
+      state.componenteSelected = value
+    },
+    clearComponenteSelected(state) {
+      state.componenteSelected = null
     },
     setCards(state, cards) {
       state.cards = cards
@@ -99,26 +78,14 @@ export default {
     clearCards(state) {
       state.cards = [[], [], []]
     },
-    setOffsets(state, offsets) {
-      console.log('setOffsets: ', offsets)
-      for (const value in offsets) {
-        // solo actualizar un offset si es valido (evita reiniciar offsets)
-        if (offsets[value] && state.offsets[value] !== 'end') {
-          state.offsets[value] = offsets[value]
-        } else {
-          console.log('no se actualiza offset: ', value, offsets[value])
-        }
-      }
+    setOffset(state, offset) {
+      console.log('setOffset: ', offset)
+      state.offset = offset
     },
-    clearOffsets(state) {
-      console.log('clearOffsets!')
+    clearOffset(state) {
+      console.log('clearOffset!')
       state.cards = [[], [], []]
-      state.offsets = {
-        propuestas: '',
-        citas: '',
-        estudios: '',
-        conceptos: '',
-      }
+      state.offset = null
     },
   },
   actions: {

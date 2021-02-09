@@ -1,25 +1,15 @@
 <template>
   <div class="mx-navbar">
     <div class="container header">
-      <div class="brand" @click="$router.push('/')">
-        <h3>Resonancias</h3>
-        <!--p class="description">
-          Los primeros diez temas de este Almacén, junto con sus propuestas,
-          conceptos y estudios, surgen de diez encuentros, en tiempos de
-          pandemia, entre profesionales de la cultura que forman parte de
-          instituciones públicas, organismos internacionales y el sector
-          independiente.
-        </p-->
+      <div class="container navigation">
+        <nuxt-link to="/" class="back">
+          <img class="arrow-left" src="@/assets/icons/arrow-left.svg" />
+          <p>Volver</p>
+        </nuxt-link>
       </div>
       <div class="burger-button">
         <img class="burger" src="@/assets/icons/filter.svg" @click="open" />
       </div>
-    </div>
-    <div class="container navigation">
-      <nuxt-link to="/" class="back">
-        <img class="arrow-left" src="@/assets/icons/arrow-left.svg" />
-        <p>Volver</p>
-      </nuxt-link>
     </div>
   </div>
 </template>
@@ -60,6 +50,7 @@ export default {
   justify-content: center;
   align-items: center;
   width: 100vw;
+  margin-top: 58px;
   color: var(--color-dark);
   background-color: var(--color-light);
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
@@ -70,11 +61,12 @@ export default {
     max-width: 1220px;
     width: 100%;
     &.header {
-      padding: 16px 24px 0 16px;
+      padding: 16px 24px 16px 16px;
       .description {
         margin: 0;
+        padding: 8px 0;
         max-width: 40em;
-        font-size: 16px;
+        font-size: 14px;
       }
     }
     &.navigation {
@@ -105,14 +97,6 @@ export default {
   background-color: white;
 }
 
-.brand {
-  h2,
-  h3 {
-    margin: 0;
-    padding: 0;
-    line-height: 1;
-  }
-}
 .burger {
   display: block;
   height: 32px;
@@ -120,5 +104,8 @@ export default {
 
 @media (min-width: 760px) {
   /* ljhad */
+  .burger {
+    height: 32px;
+  }
 }
 </style>

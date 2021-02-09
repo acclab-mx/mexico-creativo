@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <MXNavbar></MXNavbar>
     <main class="content">
       <section class="brand-logos">
         <img
@@ -22,7 +23,7 @@
             conceptos y estudios, surgen de diez encuentros, en tiempos de
             pandemia, entre profesionales de la cultura que forman parte de
             instituciones públicas, organismos internacionales y el sector
-            independiente. <nuxt-link to="/nosotros">Saber más</nuxt-link>.
+            independiente.
           </p>
         </div>
         <div class="blob-container">
@@ -65,25 +66,32 @@
           >.<br /><br />
         </p>
       </section>
-      <section id="componentes">
-        <h3>Accede a la información</h3>
-        <p>Haz click en alguna de las siguientes opciones.</p>
-        <div class="componente-menu">
-          <ComponenteMenu />
+      <section id="topics">
+        <h3>Por temática</h3>
+        <div class="topic-list">
+          <CategoryCard
+            v-for="card in $store.state.topics"
+            :key="card.id"
+            :color="card.class"
+            :counter="card.orden"
+            :title="card.tema"
+            :path="card.path"
+          />
+          <div class="end-space"></div>
         </div>
       </section>
-      <section id="campos">
+      <section id="categories">
         <h3>Descargar recursos</h3>
-        <div class="campos-list">
-          <a class="campo-btn" href="/files/sondeo.pdf" target="_blank">
+        <div class="category-list">
+          <a class="category-btn" href="/files/sondeo.pdf" target="_blank">
             Base de datos
           </a>
-          <a class="campo-btn" href="/files/sondeo.pdf" target="_blank">
+          <a class="category-btn" href="/files/sondeo.pdf" target="_blank">
             PDF del sondeo
           </a>
         </div>
       </section>
-      <section class="logos-aliados">
+      <section class="pnud-logo">
         <p class="text">Este proyecto se realizó con el apoyo de</p>
         <img
           class="logo-pnud"
@@ -91,25 +99,29 @@
           alt="Logo de la PNUD y AccLab"
         />
         <img
-          class="logo-oei"
-          src="@/assets/img/logo-oei.jpg"
+          class="logo-pnud"
+          src="@/assets/img/logo-oei.svg"
           alt="Logo de la OEI"
         />
       </section>
     </main>
+    <MXFooter />
   </div>
 </template>
 
 <script>
+import MXNavbar from '@/components/MXNavbar'
 import Lottie from '@/components/Lottie.vue'
 import animationData from '@/assets/animations/blob.json'
-import ComponenteMenu from '@/components/ComponenteMenu.vue'
+import CategoryCard from '@/components/CategoryCard'
+import MXFooter from '@/components/MXFooter'
 
 export default {
-  name: 'Home',
   components: {
+    MXNavbar,
     Lottie,
-    ComponenteMenu,
+    CategoryCard,
+    MXFooter,
   },
   data() {
     return {
@@ -128,8 +140,9 @@ export default {
   box-sizing: border-box;
   > .content {
     width: 100%;
+    margin-top: 100px;
+    margin-bottom: 48px;
     max-width: 1220px;
-    padding-top: 80px;
     box-sizing: border-box;
   }
 }
@@ -140,6 +153,7 @@ export default {
   align-items: center;
   column-gap: 16px;
   padding: 0 24px;
+  margin-top: 24px;
   .logo-cultura {
     max-width: 70%;
     max-height: 70px;
@@ -150,7 +164,6 @@ export default {
   display: flex;
   justify-content: space-between;
   padding: 0 24px;
-  padding-top: 40px;
   .content,
   .blob-container {
     max-width: 100%;
@@ -165,6 +178,7 @@ export default {
     margin: -24px;
   }
   .title {
+    margin-top: 24px;
     h1 {
       font-size: 32px;
     }
@@ -182,10 +196,7 @@ export default {
   display: none;
   margin-top: 24px;
   max-width: 32rem;
-  font-size: 18px;
-  a {
-    font-size: 18px;
-  }
+  font-size: 24px;
 }
 
 #description {
@@ -193,10 +204,7 @@ export default {
   max-width: 32rem;
   padding: 0 24px;
   p {
-    font-size: 18px;
-    a {
-      font-size: 18px;
-    }
+    font-size: 24px;
   }
 }
 
@@ -211,36 +219,45 @@ export default {
   }
 }
 
-#componentes {
+#topics {
   h3 {
     margin-top: 48px;
     margin-bottom: 24px;
     padding: 0 24px;
   }
-  p {
-    padding: 0 24px;
-  }
-  .componente-menu {
-    display: flex;
+  .topic-list {
+    z-index: 20;
     width: 100%;
-    padding: 32px;
-    justify-content: center;
-    align-items: center;
+    max-width: inherit;
+    padding: 0 24px;
+    padding-right: 24px;
+    display: flex;
+    column-gap: 16px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-color: transparent;
+    scrollbar-width: none;
+    .end-space {
+      display: block;
+      width: 1px;
+      height: 1px;
+      border: 1px solid transparent;
+    }
   }
 }
 
-#campos {
+#categories {
   padding: 24px;
   h3 {
     margin-bottom: 24px;
   }
-  .campos-list {
+  .category-list {
     max-width: 100%;
     box-sizing: border-box;
   }
 }
 
-.campo-btn {
+.category-btn {
   display: inline-block;
   font-size: 24px;
   padding: 8px 16px;
@@ -252,7 +269,7 @@ export default {
   border: none;
 }
 
-.logos-aliados {
+.pnud-logo {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -264,14 +281,11 @@ export default {
   .logo-pnud {
     height: 80px;
   }
-  .logo-oei {
-    height: 60px;
-  }
 }
 
 @media (min-width: 760px) {
   .container > .content {
-    margin-top: 120px;
+    margin-top: 122px;
   }
 
   .brand-logos {
@@ -282,7 +296,7 @@ export default {
   }
 
   #hero {
-    padding-top: 40px;
+    padding: 24px;
     .title {
       h1 {
         font-size: 72px;
@@ -295,36 +309,32 @@ export default {
 
   .description-desktop {
     display: inherit;
-    font-size: 24px;
-    a {
-      font-size: 24px;
-    }
   }
 
   #description {
     display: none;
-    p {
-      font-size: 24px;
-      a {
-        font-size: 24px;
-      }
+  }
+
+  #topics {
+    .topic-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      max-width: calc(4 * 280px + 24px * 4);
+      column-gap: 24px;
+      grid-row-gap: 24px;
     }
   }
 
-  #campos {
-    .campos-list {
+  #categories {
+    .category-list {
       flex-direction: column;
     }
   }
 
-  .logos-aliados {
+  .pnud-logo {
     .logo-pnud {
       margin-top: 16px;
       height: 120px;
-    }
-    .logo-oei {
-      margin-top: 16px;
-      height: 60px;
     }
   }
 }

@@ -3,11 +3,24 @@ import fetch from 'node-fetch'
 const filters = (filterBy) => {
   // Input: [{ field: String, operator: String = '=', value: Any }]
   const stringFilters = filterBy
+    .filter((filter) => !filter.optional) // desecha los filtros opcionales
     .map(
       (filter) => `{${filter.field}}${filter.operator || '='}${filter.value}`
     )
     .join(',')
   return stringFilters // output: 'field1=value1,field2!=value2,...,fieldN=valueN'
+}
+
+const optionalFilters = (filterBy) => {
+  // obtiene los filtros opcionales
+  const stringFilters = filterBy
+    .filter((filter) => filter.optional)
+    .map(
+      (filter) => `{${filter.field}}${filter.operator || '='}${filter.value}`
+    )
+    .join(',')
+
+  return stringFilters
 }
 
 const fields = (fieldList) => {
@@ -49,9 +62,17 @@ class Airtable {
           urlConfig = `${urlConfig}${fields(config.fields)}`
         }
         if (config.filterBy) {
+          const hayOpcionales =
+            optionalFilters(config.filterBy).length > 0 || false
           urlConfig = `${urlConfig}&filterByFormula=AND(${
             config.onlyPublic ? 'PUBLICO,' : ''
-          }${filters(config.filterBy)})`
+          }${filters(config.filterBy)}${
+            hayOpcionales
+              ? `${filters(config.filterBy) ? ',' : ''}OR(${optionalFilters(
+                  config.filterBy
+                )})`
+              : ''
+          })`
         } else if (config.onlyPublic) {
           urlConfig = `${urlConfig}&filterByFormula=PUBLICO`
         }
@@ -86,6 +107,7 @@ class Airtable {
           reject(result)
         })
         .then((data) => {
+          console.log('data: ', JSON.stringify(data, null, 2))
           if (stringify) {
             console.log('stringify!')
             const stringData = JSON.stringify(data) + '\n'

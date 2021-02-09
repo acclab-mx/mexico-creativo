@@ -1,18 +1,16 @@
 <template>
   <div id="playground" class="container">
     <PlaygroundNavbar class="playground-spacer" />
+    <MXNavbar />
     <div class="head-spacer"></div>
-    <div class="description">
-      <div
-        v-if="componenteSelected && componenteSelected.id !== ''"
-        class="description-content"
-      >
-        <h3>{{ componenteSelected.nombre }}</h3>
+    <!--section v-show="$route.query.topic" class="topic-description">
+      <div v-if="topicSelected && topicSelected.tema">
+        <p class="label">Temática</p>
         <p>
-          {{ componenteSelected.descripcion }}
+          {{ topicSelected.tema }}
         </p>
       </div>
-    </div>
+    </section-->
     <main v-if="$store.state.cards[0]" class="content">
       <div
         v-for="(cards, cs) in $store.state.cards"
@@ -50,19 +48,26 @@
         {{ endListMessage }}
       </div>
     </div>
+    <MXFooter />
   </div>
 </template>
 
 <script>
-import PlaygroundNavbar from '@/components/PlaygroundNavbar.vue'
+import MXNavbar from '@/components/MXNavbar'
+import PlaygroundNavbar from '@/components/PlaygroundNavbar'
 import CardContent from '@/components/CardContent'
+import MXFooter from '@/components/MXFooter'
 import { mapMutations, mapActions } from 'vuex'
 
 export default {
-  name: 'Playground',
   components: {
+    MXNavbar,
     PlaygroundNavbar,
     CardContent,
+    MXFooter,
+  },
+  async fetch() {
+    // await this.fetchData()
   },
   data() {
     return {
@@ -83,38 +88,37 @@ export default {
     isMobile() {
       return process.client ? window.screen.width < 760 : true
     },
-    offset() {
-      return this.$store.state.offset
+    offsets() {
+      return this.$store.state.offsets
     },
-    componente() {
-      return this.$route.query.componente || null
+    topic() {
+      return this.$route.query.topic || null
     },
-    componenteSelected() {
-      return this.$store.state.componenteSelected
+    topicSelected() {
+      return this.$store.state.topicSelected
     },
-    camposList() {
+    categoryList() {
       const list = Object.keys(this.$route.query)
         .map((q) => {
           return q === 'propuestas' ||
-            q === 'acciones' ||
+            q === 'citas' ||
             q === 'estudios' ||
-            q === 'retos'
+            q === 'conceptos'
             ? q
             : false
         })
         .filter((f) => f)
       return list.length
         ? list
-        : ['propuestas', 'acciones', 'estudios', 'retos']
+        : ['propuestas', 'citas', 'estudios', 'conceptos']
     },
   },
   watch: {
     $route(to, from) {
-      console.log('router!!!')
       if (to !== from) {
         console.log('buscar items!!!')
         window.location.reload()
-        this.clearOffset()
+        this.clearOffsets()
         this.isEndList = false
       }
     },
@@ -130,8 +134,7 @@ export default {
   mounted() {
     // this.fetchData()
     this.isEndList = false
-    this.clearOffset()
-    // this.clearComponenteSelected()
+    this.clearOffsets()
     this.fetchData()
     const queryString = new URLSearchParams(location.search)
     const cardId = queryString.get('cardId')
@@ -142,10 +145,9 @@ export default {
   methods: {
     ...mapMutations([
       'setShowCardModal',
-      'setComponenteSelected',
-      'clearComponenteSelected',
-      'setOffset',
-      'clearOffset',
+      'setTopicSelected',
+      'setOffsets',
+      'clearOffsets',
       'clearCards',
     ]),
     ...mapActions(['setCards', 'addCards']),
@@ -160,30 +162,39 @@ export default {
       this.waypoint = e
     },
     async fetchData(append) {
-      console.log('fetch offset: ', this.offset)
-      console.log('fetch componente: ', this.componente)
-      console.log('fetch camposList: ', this.camposList)
+      console.log('fetch offsets: ', this.offsets)
+      console.log('fetch topic: ', this.topic)
+      console.log('fetch categoryList: ', this.categoryList)
       this.loading = true
       let url = `/api/playground?`
-      url = `${url}camposList=${this.camposList}`
-      if (this.componente) {
-        url = `${url}&componente=${this.componente}`
+      url = `${url}categoryList=${this.categoryList}`
+      if (this.topic) {
+        url = `${url}&topic=${this.topic}`
       }
-      if (this.offset) {
-        url = `${url}&offset=${this.offset}`
+      if (this.offsets.propuestas) {
+        url = `${url}&offsetPropuestas=${this.offsets.propuestas}`
+      }
+      if (this.offsets.citas) {
+        url = `${url}&offsetCitas=${this.offsets.citas}`
+      }
+      if (this.offsets.estudios) {
+        url = `${url}&offsetEstudios=${this.offsets.estudios}`
+      }
+      if (this.offsets.conceptos) {
+        url = `${url}&offsetConceptos=${this.offsets.conceptos}`
       }
       const { data } = await this.$axios(url)
       this.loading = false
       console.log('data: ', data)
-      if (data.records.length) {
+      if (data.cards.length) {
         if (append) {
-          this.addCards(data.records)
+          this.addCards(data.cards)
         } else {
-          this.clearOffset()
-          this.setCards(data.records)
+          this.clearOffsets()
+          this.setCards(data.cards)
         }
-        console.log('offset: ', data.offset)
-        this.setOffset(data.offset)
+        console.log('offsets: ', data.offsets)
+        this.setOffsets(data.offsets)
       } else {
         this.isEndList = true
       }
@@ -193,14 +204,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.head-spacer {
-  display: block;
-  width: 100%;
-  height: 140px;
-}
-.content {
-  width: 100%;
-}
 .container {
   min-height: 100vh;
   background-color: #e5e5e5;
@@ -268,16 +271,29 @@ export default {
     }
   }
 }
-.description {
-  padding: 24px 18px;
-  background-color: white;
-  .description-content {
-    margin: 0 auto;
+.playground-spacer {
+  margin-top: 68px;
+}
+.head-spacer {
+  display: block;
+  width: 100%;
+  height: 224px;
+}
+.topic-description {
+  display: flex;
+  justify-content: center;
+  background-color: var(--color-light);
+  > div {
+    padding: 24px;
+    width: 100%;
     max-width: 1220px;
-    padding: 0 24px;
     p {
-      max-width: 40em;
-      font-size: 14px;
+      margin: 0;
+      &.label {
+        margin-bottom: 8px;
+        font-size: 18px;
+        font-style: italic;
+      }
     }
   }
 }
@@ -296,19 +312,18 @@ export default {
     background-color: var(--color-light);
   }
 }
+
 @media (min-width: 760px) {
+  .playground-spacer {
+    margin-top: 68px;
+  }
+  .head-spacer {
+    height: 240px;
+  }
   .container {
     main.content {
       .cards-column {
         width: calc(100% / 3);
-      }
-    }
-  }
-
-  .description {
-    .description-content {
-      p {
-        font-size: 18px;
       }
     }
   }

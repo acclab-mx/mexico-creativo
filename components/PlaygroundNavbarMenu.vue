@@ -7,34 +7,34 @@
         </div>
         <div class="filters">
           <h3>Explorar información</h3>
-          <p>Por temática</p>
-          <div class="topic-selector">
-            <TopicSelector
-              v-model="topicSelected"
-              :topics="$store.state.topics"
+          <p>Por componentes</p>
+          <div class="componente-selector">
+            <ComponenteSelector
+              v-model="componenteSelected"
+              :componentes="$store.state.componentes"
             />
           </div>
-          <p>Por categoría</p>
-          <div class="category-selector">
-            <CategoryButton
+          <p>Por campos</p>
+          <div class="campo-selector">
+            <CampoButton
               v-model="showPropuestas"
               label="Propuestas"
               @click="showPropuestas = !showPropuestas"
             />
-            <CategoryButton
-              v-model="showCitas"
-              label="Citas"
-              @click="showCitas = !showCitas"
+            <CampoButton
+              v-model="showAcciones"
+              label="Acciones"
+              @click="showAcciones = !showAcciones"
             />
-            <CategoryButton
+            <CampoButton
               v-model="showEstudios"
               label="Estudios"
               @click="showEstudios = !showEstudios"
             />
-            <CategoryButton
-              v-model="showConceptos"
-              label="Conceptos"
-              @click="showConceptos = !showConceptos"
+            <CampoButton
+              v-model="showRetos"
+              label="Retos"
+              @click="showRetos = !showRetos"
             />
           </div>
         </div>
@@ -44,33 +44,33 @@
 </template>
 
 <script>
-import TopicSelector from '@/components/TopicSelector'
-import CategoryButton from '@/components/CategoryButton'
+import ComponenteSelector from '@/components/ComponenteSelector'
+import CampoButton from '@/components/CampoButton'
 import { mapMutations } from 'vuex'
 
 export default {
   components: {
-    TopicSelector,
-    CategoryButton,
+    ComponenteSelector,
+    CampoButton,
   },
   data() {
     return {
       showPropuestas: false,
-      showCitas: false,
+      showAcciones: false,
       showEstudios: false,
-      showConceptos: false,
+      showRetos: false,
     }
   },
   computed: {
-    topicSelected: {
+    componenteSelected: {
       get() {
-        return this.$store.state.topicSelected
+        return this.$store.state.componenteSelected
       },
       set(val) {
         console.log(val)
-        this.setTopicSelected(val)
+        this.setComponenteSelected(val)
         this.$router.replace({
-          query: { ...this.$route.query, topic: val ? val.orden : null },
+          query: { ...this.$route.query, componente: val ? val.orden : null },
         })
       },
     },
@@ -78,7 +78,7 @@ export default {
   watch: {
     $route(to, from) {
       if (to !== from) {
-        this.updateCategories()
+        this.updateCampos()
       }
     },
     showPropuestas(val) {
@@ -93,15 +93,15 @@ export default {
         this.$router.replace({ query: { ...rest } })
       }
     },
-    showCitas(val) {
+    showAcciones(val) {
       if (val) {
-        if (!Object.keys(this.$route.query).includes('citas')) {
+        if (!Object.keys(this.$route.query).includes('acciones')) {
           this.$router.replace({
-            query: { ...this.$route.query, citas: null },
+            query: { ...this.$route.query, acciones: null },
           })
         }
-      } else if (Object.keys(this.$route.query).includes('citas')) {
-        const { citas, ...rest } = this.$route.query
+      } else if (Object.keys(this.$route.query).includes('acciones')) {
+        const { acciones, ...rest } = this.$route.query
         this.$router.replace({ query: { ...rest } })
       }
     },
@@ -117,45 +117,45 @@ export default {
         this.$router.replace({ query: { ...rest } })
       }
     },
-    showConceptos(val) {
+    showRetos(val) {
       if (val) {
-        if (!Object.keys(this.$route.query).includes('conceptos')) {
+        if (!Object.keys(this.$route.query).includes('retos')) {
           this.$router.replace({
-            query: { ...this.$route.query, conceptos: null },
+            query: { ...this.$route.query, retos: null },
           })
         }
-      } else if (Object.keys(this.$route.query).includes('conceptos')) {
-        const { conceptos, ...rest } = this.$route.query
+      } else if (Object.keys(this.$route.query).includes('retos')) {
+        const { retos, ...rest } = this.$route.query
         this.$router.replace({ query: { ...rest } })
       }
     },
   },
   mounted() {
-    this.updateCategories()
+    this.updateCampos()
   },
   methods: {
     ...mapMutations([
       'setShowMXNavbarMenu',
-      'setTopicSelected',
-      'setActiveCategories',
+      'setComponenteSelected',
+      'setActiveCampos',
     ]),
     close() {
       // console.log('close')
       this.setShowMXNavbarMenu(false)
     },
-    updateCategories() {
+    updateCampos() {
       console.log('query: ', this.$route.query)
       if (Object.keys(this.$route.query).includes('propuestas')) {
         this.showPropuestas = true
       }
-      if (Object.keys(this.$route.query).includes('citas')) {
-        this.showCitas = true
+      if (Object.keys(this.$route.query).includes('acciones')) {
+        this.showAcciones = true
       }
       if (Object.keys(this.$route.query).includes('estudios')) {
         this.showEstudios = true
       }
-      if (Object.keys(this.$route.query).includes('conceptos')) {
-        this.showConceptos = true
+      if (Object.keys(this.$route.query).includes('retos')) {
+        this.showRetos = true
       }
     },
   },
@@ -200,7 +200,7 @@ export default {
           margin: 0;
           margin-top: 8px;
         }
-        .category-selector {
+        .componente-selector {
           > * {
             margin-top: 8px;
           }
