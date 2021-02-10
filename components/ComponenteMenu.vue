@@ -6,90 +6,111 @@
       y="0"
       width="1000"
       height="500"
-      fill="black"
       stroke="red"
+      fill="none"
     /-->
+    <!--rect x="0" y="0" width="1000" height="500" fill="black" /-->
     <nuxt-link to="/playground?componente=8">
       <path
-        id="ecosistema-cultural"
-        :d="ecosistemaCultural"
+        ref="pathEcosistemaCultural"
+        d="M 440, 100 C 560, 10 760, 10 860, 100 960, 200 960, 300 860, 400 810, 450 760, 500 660, 400 510, 250 290, 250 440, 100"
         fill="rgba(111, 59, 196, 0.7)"
       />
       <text
-        x="420"
-        y="120"
+        x="520"
+        y="100"
         font-family="Montserrat"
-        font-size="24"
-        font-weight="600"
+        font-size="18"
+        font-weight="700"
         fill="white"
       >
-        Ecosistema cultural
+        Ecosistema Cultural
       </text>
     </nuxt-link>
     <nuxt-link to="/playground?componente=9">
       <path
-        id="cadena-de-valor"
-        :d="cadenaDeValor"
-        fill="rgba(236, 172, 7, 1.0)"
+        ref="pathCadenaDeValor"
+        d="M 120, 400 C 160, 300 260, 300 320, 350 380, 420 350, 460 300, 480 240, 490 260, 460 160, 480 140, 480 100, 450 120, 400"
+        fill="rgba(236, 172, 7, 0.7)"
       />
       <text
-        x="150"
-        y="380"
+        x="160"
+        y="420"
         font-family="Montserrat"
-        font-size="24"
-        font-weight="600"
+        font-size="18"
+        font-weight="700"
         fill="white"
       >
         Cadena de valor
       </text>
     </nuxt-link>
     <nuxt-link to="/playground?estudios">
-      <path id="estudios" :d="estudios" fill="rgba(128, 190, 50, 1.0)" />
+      <path
+        ref="pathEstudios"
+        d="M 165, 190 C 170, 200 200, 230 290, 200 310, 190 310, 180 290, 150 270, 120 260, 150 230, 130 190, 100 150, 150 165, 190"
+        fill="rgba(128, 190, 50, 1)"
+      />
       <text
-        x="320"
-        y="220"
+        ref="textEstudios"
+        x="190"
+        y="180"
         font-family="Montserrat"
-        font-size="24"
-        font-weight="600"
+        font-size="18"
+        font-weight="700"
         fill="white"
       >
         Estudios
       </text>
     </nuxt-link>
     <nuxt-link to="/playground?propuestas">
-      <path id="propuestas" :d="propuestas" fill="rgba(27, 20, 100, 1.0)" />
+      <path
+        ref="pathPropuestas"
+        d="M 310, 340 C 350, 320 400, 280 420, 350 430, 365 470, 380 430, 410 390, 440 340, 460 320, 400 300, 380 280, 380 310, 340"
+        fill="rgba(27, 20, 100, 1)"
+      />
       <text
-        x="380"
-        y="420"
+        ref="textPropuestas"
+        x="325"
+        y="380"
         font-family="Montserrat"
-        font-size="24"
-        font-weight="600"
+        font-size="18"
+        font-weight="700"
         fill="white"
       >
         Propuestas
       </text>
     </nuxt-link>
     <nuxt-link to="/playground?acciones">
-      <path id="acciones" :d="acciones" fill="rgba(240, 108, 33, 1.0)" />
+      <path
+        ref="pathAcciones"
+        d="M 480, 400 C 480, 330 580, 350 600, 370 740, 420 600, 500 580, 480 550, 460 520, 500 500, 460 474, 430 480, 380 480, 400"
+        fill="rgba(240, 108, 33, 1)"
+      />
       <text
-        x="620"
-        y="320"
+        ref="textAcciones"
+        x="520"
+        y="430"
         font-family="Montserrat"
-        font-size="24"
-        font-weight="600"
+        font-size="18"
+        font-weight="700"
         fill="white"
       >
         Acciones
       </text>
     </nuxt-link>
     <nuxt-link to="/playground?retos">
-      <path id="retos" :d="retos" fill="rgba(18, 203, 196, 1.0)" />
+      <path
+        ref="pathRetos"
+        d="M 620, 160 C 640, 120 640, 160 660, 140 700, 100 720, 170 724, 160 720, 160 740, 190 680, 210 620, 220 600, 200 620, 160"
+        fill="rgba(18, 203, 196, 1)"
+      />
       <text
-        x="520"
-        y="220"
+        ref="textRetos"
+        x="640"
+        y="180"
         font-family="Montserrat"
-        font-size="24"
-        font-weight="600"
+        font-size="18"
+        font-weight="700"
         fill="white"
       >
         Retos
@@ -99,35 +120,29 @@
 </template>
 
 <script>
-import ecosistemaCulturalList from '@/assets/animations/custom/ecosistemaCultural.js'
-import cadenaDeValor from '@/assets/animations/custom/cadenaDeValor.js'
-import estudios from '@/assets/animations/custom/estudios.js'
-import propuestas from '@/assets/animations/custom/propuestas.js'
-import acciones from '@/assets/animations/custom/acciones.js'
-import retos from '@/assets/animations/custom/retos.js'
-
-// console.log('ecosistemaCulturalList: ', ecosistemaCulturalList)
-
-const delay = (ms) => new Promise((resolve) => setTimeout(() => resolve(), ms))
+import animationEcosistemaCultural from '@/plugins/animationEcosistemaCultural.js'
+import animationCadenaDeValor from '@/plugins/animationCadenaDeValor.js'
+import animationEstudios from '@/plugins/animationEstudios.js'
+import animationEstudiosText from '@/plugins/animationEstudiosText.js'
+import animationPropuestas from '@/plugins/animationPropuestas.js'
+import animationPropuestasText from '@/plugins/animationPropuestasText.js'
+import animationAcciones from '@/plugins/animationAcciones.js'
+import animationAccionesText from '@/plugins/animationAccionesText.js'
+import animationRetos from '@/plugins/animationRetos.js'
+import animationRetosText from '@/plugins/animationRetosText.js'
 
 export default {
-  data() {
-    return {
-      ecosistemaCultural: ecosistemaCulturalList[0],
-      cadenaDeValor: cadenaDeValor[0],
-      estudios: estudios[0],
-      propuestas: propuestas[0],
-      acciones: acciones[0],
-      retos: retos[0],
-    }
-  },
-  async mounted() {
-    while (true) {
-      for (let i = 0; i < ecosistemaCulturalList.length; i++) {
-        this.ecosistemaCultural = ecosistemaCulturalList[i]
-        await delay(100)
-      }
-    }
+  mounted() {
+    animationEcosistemaCultural(this.$refs.pathEcosistemaCultural)
+    animationCadenaDeValor(this.$refs.pathCadenaDeValor)
+    animationEstudios(this.$refs.pathEstudios)
+    animationEstudiosText(this.$refs.textEstudios)
+    animationPropuestas(this.$refs.pathPropuestas)
+    animationPropuestasText(this.$refs.textPropuestas)
+    animationAcciones(this.$refs.pathAcciones)
+    animationAccionesText(this.$refs.textAcciones)
+    animationRetos(this.$refs.pathRetos)
+    animationRetosText(this.$refs.textRetos)
   },
 }
 </script>
