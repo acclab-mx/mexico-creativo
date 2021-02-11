@@ -18,11 +18,10 @@
             Repositorio vivo dónde confluyen, visualizan, articulan y
             distribuyen ideas y propuestas sobre las economías culturales y
             creativas.<br /><br />
-            Los primeros diez temas de este Almacén, junto con sus propuestas,
-            conceptos y estudios, surgen de diez encuentros, en tiempos de
-            pandemia, entre profesionales de la cultura que forman parte de
-            instituciones públicas, organismos internacionales y el sector
-            independiente. <nuxt-link to="/nosotros">Saber más</nuxt-link>.
+            Resonancias surge de diez encuentros, en tiempos de pandemia, entre
+            profesionales de la cultura que forman parte de instituciones
+            públicas, organismos internacionales y el sector independiente.
+            <nuxt-link to="/nosotros">Saber más</nuxt-link>.
           </p>
         </div>
         <div class="blob-container">
@@ -33,40 +32,21 @@
         <p>
           Repositorio vivo dónde confluyen, visualizan, articulan y distribuyen
           ideas y propuestas sobre las economías culturales y creativas.<br /><br />
-          Los primeros diez temas de este Almacén, junto con sus propuestas,
-          conceptos y estudios, surgen de diez encuentros, en tiempos de
-          pandemia, entre profesionales de la cultura que forman parte de
-          instituciones públicas, organismos internacionales y el sector
-          independiente.
+          Resonancias surge de diez encuentros, en tiempos de pandemia, entre
+          profesionales de la cultura que forman parte de instituciones
+          públicas, organismos internacionales y el sector independiente.
+          <nuxt-link to="/nosotros">Saber más</nuxt-link>.
         </p>
       </section>
       <section id="details">
         <h2>Guía para usar el Almacén</h2>
         <p>
-          Este <b><i>Almacén</i></b> está conformado por muchas tarjetas que
-          reúnen distintos saberes surgidos de los Diálogos Públicos, y como
-          todo buen Almacén siempre está dispuesto a recibir nuevas
-          propuestas.<br /><br />
           Puedes explorar las ideas a partir de temas centrales y por medio de
           las distintas categorías. Encontrarás textos, pero también
-          infografías, gráficas, imágenes, audios y videos.<br /><br />
-          Cada tarjeta guarda relación con otras tarjetas porque comparten el
-          mismo tema, la misma categoría o una serie de conceptos
-          relacionados.<br /><br />
-          Al ser un repositorio vivo, nos interesa que crezca y enriquezca de
-          enfoques diversos, así que siempre estará abierta la posibilidad de
-          que nos propongas una
-          <b
-            ><i
-              ><a href="https://airtable.com/shrVO4h0Y1y1XLpMw" target="_blank"
-                >nueva tarjeta</a
-              ></i
-            ></b
-          >.<br /><br />
+          infografías, gráficas, imágenes, audios y videos.
         </p>
       </section>
       <section id="componentes">
-        <h3>Accede a la información</h3>
         <p>Haz click en alguna de las siguientes opciones.</p>
         <div class="componente-menu">
           <ComponenteMenu />
@@ -75,10 +55,18 @@
       <section id="campos">
         <h3>Descargar recursos</h3>
         <div class="campos-list">
-          <a class="campo-btn" href="/files/sondeo.pdf" target="_blank">
+          <a
+            class="campo-btn"
+            href="https://mexicocreativo.cultura.gob.mx/wp-content/uploads/2020/09/1-BASE-Sondeo.xlsx"
+            target="_blank"
+          >
             Base de datos
           </a>
-          <a class="campo-btn" href="/files/sondeo.pdf" target="_blank">
+          <a
+            class="campo-btn"
+            href="https://mexicocreativo.cultura.gob.mx/wp-content/uploads/2020/09/Resultados-del-Sondeo.pdf"
+            target="_blank"
+          >
             PDF del sondeo
           </a>
         </div>
