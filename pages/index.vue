@@ -85,16 +85,18 @@
       </section>
       <section class="logos-aliados">
         <p class="text">Este proyecto se realizó con el apoyo de</p>
-        <img
-          class="logo-pnud"
-          src="@/assets/img/pnud-acclab.jpg"
-          alt="Logo de la PNUD y AccLab"
-        />
-        <img
-          class="logo-oei"
-          src="@/assets/img/logo-oei.jpg"
-          alt="Logo de la OEI"
-        />
+        <div class="logos-container">
+          <img
+            class="logo-pnud"
+            src="@/assets/img/pnud-acclab.jpg"
+            alt="Logo de la PNUD y AccLab"
+          />
+          <img
+            class="logo-oei"
+            src="@/assets/img/logo-oei.jpg"
+            alt="Logo de la OEI"
+          />
+        </div>
       </section>
     </main>
   </div>
@@ -261,11 +263,18 @@ export default {
     text-align: center;
     margin: 16px 74px 8px 74px;
   }
-  .logo-pnud {
-    height: 80px;
-  }
-  .logo-oei {
-    height: 60px;
+  .logos-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    padding: 24px;
+    .logo-pnud {
+      height: 100px;
+    }
+    .logo-oei {
+      height: 40px;
+    }
   }
 }
 
@@ -320,7 +329,7 @@ export default {
   .logos-aliados {
     .logo-pnud {
       margin-top: 16px;
-      height: 120px;
+      height: 200px;
     }
     .logo-oei {
       margin-top: 16px;
