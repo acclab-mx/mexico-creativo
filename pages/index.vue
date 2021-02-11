@@ -85,6 +85,20 @@
             alt="Logo de la OEI"
           />
         </div>
+        <div class="texto-pnud">
+          <div>
+            <p class="txt">
+              La iniciativa Resonancias fue realizada con el apoyo del
+              Laboratorio de Aceleración del Programa de las Naciones Unidas
+              para el Desarrollo en México.<br /><br />
+              El análisis y las conclusiones aquí expresadas no reflejan
+              necesariamente las opiniones del Programa de las Naciones Unidas
+              para el Desarrollo, de su Junta Ejecutiva, ni de sus Estados
+              Miembros.
+            </p>
+          </div>
+          <div></div>
+        </div>
       </section>
     </main>
   </div>
@@ -262,6 +276,23 @@ export default {
     }
     .logo-oei {
       height: 40px;
+    }
+  }
+  .texto-pnud {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    div {
+      display: flex;
+      justify-content: center;
+      width: 50%;
+      height: 100%;
+      .txt {
+        max-width: 30em;
+        font-size: 10px;
+        padding: 0 24px;
+      }
     }
   }
 }
