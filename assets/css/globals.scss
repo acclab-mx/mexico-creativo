@@ -59,6 +59,13 @@ ul > li > a {
 	text-decoration: none;
 }
 
+.popper {
+  max-width: 360px;
+  * {
+    font-size: 12px;
+  }
+}
+
 @media (min-width: 760px) {
 	h1 {
 		font-size: 96px;

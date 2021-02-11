@@ -7,35 +7,105 @@
         </div>
         <div class="filters">
           <h3>Explorar información</h3>
-          <p>Por componentes</p>
           <div class="componente-selector">
             <ComponenteSelector
               v-model="componenteSelected"
               :componentes="$store.state.componentes"
             />
           </div>
-          <p>Por campos</p>
           <div class="campo-selector">
-            <CampoButton
-              v-model="showPropuestas"
-              label="Propuestas"
-              @click="showPropuestas = !showPropuestas"
-            />
-            <CampoButton
-              v-model="showAcciones"
-              label="Acciones"
-              @click="showAcciones = !showAcciones"
-            />
-            <CampoButton
-              v-model="showEstudios"
-              label="Estudios"
-              @click="showEstudios = !showEstudios"
-            />
-            <CampoButton
-              v-model="showRetos"
-              label="Retos"
-              @click="showRetos = !showRetos"
-            />
+            <popper trigger="hover">
+              <div class="popper">
+                <p>
+                  Los estudios reunidos y en vías de sumarse, tienen diferentes
+                  sonoridades.<br />Desde las investigaciones académicas, y los
+                  datos estadísticos, hasta los manifiestos artísticos, hacen
+                  eco de diversas reflexiones en torno a la contrucción de
+                  políticas culturales.<br />
+                  <b
+                    >¿Conoces investigaciones, manifiestos, peticiones, entre
+                    otros documentos, que abonen al conocimiento del ecosistema
+                    cultural?<br />
+                    Te invitamos a subirlos en este conjunto de estudios.</b
+                  >
+                </p>
+              </div>
+              <CampoButton
+                id="tooltip-target-estudios"
+                slot="reference"
+                v-model="showEstudios"
+                active-color="--color-campo-1"
+                label="Estudios"
+                @click="showEstudios = !showEstudios"
+              />
+            </popper>
+            <popper trigger="hover">
+              <div class="popper">
+                <p>
+                  Frente a las necesidades despiertan voces tenues que conforman
+                  rumores y en la medida que crecen se convierten en propuestas
+                  que retumban e invitan a pensar en el cambio.<br />
+                  <b
+                    >Escibe y comparte tus ideas, futuros imaginados,
+                    inciativas, etc. sobre el diseño, ejecución, evaluación de
+                    las políticas culturales (de gobierno, del sector privado y
+                    de la sociedad civil organizada) dirigidas al
+                    fortalecimiento del ecosistema cultural?</b
+                  >
+                </p>
+              </div>
+              <CampoButton
+                slot="reference"
+                v-model="showPropuestas"
+                active-color="--color-campo-2"
+                label="Propuestas"
+                @click="showPropuestas = !showPropuestas"
+              />
+            </popper>
+            <popper trigger="hover">
+              <div class="popper">
+                <p>
+                  Las propuestas llevadas a la práctica pueden volverse cargas
+                  eléctricas, propagarse y alcanzar a dar un poco de luz capaz
+                  de volverse grandes fuegos.<br />
+                  <b
+                    >Queremos ampliar el conocimiento sobre programas y
+                    proyectos de gobierno, del sector privado, la sociedad civil
+                    organizada u organismos internacionales que se estén
+                    llevando actualmente para el fortalecimiento del ecosistema
+                    cultural</b
+                  >
+                </p>
+              </div>
+              <CampoButton
+                slot="reference"
+                v-model="showAcciones"
+                active-color="--color-campo-3"
+                label="Acciones"
+                @click="showAcciones = !showAcciones"
+              />
+            </popper>
+            <popper trigger="hover">
+              <div class="popper">
+                <p>
+                  ¿Nuestras acciones llegaron, alcanzaron, resonaron hasta los
+                  rincones esperados, su propagación generó algún cambio, otras
+                  formas de hacer?, ¿logramos crear, expe'rimentar y habitar lo
+                  común?<br />
+                  <b
+                    >¿Cuáles son los desafìos a afrontar para el fortalecimiento
+                    del ecosistema cultural?
+                  </b>
+                </p>
+              </div>
+              <CampoButton
+                slot="reference"
+                v-model="showRetos"
+                active-color="--color-campo-4"
+                label="Retos"
+                @click="showRetos = !showRetos"
+              />
+            </popper>
           </div>
         </div>
       </div>
@@ -201,9 +271,10 @@ export default {
           margin-top: 8px;
         }
         .componente-selector {
-          > * {
-            margin-top: 8px;
-          }
+          margin-top: 8px;
+        }
+        .campo-selector {
+          margin-top: 18px;
         }
       }
     }

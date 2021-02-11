@@ -14,7 +14,7 @@ export default {
   css: ['~/assets/css/main.scss'],
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
-  plugins: ['~/plugins/waypoint.js'],
+  plugins: ['~/plugins/waypoint.js', '~/plugins/tooltips.js'],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
   components: true,

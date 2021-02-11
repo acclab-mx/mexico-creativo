@@ -22,7 +22,14 @@
         class="componente-option"
         @click="select(componente)"
       >
-        <div :class="border(componente.orden)">{{ componente.nombre }}</div>
+        <popper trigger="hover">
+          <div v-show="componente.descripcion" class="popper">
+            {{ componente.descripcion }}
+          </div>
+          <div slot="reference" :class="border(componente.orden)">
+            {{ componente.nombre }}
+          </div>
+        </popper>
       </div>
     </div>
   </div>
@@ -47,6 +54,7 @@ export default {
         this.$store.state.componenteSelected || {
           orden: 0,
           nombre: 'Selecciona una opción',
+          descripcion: '',
         }
       )
     },
@@ -110,6 +118,9 @@ export default {
       background-color: #e5e5e5;
       border-radius: 8px;
       margin-top: 8px;
+      &:nth-child(2) {
+        margin-bottom: 28px;
+      }
       div {
         display: block;
         padding: 8px;

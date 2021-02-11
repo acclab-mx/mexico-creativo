@@ -1,5 +1,10 @@
 <template>
-  <button class="campo-button" :class="[activeState]" @click="onClick">
+  <button
+    class="campo-button"
+    :style="activeColorStyle"
+    :class="[activeState]"
+    @click="onClick"
+  >
     {{ label }}
   </button>
 </template>
@@ -7,6 +12,10 @@
 <script>
 export default {
   props: {
+    activeColor: {
+      type: String,
+      required: false,
+    },
     label: {
       type: String,
       required: true,
@@ -19,6 +28,11 @@ export default {
   computed: {
     activeState() {
       return this.value ? 'enabled' : 'disabled'
+    },
+    activeColorStyle() {
+      return this.activeState === 'enabled'
+        ? `background-color: var(${this.activeColor})`
+        : ''
     },
   },
   methods: {
@@ -33,6 +47,7 @@ export default {
 <style lang="scss" scoped>
 .campo-button {
   display: inline-block;
+  margin-top: 8px;
   padding: 8px 16px;
   border: none;
   border-radius: 8px;
