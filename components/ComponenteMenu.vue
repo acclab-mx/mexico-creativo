@@ -10,7 +10,7 @@
       fill="none"
     /-->
     <!--rect x="0" y="0" width="1000" height="500" fill="black" /-->
-    <nuxt-link to="/playground?componente=8">
+    <nuxt-link to="/playground?componente=1">
       <path
         ref="pathEcosistemaCultural"
         d="M 440, 100 C 560, 10 760, 10 860, 100 960, 200 960, 300 860, 400 810, 450 760, 500 660, 400 510, 250 290, 250 440, 100"
@@ -27,7 +27,7 @@
         Ecosistema Cultural
       </text>
     </nuxt-link>
-    <nuxt-link to="/playground?componente=9">
+    <nuxt-link to="/playground?componente=2">
       <path
         ref="pathCadenaDeValor"
         d="M 120, 400 C 160, 300 260, 300 320, 350 380, 420 350, 460 300, 480 240, 490 260, 460 160, 480 140, 480 100, 450 120, 400"
