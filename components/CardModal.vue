@@ -21,9 +21,9 @@
           v-html="descriptionMD"
         ></div>
         <div></div>
-        <div v-if="card.link" class="enlaces">
+        <div v-if="card.enlace" class="enlaces">
           <p>Enlaces:</p>
-          <a :href="card.link" target="_blank">{{ card.link }}</a>
+          <a :href="card.enlace" target="_blank">{{ card.enlace }}</a>
         </div>
         <div v-for="(pillGroup, g) in pillGroups" :key="g" class="pill-group">
           <p>{{ pillGroup.name }}</p>
