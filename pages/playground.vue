@@ -8,9 +8,9 @@
         class="description-content"
       >
         <h3>{{ componenteSelected.nombre }}</h3>
-        <p>
-          {{ componenteSelected.descripcion }}
-        </p>
+        <div class="descripcion">
+          <div v-html="toMD(componenteSelected.descripcion)"></div>
+        </div>
       </div>
     </div>
     <main v-if="$store.state.cards[0]" class="content">
@@ -54,9 +54,36 @@
 </template>
 
 <script>
+import MarkdownIt from 'markdown-it'
 import PlaygroundNavbar from '@/components/PlaygroundNavbar.vue'
 import CardContent from '@/components/CardContent'
 import { mapMutations, mapActions } from 'vuex'
+
+const md = new MarkdownIt({
+  breaks: true,
+})
+
+const camposTitulos = {
+  propuestas: 'Propuestas',
+  acciones: 'Acciones',
+  estudios: 'Estudios',
+  retos: 'Retos',
+}
+
+const camposDescripciones = {
+  propuestas: `Frente a las necesidades despiertan voces tenues que conforman rumores y en la medida que crecen se convierten en propuestas que retumban e invitan a pensar en el cambio.\n
+**Escibe y comparte tus ideas, futuros imaginados, inciativas, etc.  sobre el diseño, ejecución, evaluación de las políticas culturales (de gobierno, del sector privado y de la sociedad civil organizada) dirigidas al fortalecimiento del ecosistema cultural?**
+  `,
+  acciones: `Las propuestas llevadas a la práctica pueden volverse cargas eléctricas, propagarse y alcanzar a dar un poco de luz capaz de volverse grandes fuegos.\n
+**Queremos ampliar el conocimiento sobre programas y proyectos de gobierno, del sector privado, la sociedad civil organizada u organismos internacionales  que se estén llevando actualmente para el fortalecimiento del ecosistema cultural**
+  `,
+  estudios: `Los estudios reunidos y en vías de sumarse, tienen diferentes sonoridades. Desde las investigaciones académicas, y los datos estadísticos, hasta los manifiestos artísticos, hacen eco de diversas reflexiones en torno a la contrucción de políticas culturales.\n
+**¿Conoces investigaciones, manifiestos, peticiones,  entre otros documentos, que abonen al conocimiento del ecosistema cultural? Te invitamos a subirlos en este conjunto de estudios.**
+  `,
+  retos: `¿Nuestras acciones llegaron, alcanzaron, resonaron hasta los rincones esperados, su propagación generó algún cambio, otras formas de hacer?, ¿logramos crear, expe'rimentar y habitar lo común?\n
+**¿Cuáles son los desafìos a afrontar para el fortalecimiento del ecosistema cultural?**
+  `,
+}
 
 export default {
   name: 'Playground',
@@ -90,7 +117,17 @@ export default {
       return this.$route.query.componente || null
     },
     componenteSelected() {
-      return this.$store.state.componenteSelected
+      let response =
+        this.camposList.length === 1
+          ? {
+              nombre: camposTitulos[this.camposList[0]],
+              descripcion: camposDescripciones[this.camposList[0]],
+            }
+          : null
+      if (this.$store.state.componenteSelected) {
+        response = this.$store.state.componenteSelected
+      }
+      return response
     },
     camposList() {
       const list = Object.keys(this.$route.query)
@@ -188,6 +225,9 @@ export default {
         this.isEndList = true
       }
     },
+    toMD(text) {
+      return md.render(text)
+    },
   },
 }
 </script>
@@ -275,9 +315,10 @@ export default {
     margin: 0 auto;
     max-width: 1220px;
     padding: 0 24px;
-    p {
+    .descripcion {
+      display: block;
       max-width: 40em;
-      font-size: 14px;
+      box-sizing: border-box;
     }
   }
 }
@@ -301,14 +342,6 @@ export default {
     main.content {
       .cards-column {
         width: calc(100% / 3);
-      }
-    }
-  }
-
-  .description {
-    .description-content {
-      p {
-        font-size: 18px;
       }
     }
   }
