@@ -2,8 +2,8 @@
   <div class="card-content" @click="open">
     <p class="label">{{ campo }}</p>
     <div class="separator" :class="[colorClass]"></div>
-    <h3 :class="[campos_txt[0].toLowerCase()]">
-      {{ title }}
+    <h3 v-show="titulo" :class="[campos_txt[0].toLowerCase()]">
+      {{ titulo }}
     </h3>
     <img v-if="visualAttachment !== null" :src="visualAttachment" />
     <div
@@ -30,6 +30,10 @@ export default {
     },
     orden: {
       type: Number,
+    },
+    titulo: {
+      type: String,
+      required: true,
     },
     campos_orden_txt: {
       type: Array,

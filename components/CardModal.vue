@@ -17,7 +17,7 @@
         <div
           v-if="description"
           class="description"
-          :class="[card.campos_txt[0].toLowerCase()]"
+          :class="[card.campos_txt ? card.campos_txt[0].toLowerCase() : '']"
           v-html="descriptionMD"
         ></div>
         <div></div>
@@ -62,7 +62,9 @@ export default {
       return this.$store.state.cardModal
     },
     colorClass() {
-      return `color-campo-${this.card.campos_orden_txt[0]}`
+      return `color-campo-${
+        this.card.campos_orden_txt ? this.card.campos_orden_txt[0] : '0'
+      }`
     },
     categoryTag() {
       return this.card.category
@@ -74,7 +76,7 @@ export default {
       return attachment
     },
     title() {
-      return this.card.titulo
+      return this.card.titulo || this.card.nombre || ''
     },
     description() {
       return this.card.descripcion
@@ -162,7 +164,7 @@ export default {
     openPill(pill) {
       const cardId = `${pill.category}-${pill.cardId}`
       console.log('open pill: ', cardId)
-      if (pill.category === 'concepto') {
+      if (pill.category === 'etiqueta') {
         console.log('open: ', cardId)
         const queryParams = new URLSearchParams(window.location.search)
         queryParams.set('cardId', cardId)

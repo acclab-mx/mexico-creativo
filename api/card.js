@@ -22,12 +22,15 @@ export default async function (req, res) {
     console.log('parsedQuery: ', parsedQuery)
 
     const [category, id] = parsedQuery.cardId.split('-')
-    const resourcePath = getResourcePath('contenidos', id)
+
+    const table = category === 'etiqueta' ? 'etiquetas' : 'contenidos';
+
+    const resourcePath = getResourcePath(table, id)
 
     console.log('resourcePath: ', resourcePath)
 
     const response = helpers.parseFields(
-      'contenidos',
+      table,
       await airtable.request(
         resourcePath,
         {
@@ -56,8 +59,11 @@ export default async function (req, res) {
       case 'retos':
         response.category = 'Retos'
         break
+      case 'etiqueta':
+        response.category = 'Etiquetas'
+        break
       default:
-        response.category = ''
+        response.category = category
     }
 
     res.setHeader('Content-Type', 'application/json')
