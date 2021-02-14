@@ -45,7 +45,9 @@
 import MarkdownIt from 'markdown-it'
 import { mapMutations, mapActions } from 'vuex'
 
-const md = new MarkdownIt()
+const md = new MarkdownIt({
+  breaks: true,
+})
 
 const zipToObj = (category, cardIds, labels) =>
   Array.isArray(cardIds)
