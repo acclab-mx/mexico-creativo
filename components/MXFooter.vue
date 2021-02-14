@@ -30,23 +30,21 @@
               </li>
               <li>
                 <a
+                  style="display: block; width: 240px"
                   href="https://consultapublicamx.inai.org.mx/vut-web/"
                   target="_blank"
-                  >Plataforma nacional de transparencia</a
+                  >Plataforma Nacional de Transparencia</a
                 >
               </li>
             </ul>
           </div>
           <div class="grupo">
-            <h3 class="title">Recursos</h3>
+            <h3 class="title">¿Qué es gob.mx?</h3>
             <ul>
-              <li><a href="#" target="_blank">Descargar reporte</a></li>
-              <li><a href="#" target="_blank">Descargar base de datos</a></li>
-            </ul>
-          </div>
-          <div class="grupo">
-            <h3 class="title">Legal</h3>
-            <ul>
+              <li class="only-text">
+                Es el portal único de trámites, información y participación
+                ciudadana. <a href="#" target="_blank">Leer más</a>
+              </li>
               <li>
                 <a href="https://datos.gob.mx/" target="_blank"
                   >Portal de datos abiertos</a
@@ -83,8 +81,33 @@
               </li>
               <li>
                 <a href="https://www.gob.mx/sitemap" target="_blank"
-                  >Nosotros</a
+                  >Mapa de sitio</a
                 >
+              </li>
+            </ul>
+          </div>
+          <div class="grupo">
+            <a
+              class="title-link"
+              href="https://www.gob.mx/tramites/ficha/presentacion-de-quejas-y-denuncias-en-la-sfp/SFP54"
+              target="_blank"
+              >Denuncia contra servidores públicos</a
+            >
+            <h3 class="title">Sígenos en</h3>
+            <ul class="social-media">
+              <li>
+                <a
+                  class="social-media-icon"
+                  href="https://www.facebook.com/gobmexico"
+                  target="_blank"
+                  ><img src="@/assets/icons/facebook.svg"
+                /></a>
+                <a
+                  class="social-media-icon"
+                  href="https://twitter.com/GobiernoMX"
+                  target="_blank"
+                  ><img src="@/assets/icons/twitter.svg"
+                /></a>
               </li>
             </ul>
           </div>
@@ -110,13 +133,12 @@ footer {
   .content {
     width: 100%;
     max-width: 1220px;
-    padding: 24px;
+    padding: 32px;
     #enlaces-de-interes {
       display: flex;
       flex-direction: column;
-      justify-content: center;
-      column-gap: 80px;
-      grid-row-gap: 32px;
+      justify-content: space-between;
+      column-gap: 18px;
       .title {
         font-weight: 500;
         font-family: 'asapregular', 'HelveticaNeue-Light',
@@ -125,9 +147,33 @@ footer {
         font-size: 18px;
         margin-bottom: 18px;
       }
+      .title-link {
+        display: block;
+        width: 100%;
+        min-width: 300px;
+        font-size: 14px;
+        color: white;
+        margin-bottom: 18px;
+      }
       .grupo {
+        margin-bottom: 32px;
         .logo-mexico {
-          height: 60px;
+          width: 100%;
+          max-width: 300px;
+        }
+        .only-text {
+          font-size: 14px;
+          margin-bottom: 8px;
+        }
+        .social-media {
+          display: flex;
+          justify-content: space-between;
+          .social-media-icon {
+            img {
+              display: inline-block;
+              height: 20px;
+            }
+          }
         }
       }
     }
@@ -137,7 +183,7 @@ footer {
     margin-top: 8px;
     li {
       a {
-        padding-top: 8px;
+        padding-top: 4px;
         color: var(--color-light);
         font-family: 'asapregular', 'HelveticaNeue-Light',
           'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial,
@@ -161,11 +207,34 @@ footer {
   }
 }
 
-@media (min-width: 760px) {
+@media (min-width: 1020px) {
   footer {
     .content {
       #enlaces-de-interes {
         flex-direction: row;
+        column-gap: 16px;
+      }
+    }
+  }
+}
+
+@media (min-width: 1220px) {
+  footer {
+    .content {
+      #enlaces-de-interes {
+        flex-direction: row;
+        column-gap: 32px;
+      }
+    }
+  }
+}
+
+@media (min-width: 1320px) {
+  footer {
+    .content {
+      #enlaces-de-interes {
+        flex-direction: row;
+        column-gap: 32px;
       }
     }
   }

@@ -74,6 +74,15 @@
       <section class="logos-aliados">
         <p class="text">Este proyecto se realizó con el apoyo de</p>
         <div class="logos-container">
+          <p class="txt">
+            La iniciativa Resonancias fue realizada con el apoyo del Laboratorio
+            de Aceleración del Programa de las Naciones Unidas para el
+            Desarrollo en México.<br /><br />
+            El análisis y las conclusiones aquí expresadas no reflejan
+            necesariamente las opiniones del Programa de las Naciones Unidas
+            para el Desarrollo, de su Junta Ejecutiva, ni de sus Estados
+            Miembros.
+          </p>
           <img
             class="logo-pnud"
             src="@/assets/img/pnud-acclab.jpg"
@@ -84,20 +93,6 @@
             src="@/assets/img/logo-oei.jpg"
             alt="Logo de la OEI"
           />
-        </div>
-        <div class="texto-pnud">
-          <div>
-            <p class="txt">
-              La iniciativa Resonancias fue realizada con el apoyo del
-              Laboratorio de Aceleración del Programa de las Naciones Unidas
-              para el Desarrollo en México.<br /><br />
-              El análisis y las conclusiones aquí expresadas no reflejan
-              necesariamente las opiniones del Programa de las Naciones Unidas
-              para el Desarrollo, de su Junta Ejecutiva, ni de sus Estados
-              Miembros.
-            </p>
-          </div>
-          <div></div>
         </div>
       </section>
     </main>
@@ -263,36 +258,25 @@ export default {
   align-items: center;
   .text {
     text-align: center;
-    margin: 16px 74px 8px 74px;
+    margin: 16px 24px 8px 24px;
   }
   .logos-container {
     display: flex;
     justify-content: space-around;
+    flex-direction: column;
+    grid-row-gap: 24px;
     align-items: center;
     width: 100%;
     padding: 24px;
     .logo-pnud {
-      height: 100px;
+      height: 120px;
     }
     .logo-oei {
-      height: 40px;
+      height: 60px;
     }
-  }
-  .texto-pnud {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    width: 100%;
-    div {
-      display: flex;
-      justify-content: center;
-      width: 50%;
-      height: 100%;
-      .txt {
-        max-width: 30em;
-        font-size: 10px;
-        padding: 0 24px;
-      }
+    .txt {
+      width: 100%;
+      font-size: 14px;
     }
   }
 }
@@ -346,13 +330,17 @@ export default {
   }
 
   .logos-aliados {
-    .logo-pnud {
-      margin-top: 16px;
-      height: 200px;
-    }
-    .logo-oei {
-      margin-top: 16px;
-      height: 60px;
+    .logos-container {
+      flex-direction: row;
+      .txt {
+        max-width: 30%;
+      }
+      .logo-pnud {
+        height: 200px;
+      }
+      .logo-oei {
+        height: 60px;
+      }
     }
   }
 }
