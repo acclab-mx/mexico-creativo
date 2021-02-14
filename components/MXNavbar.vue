@@ -56,6 +56,7 @@ export default {
 
 <style lang="scss" scoped>
 .mx-navbar {
+  z-index: 100;
   position: fixed;
   display: flex;
   top: 0;

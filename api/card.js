@@ -23,7 +23,7 @@ export default async function (req, res) {
 
     const [category, id] = parsedQuery.cardId.split('-')
 
-    const table = category === 'etiqueta' ? 'etiquetas' : 'contenidos';
+    const table = category === 'etiqueta' ? 'etiquetas' : 'contenidos'
 
     const resourcePath = getResourcePath(table, id)
 
