@@ -168,7 +168,9 @@ export default {
     // this.fetchData()
     this.isEndList = false
     this.clearOffset()
-    // this.clearComponenteSelected()
+    if (!this.componente) {
+      this.clearComponenteSelected()
+    }
     this.fetchData()
     const queryString = new URLSearchParams(location.search)
     const cardId = queryString.get('cardId')
@@ -226,7 +228,7 @@ export default {
       }
     },
     toMD(text) {
-      return md.render(text)
+      return text ? md.render(text) : null
     },
   },
 }
