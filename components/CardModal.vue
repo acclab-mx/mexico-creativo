@@ -194,6 +194,7 @@ export default {
   justify-content: center;
   align-items: center;
   pointer-events: none;
+  z-index: 3000;
   > .container {
     width: 100vw;
     height: 100%;
