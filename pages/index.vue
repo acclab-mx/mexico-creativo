@@ -15,14 +15,24 @@
           </div>
         </div>
       </section>
-      <section id="description">
-        <p>
-          Repositorio vivo dónde confluyen, visualizan, articulan y distribuyen
-          ideas y propuestas sobre las economías culturales y creativas.
-          <nuxt-link to="/nosotros">Saber más</nuxt-link>.
-        </p>
-      </section>
       <section id="componentes">
+        <p>
+          Resonancias es una herramienta de construcción colectiva, pensada para
+          reunir información relevante para construir política cultura, ya sea
+          pública, privada o emanada del sector de la sociedad civil organizada
+          y que apunte a fortalecer el ecosistema cultural y sus cadenas de
+          valor. Y como buena caja de reverberación, siempre está dispuesta a
+          sumar nuevas voces. <nuxt-link to="/nosotros">Saber más</nuxt-link>.
+        </p>
+        <p>Te invitamos a que explores este repositorio vivo.</p>
+        <p>
+          Para consultar y alimentar el sitio, hemos abierto una serie de
+          conjuntos: estudios, propuestas, retos, acciones, ecosistema cultural
+          y cadena de valor. A partir de ellos, podrás guiar tu búsqueda.
+          <br />Aquí se hacen eco y cruzan distintas reflexiones surgidas de
+          diálogos entre personas involucradas activamente en el sector cultural
+          y artístico.
+        </p>
         <p>Haz click en alguna de las siguientes opciones:</p>
         <div class="componente-menu">
           <ComponenteMenu />

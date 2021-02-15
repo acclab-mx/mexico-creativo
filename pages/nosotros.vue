@@ -11,13 +11,6 @@
         <div class="text-container">
           <h2>Conoce más</h2>
           <p>
-            Queremos a través de esta herramienta, que nos sirve para hacer un
-            ejercicio de resonancia colectiva, reunir información relevante para
-            construir política cultura, ya sea pública, privada o emanada del
-            sector de la sociedad civil organizada y que apunte a fortalecer el
-            ecosistema cultural y a su economía cultural y creativa.
-          </p>
-          <p>
             Resonar es dejar que las frecuencias de otros cuerpos alcancen el
             nuestro, vibrar en nuestra condición compartida de seres vivientes.
             Es permitirnos entrar en frecuencia en conjunto, amplificar la
@@ -27,14 +20,6 @@
             con experiencias y lenguajes singulares, pero que responden a la
             urgencia de materializar otras formas de hacer frente a la realidad
             del sector cultural y artístico.
-          </p>
-          <p>
-            Aquí se hacen eco distintas reflexiones surgidas de diálogos entre
-            personas involucradas activamente en el sector cultural y artístico.
-            Y como buena caja de reverberación, siempre está dispuesta a sumar
-            nuevas voces. Para alimentar el sitio, hemos abierto una serie de
-            campos: estudios, propuestas, retos y acciones, para guiar sus
-            aportes.
           </p>
           <p>
             Esta herramienta no propone un camino único de exploración, está
