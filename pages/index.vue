@@ -35,7 +35,8 @@
         </p>
         <p>Haz click en alguna de las siguientes opciones:</p>
         <div class="componente-menu">
-          <ComponenteMenu />
+          <ComponenteMenu class="desktop" />
+          <ComponenteMenuMovil class="movil" />
         </div>
       </section>
       <section id="campos">
@@ -87,11 +88,13 @@
 
 <script>
 import ComponenteMenu from '@/components/ComponenteMenu.vue'
+import ComponenteMenuMovil from '@/components/ComponenteMenuMovil.vue'
 
 export default {
   name: 'Home',
   components: {
     ComponenteMenu,
+    ComponenteMenuMovil,
   },
 }
 </script>
@@ -172,12 +175,18 @@ export default {
     padding: 0 24px;
   }
   .componente-menu {
+    .desktop {
+      display: none;
+    }
+  }
+
+  /* .componente-menu {
     display: flex;
     width: 100%;
     padding: 32px;
     justify-content: center;
     align-items: center;
-  }
+  } */
 }
 
 #campos {
@@ -250,6 +259,17 @@ export default {
     .title {
       h1 {
         font-size: 72px;
+      }
+    }
+  }
+
+  #componentes {
+    .componente-menu {
+      .desktop {
+        display: inherit;
+      }
+      .movil {
+        display: none;
       }
     }
   }
