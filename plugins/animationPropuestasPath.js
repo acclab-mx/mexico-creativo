@@ -5,30 +5,30 @@ const animate = (el) => {
     .timeline({
       autoplay: true,
       loop: true,
-      duration: 7000,
+      duration: 60000,
     })
     .add({
       targets: el,
       translateY: 10,
-      translateX: -220,
+      translateX: 260,
       easing: 'linear',
     })
     .add({
       targets: el,
-      translateY: -80,
-      translateX: -240,
+      translateY: -180,
+      translateX: 440,
       easing: 'linear',
     })
     .add({
       targets: el,
-      translateY: 150,
-      translateX: -300,
+      translateY: -250,
+      translateX: 300,
       easing: 'linear',
     })
     .add({
       targets: el,
-      translateY: 0,
-      translateX: -220,
+      translateY: -120,
+      translateX: -30,
       easing: 'linear',
     })
     .add({
