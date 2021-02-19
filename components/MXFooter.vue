@@ -93,7 +93,7 @@
               target="_blank"
               >Denuncia contra servidores públicos</a
             >
-            <h3 class="title">Sígenos en</h3>
+            <h3 class="title">Síguenos en</h3>
             <ul class="social-media">
               <li>
                 <a
@@ -135,10 +135,10 @@ footer {
     max-width: 1220px;
     padding: 32px;
     #enlaces-de-interes {
-      display: flex;
+      display: inline-flex;
       flex-direction: column;
       justify-content: space-between;
-      column-gap: 18px;
+      column-gap: 32px;
       .title {
         font-weight: 500;
         font-family: 'asapregular', 'HelveticaNeue-Light',
@@ -156,6 +156,8 @@ footer {
         margin-bottom: 18px;
       }
       .grupo {
+        /* margin: 0 32px 32px 0; */
+
         margin-bottom: 32px;
         .logo-mexico {
           width: 100%;
@@ -203,6 +205,8 @@ footer {
     display: block;
     width: 100%;
     height: 40px;
+    background-repeat: no-repeat;
+    background-size: cover;
     background-image: url('https://framework-gb.cdn.gob.mx/landing/img/pleca.svg');
   }
 }

@@ -18,7 +18,7 @@
       <section id="componentes">
         <p>
           Resonancias es una herramienta de construcción colectiva, pensada para
-          reunir información relevante para construir política cultura, ya sea
+          reunir información relevante para construir política cultural, ya sea
           pública, privada o emanada del sector de la sociedad civil organizada
           y que apunte a fortalecer el ecosistema cultural y sus cadenas de
           valor. Y como buena caja de reverberación, siempre está dispuesta a
@@ -59,7 +59,7 @@
         </div>
       </section>
       <section class="logos-aliados">
-        <p class="text">Este proyecto se realizó con el apoyo de</p>
+        <p class="text"><b>Este proyecto se realizó con el apoyo de</b></p>
         <div class="logos-container">
           <p class="txt">
             La iniciativa Resonancias fue realizada con el apoyo del Laboratorio
@@ -77,7 +77,7 @@
           />
           <img
             class="logo-oei"
-            src="@/assets/img/logo-oei.jpg"
+            src="@/assets/img/logo-oei.png"
             alt="Logo de la OEI"
           />
         </div>
@@ -172,6 +172,7 @@ export default {
     padding: 0 24px;
   }
   p {
+    max-width: 60rem;
     padding: 0 24px;
   }
   .componente-menu {

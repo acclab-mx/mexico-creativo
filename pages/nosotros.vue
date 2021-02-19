@@ -9,6 +9,7 @@
       </div>
       <div class="contenido">
         <div class="text-container">
+          <nuxt-link class="back" to="/">Volver al inicio</nuxt-link>
           <h2>Conoce más</h2>
           <p>
             Resonar es dejar que las frecuencias de otros cuerpos alcancen el
@@ -78,10 +79,9 @@ export default {
       .contenido {
         flex-direction: row;
         width: 100%;
-        padding-top: 40px;
+        padding-top: 80px;
         padding-bottom: 40px;
         h2 {
-          margin-top: 60px;
           margin-bottom: 30px;
         }
         p {
@@ -89,6 +89,10 @@ export default {
         }
         .text-container {
           width: 100%;
+          .back {
+            display: inline-block;
+            padding-bottom: 24px;
+          }
         }
         .blob-container {
           height: 80px;

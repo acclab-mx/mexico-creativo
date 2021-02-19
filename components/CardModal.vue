@@ -115,14 +115,14 @@ export default {
                     ),
                   }
                 : null
-            case 'organizaciones':
-              return this.card.organizaciones
+            case 'organizacion':
+              return this.card.organizacion
                 ? {
                     name: 'Organizaciones',
                     value: zipToObj(
                       'organizacion',
-                      this.card.organizaciones,
-                      this.card.organizaciones_txt
+                      this.card.organizacion,
+                      this.card.organizacion_txt
                     ),
                   }
                 : null
@@ -132,7 +132,7 @@ export default {
                     name: 'Etiquetas',
                     value: zipToObj(
                       'etiqueta',
-                      this.card.etiquetas,
+                      this.card.etiquetas_orden,
                       this.card.etiquetas_txt
                     ),
                   }
@@ -168,11 +168,12 @@ export default {
       console.log('open pill: ', cardId)
       if (pill.category === 'etiqueta') {
         console.log('open: ', cardId)
-        const queryParams = new URLSearchParams(window.location.search)
+        /* const queryParams = new URLSearchParams(window.location.search)
         queryParams.set('cardId', cardId)
         console.log('queryParams: ', queryParams)
         history.pushState(null, null, `?${queryParams.toString()}`)
-        this.fetchCard(cardId)
+        this.fetchCard(cardId) */
+        this.$router.push(`/playground?etiqueta=${pill.cardId}`)
       }
     },
   },

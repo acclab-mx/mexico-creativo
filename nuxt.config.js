@@ -49,6 +49,7 @@ export default {
     '/api/tematicas': '~/api/tematicas.js',
     '/api/componentes': '~/api/componentes.js',
     '/api/playground': '~/api/playground.js',
+    '/api/etiquetas': '~/api/etiquetas.js',
     '/api/card': '~/api/card.js',
     '/api/test': '~/api/test.js',
   },

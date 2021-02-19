@@ -18,8 +18,8 @@
         fill="rgba(111, 59, 196, 0.7)"
       />
       <text
-        x="640"
-        y="100"
+        x="680"
+        y="140"
         font-family="Montserrat"
         font-size="18"
         font-weight="700"

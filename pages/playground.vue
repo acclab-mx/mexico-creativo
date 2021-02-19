@@ -31,7 +31,7 @@
       </div>
     </div>
     <div v-if="!loading" class="loadMore">
-      <div class="button" @click="fetchData(true)">Cargar más elementos</div>
+      <div class="button" @click="loadMore(true)">Cargar más elementos</div>
     </div>
     <div
       v-waypoint="{
@@ -72,7 +72,7 @@ const camposTitulos = {
 
 const camposDescripciones = {
   propuestas: `Frente a las necesidades despiertan voces tenues que conforman rumores y en la medida que crecen se convierten en propuestas que retumban e invitan a pensar en el cambio.\n
-**Escibe y comparte tus ideas, futuros imaginados, inciativas, etc.  sobre el diseño, ejecución, evaluación de las políticas culturales (de gobierno, del sector privado y de la sociedad civil organizada) dirigidas al fortalecimiento del ecosistema cultural?**
+**Escribe y comparte tus ideas, futuros imaginados, iniciativas, etc.  sobre el diseño, ejecución, evaluación de las políticas culturales (de gobierno, del sector privado y de la sociedad civil organizada) dirigidas al fortalecimiento del ecosistema cultural**
   `,
   acciones: `Las propuestas llevadas a la práctica pueden volverse cargas eléctricas, propagarse y alcanzar a dar un poco de luz capaz de volverse grandes fuegos.\n
 **Queremos ampliar el conocimiento sobre programas y proyectos de gobierno, del sector privado, la sociedad civil organizada u organismos internacionales  que se estén llevando actualmente para el fortalecimiento del ecosistema cultural**
@@ -80,7 +80,7 @@ const camposDescripciones = {
   estudios: `Los estudios reunidos y en vías de sumarse, tienen diferentes sonoridades. Desde las investigaciones académicas, y los datos estadísticos, hasta los manifiestos artísticos, hacen eco de diversas reflexiones en torno a la contrucción de políticas culturales.\n
 **¿Conoces investigaciones, manifiestos, peticiones,  entre otros documentos, que abonen al conocimiento del ecosistema cultural? Te invitamos a subirlos en este conjunto de estudios.**
   `,
-  retos: `¿Nuestras acciones llegaron, alcanzaron, resonaron hasta los rincones esperados, su propagación generó algún cambio, otras formas de hacer?, ¿logramos crear, expe'rimentar y habitar lo común?\n
+  retos: `¿Nuestras acciones llegaron, alcanzaron, resonaron hasta los rincones esperados, su propagación generó algún cambio, otras formas de hacer?, ¿logramos crear, experimentar y habitar lo común?\n
 **¿Cuáles son los desafìos a afrontar para el fortalecimiento del ecosistema cultural?**
   `,
 }
@@ -159,7 +159,14 @@ export default {
       if (to.going === 'in' && from.going === 'out') {
         if (this.$store.state.cards[0].length) {
           console.log('cargar más items...')
-          this.fetchData(true)
+          const queryString = new URLSearchParams(location.search)
+          const etiqueta = queryString.get('etiqueta')
+          if (etiqueta) {
+            console.log('fetchByEtiqueta!')
+            this.fetchByEtiqueta(true)
+          } else {
+            this.fetchData(true)
+          }
         }
       }
     },
@@ -171,12 +178,13 @@ export default {
     if (!this.componente) {
       this.clearComponenteSelected()
     }
-    this.fetchData()
+    // this.fetchData()
     const queryString = new URLSearchParams(location.search)
     const cardId = queryString.get('cardId')
     if (cardId) {
       this.setShowCardModal(true)
     }
+    this.loadMore()
   },
   methods: {
     ...mapMutations([
@@ -197,6 +205,41 @@ export default {
     onWaypoint(e) {
       // console.log('onWaypoint: ', e)
       this.waypoint = e
+    },
+    loadMore(append) {
+      const queryString = new URLSearchParams(location.search)
+      const etiqueta = queryString.get('etiqueta')
+      if (etiqueta) {
+        this.fetchByEtiqueta(append)
+      } else {
+        this.fetchData(append)
+      }
+    },
+    async fetchByEtiqueta(append) {
+      console.log('fetchByEtiqueta: ', append)
+      console.log('fetch offset: ', this.offset)
+      this.loading = true
+      const queryString = new URLSearchParams(location.search)
+      const etiqueta = queryString.get('etiqueta')
+      let url = `/api/etiquetas?id=${etiqueta}`
+      if (this.offset) {
+        url = `${url}&offset=${this.offset}`
+      }
+      const { data } = await this.$axios(url)
+      this.loading = false
+      console.log('data: ', data)
+      if (data.records.length) {
+        if (append) {
+          this.addCards(data.records)
+        } else {
+          this.clearOffset()
+          this.setCards(data.records)
+        }
+        console.log('offset: ', data.offset)
+        this.setOffset(data.offset)
+      } else {
+        this.isEndList = true
+      }
     },
     async fetchData(append) {
       console.log('fetch offset: ', this.offset)

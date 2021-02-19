@@ -28,20 +28,10 @@ export default async function (req, res) {
     }
 
     if (parsedQuery.offset !== 'end') {
-      if ('componente' in parsedQuery) {
+      if ('id' in parsedQuery) {
         filterBy.push({
-          field: 'componentes_orden_txt',
-          value: parsedQuery.componente,
-        })
-      }
-
-      if ('camposList' in parsedQuery) {
-        parsedQuery.camposList.split(',').forEach((campos) => {
-          filterBy.push({
-            field: 'campos_txt',
-            value: `"${campos}"`,
-            optional: true,
-          })
+          field: 'etiquetas_orden',
+          value: parsedQuery.id,
         })
       }
 

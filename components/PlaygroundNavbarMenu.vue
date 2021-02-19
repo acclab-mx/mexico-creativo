@@ -139,8 +139,10 @@ export default {
       set(val) {
         console.log(val)
         this.setComponenteSelected(val)
+        const query = this.$route.query
+        delete query.etiqueta
         this.$router.replace({
-          query: { ...this.$route.query, componente: val ? val.orden : null },
+          query: { ...query, componente: val ? val.orden : null },
         })
       },
     },
@@ -215,16 +217,18 @@ export default {
     },
     updateCampos() {
       console.log('query: ', this.$route.query)
-      if (Object.keys(this.$route.query).includes('propuestas')) {
+      const query = this.$route.query
+      delete query.etiqueta
+      if (Object.keys(query).includes('propuestas')) {
         this.showPropuestas = true
       }
-      if (Object.keys(this.$route.query).includes('acciones')) {
+      if (Object.keys(query).includes('acciones')) {
         this.showAcciones = true
       }
-      if (Object.keys(this.$route.query).includes('estudios')) {
+      if (Object.keys(query).includes('estudios')) {
         this.showEstudios = true
       }
-      if (Object.keys(this.$route.query).includes('retos')) {
+      if (Object.keys(query).includes('retos')) {
         this.showRetos = true
       }
     },
