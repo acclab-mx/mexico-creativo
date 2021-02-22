@@ -290,13 +290,14 @@ export default {
   min-height: 100vh;
   background-color: #e5e5e5;
   main.content {
-    display: flex;
-    column-gap: 24px;
+    display: block;
     align-items: flex-start;
     margin: 0 auto;
     max-width: 1220px;
     padding: 24px;
     .cards-column {
+      padding: 0 12px;
+
       > * {
         margin-bottom: 24px;
       }
@@ -385,6 +386,7 @@ export default {
 @media (min-width: 760px) {
   .container {
     main.content {
+      display: flex;
       .cards-column {
         width: calc(100% / 3);
       }

@@ -102,12 +102,12 @@ export default {
     display: none;
     margin-top: 8px;
     padding: 0;
-    column-gap: 16px;
     li {
       display: flex;
       flex-direction: column;
       list-style: none;
       margin-top: 8px;
+      margin-right: 16px;
       a {
         display: block;
         font-size: 16px;

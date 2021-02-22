@@ -142,7 +142,10 @@ export default {
         const query = this.$route.query
         delete query.etiqueta
         this.$router.replace({
-          query: { ...query, componente: val ? val.orden : null },
+          query: {
+            ...query,
+            componente: val ? val.orden : null,
+          },
         })
       },
     },
@@ -157,48 +160,76 @@ export default {
       if (val) {
         if (!Object.keys(this.$route.query).includes('propuestas')) {
           this.$router.replace({
-            query: { ...this.$route.query, propuestas: null },
+            query: {
+              ...this.$route.query,
+              propuestas: null,
+            },
           })
         }
       } else if (Object.keys(this.$route.query).includes('propuestas')) {
         const { propuestas, ...rest } = this.$route.query
-        this.$router.replace({ query: { ...rest } })
+        this.$router.replace({
+          query: {
+            ...rest,
+          },
+        })
       }
     },
     showAcciones(val) {
       if (val) {
         if (!Object.keys(this.$route.query).includes('acciones')) {
           this.$router.replace({
-            query: { ...this.$route.query, acciones: null },
+            query: {
+              ...this.$route.query,
+              acciones: null,
+            },
           })
         }
       } else if (Object.keys(this.$route.query).includes('acciones')) {
         const { acciones, ...rest } = this.$route.query
-        this.$router.replace({ query: { ...rest } })
+        this.$router.replace({
+          query: {
+            ...rest,
+          },
+        })
       }
     },
     showEstudios(val) {
       if (val) {
         if (!Object.keys(this.$route.query).includes('estudios')) {
           this.$router.replace({
-            query: { ...this.$route.query, estudios: null },
+            query: {
+              ...this.$route.query,
+              estudios: null,
+            },
           })
         }
       } else if (Object.keys(this.$route.query).includes('estudios')) {
         const { estudios, ...rest } = this.$route.query
-        this.$router.replace({ query: { ...rest } })
+        this.$router.replace({
+          query: {
+            ...rest,
+          },
+        })
       }
     },
     showRetos(val) {
       if (val) {
         if (!Object.keys(this.$route.query).includes('retos')) {
           this.$router.replace({
-            query: { ...this.$route.query, retos: null },
+            query: {
+              ...this.$route.query,
+              retos: null,
+            },
           })
         }
       } else if (Object.keys(this.$route.query).includes('retos')) {
         const { retos, ...rest } = this.$route.query
-        this.$router.replace({ query: { ...rest } })
+        this.$router.replace({
+          query: {
+            ...rest,
+          },
+        })
       }
     },
   },
@@ -212,10 +243,7 @@ export default {
       'setActiveCampos',
     ]),
     close() {
-      // console.log('close')
-      this.setShowMXNavbarMenu(false)
-    },
-    updateCampos() {
+      // console.log('close') this.setShowMXNavbarMenu(false) }, updateCampos() {
       console.log('query: ', this.$route.query)
       const query = this.$route.query
       delete query.etiqueta

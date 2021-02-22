@@ -156,8 +156,7 @@ footer {
         margin-bottom: 18px;
       }
       .grupo {
-        /* margin: 0 32px 32px 0; */
-
+        margin: 0 32px 32px 0;
         margin-bottom: 32px;
         .logo-mexico {
           width: 100%;
@@ -206,6 +205,7 @@ footer {
     width: 100%;
     height: 40px;
     background-repeat: no-repeat;
+    background-color: var(--color-brand-green);
     background-size: cover;
     background-image: url('https://framework-gb.cdn.gob.mx/landing/img/pleca.svg');
   }

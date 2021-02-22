@@ -130,12 +130,16 @@ import animationEcosistemaCultural from '@/plugins/animationEcosistemaCultural.j
 import animationCadenaDeValor from '@/plugins/animationCadenaDeValor.js'
 import animationEstudios from '@/plugins/animationEstudios.js'
 import animationEstudiosPath from '@/plugins/animationEstudiosPath.js'
+import animationEstudiosText from '@/plugins/animationEstudiosText.js'
 import animationPropuestas from '@/plugins/animationPropuestas.js'
 import animationPropuestasPath from '@/plugins/animationPropuestasPath.js'
+import animationPropuestasText from '@/plugins/animationPropuestasText.js'
 import animationAcciones from '@/plugins/animationAcciones.js'
 import animationAccionesPath from '@/plugins/animationAccionesPath.js'
+import animationAccionesText from '@/plugins/animationAccionesText.js'
 import animationRetos from '@/plugins/animationRetos.js'
 import animationRetosPath from '@/plugins/animationRetosPath.js'
+import animationRetosText from '@/plugins/animationRetosText.js'
 
 export default {
   mounted() {
@@ -143,16 +147,16 @@ export default {
     animationCadenaDeValor(this.$refs.pathCadenaDeValor)
     animationEstudios(this.$refs.pathEstudios)
     animationEstudiosPath(this.$refs.pathEstudios)
-    animationEstudiosPath(this.$refs.textEstudios)
+    animationEstudiosText(this.$refs.textEstudios, { x: 280, y: 210 })
     animationPropuestas(this.$refs.pathPropuestas)
     animationPropuestasPath(this.$refs.pathPropuestas)
-    animationPropuestasPath(this.$refs.textPropuestas)
+    animationPropuestasText(this.$refs.textPropuestas, { x: 390, y: 400 })
     animationAcciones(this.$refs.pathAcciones)
     animationAccionesPath(this.$refs.pathAcciones)
-    animationAccionesPath(this.$refs.textAcciones)
+    animationAccionesText(this.$refs.textAcciones, { x: 640, y: 380 })
     animationRetos(this.$refs.pathRetos)
     animationRetosPath(this.$refs.pathRetos)
-    animationRetosPath(this.$refs.textRetos)
+    animationRetosText(this.$refs.textRetos, { x: 580, y: 180 })
   },
 }
 </script>
