@@ -1,7 +1,7 @@
 import airtable from './airtable.js'
 import helpers from './helpers.js'
 
-const pageSize = 100 // items por categoría
+const pageSize = 9 // items por categoría
 
 export default async function (req, res) {
   try {
