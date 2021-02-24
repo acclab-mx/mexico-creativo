@@ -1,7 +1,7 @@
 import airtable from './airtable.js'
 import helpers from './helpers.js'
 
-const pageSize = 9 // items por categoría
+const pageSize = 100 // items por categoría
 
 export default async function (req, res) {
   try {
@@ -30,8 +30,10 @@ export default async function (req, res) {
     if (parsedQuery.offset !== 'end') {
       if ('componente' in parsedQuery) {
         filterBy.push({
+          formulaType: 'regex',
           field: 'componentes_orden_txt',
           value: parsedQuery.componente,
+          optional: true
         })
       }
 

@@ -243,7 +243,10 @@ export default {
       'setActiveCampos',
     ]),
     close() {
-      // console.log('close') this.setShowMXNavbarMenu(false) }, updateCampos() {
+      // console.log('close')
+      this.setShowMXNavbarMenu(false)
+    },
+    updateCampos() {
       console.log('query: ', this.$route.query)
       const query = this.$route.query
       delete query.etiqueta

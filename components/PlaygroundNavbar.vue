@@ -2,10 +2,10 @@
   <div class="mx-navbar">
     <div class="container header">
       <div class="container navigation">
-        <nuxt-link to="/" class="back">
+        <div class="back" @click="$router.back()">
           <img class="arrow-left" src="@/assets/icons/arrow-left.svg" />
           <p>Volver</p>
-        </nuxt-link>
+        </div>
       </div>
       <div class="burger-button">
         <img class="burger" src="@/assets/icons/filter.svg" @click="open" />
