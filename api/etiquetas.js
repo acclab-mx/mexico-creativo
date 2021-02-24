@@ -33,7 +33,7 @@ export default async function (req, res) {
           formulaType: 'regex',
           field: 'etiquetas_orden',
           value: parsedQuery.id,
-          optional: true
+          optional: true,
         })
       }
 

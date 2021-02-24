@@ -15,17 +15,13 @@ const optionalFilters = (filterBy) => {
   // obtiene los filtros opcionales
   const stringFilters = filterBy
     .filter((filter) => filter.optional)
-    .map(
-      (filter) => {
-        if (!filter.formulaType || filter.formulaType === "equal") {
-          return `{${filter.field}}${filter.operator || '='}${filter.value}`
-        } else {
-          if (filter.formulaType === "regex") {
-            return `REGEX_MATCH(ARRAYJOIN({${filter.field}}, ";"),"\\b${filter.value}\\b")`
-          }
-        }
+    .map((filter) => {
+      if (filter.formulaType || filter.formulaType === 'regex') {
+        return `REGEX_MATCH(ARRAYJOIN({${filter.field}}, ";"),"\\b${filter.value}\\b")`
+      } else {
+        return `{${filter.field}}${filter.operator || '='}${filter.value}`
       }
-    )
+    })
     .join(',')
 
   return stringFilters

@@ -33,7 +33,7 @@ export default async function (req, res) {
           formulaType: 'regex',
           field: 'componentes_orden_txt',
           value: parsedQuery.componente,
-          optional: true
+          optional: true,
         })
       }
 

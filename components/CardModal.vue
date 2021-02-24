@@ -4,45 +4,39 @@
       <div class="close">
         <img class="cross" src="@/assets/icons/cross.svg" @click="close" />
       </div>
-      <div class="content-box">
-        <div v-if="!card" class="content">
-          <div class="card-conent">
-            <div class="loader">
-              <img class="icon" src="@/assets/icons/loader.svg" />
-            </div>
+      <div v-if="!card" class="content">
+        <div class="card-conent">
+          <div class="loader">
+            <img class="icon" src="@/assets/icons/loader.svg" />
           </div>
         </div>
-        <div v-else class="content">
-          <div class="card-conent">
-            <p class="label">{{ card.category }}</p>
-            <div class="separator" :class="[colorClass]"></div>
-            <h3>{{ title }}</h3>
-            <img v-if="visualAttachment !== null" :src="visualAttachment" />
+      </div>
+      <div v-else class="content">
+        <div class="card-conent">
+          <p class="label">{{ card.category }}</p>
+          <div class="separator" :class="[colorClass]"></div>
+          <h3>{{ title }}</h3>
+          <img v-if="visualAttachment !== null" :src="visualAttachment" />
+          <div
+            v-if="description"
+            class="description"
+            :class="[card.campos_txt ? card.campos_txt[0].toLowerCase() : '']"
+            v-html="descriptionMD"
+          ></div>
+          <div></div>
+          <div v-if="card.enlace" class="enlaces">
+            <p>Enlaces:</p>
+            <a :href="card.enlace" target="_blank">{{ card.enlace }}</a>
+          </div>
+          <div v-for="(pillGroup, g) in pillGroups" :key="g" class="pill-group">
+            <p>{{ pillGroup.name }}</p>
             <div
-              v-if="description"
-              class="description"
-              :class="[card.campos_txt ? card.campos_txt[0].toLowerCase() : '']"
-              v-html="descriptionMD"
-            ></div>
-            <div></div>
-            <div v-if="card.enlace" class="enlaces">
-              <p>Enlaces:</p>
-              <a :href="card.enlace" target="_blank">{{ card.enlace }}</a>
-            </div>
-            <div
-              v-for="(pillGroup, g) in pillGroups"
-              :key="g"
-              class="pill-group"
+              v-for="(pill, p) in pillGroup.value"
+              :key="p"
+              class="pill"
+              @click="openPill(pill)"
             >
-              <p>{{ pillGroup.name }}</p>
-              <div
-                v-for="(pill, p) in pillGroup.value"
-                :key="p"
-                class="pill"
-                @click="openPill(pill)"
-              >
-                {{ pill.label }}
-              </div>
+              {{ pill.label }}
             </div>
           </div>
         </div>
@@ -196,17 +190,21 @@ export default {
 
 <style lang="scss" scoped>
 .card-modal {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
+  width: 100vw;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   pointer-events: none;
   z-index: 3000;
   > .container {
+    position: relative;
+    display: block;
     width: 100vw;
     height: 100%;
     max-height: 100%;
@@ -222,24 +220,21 @@ export default {
         width: 32px;
       }
     }
-    .content-box {
+    .content {
       display: block;
-      .content {
-        display: block;
-        max-height: 100%;
-        .card-conent {
+      max-height: 100%;
+      .card-conent {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        grid-row-gap: 16px;
+        padding: 0 28px 28px 28px;
+        .loader {
           display: flex;
-          justify-content: space-between;
-          flex-direction: column;
-          grid-row-gap: 16px;
-          padding: 0 28px 28px 28px;
-          .loader {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            .icon {
-              max-width: 60px;
-            }
+          justify-content: center;
+          align-items: center;
+          .icon {
+            max-width: 60px;
           }
         }
       }
