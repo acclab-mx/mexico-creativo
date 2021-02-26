@@ -4,12 +4,12 @@
     <div class="head-spacer"></div>
     <div class="description">
       <div
-        v-if="componenteSelected && componenteSelected.id !== ''"
+        v-if="pageHeader.title && pageHeader.title !== ''"
         class="description-content"
       >
-        <h3>{{ componenteSelected.nombre }}</h3>
+        <h3>{{ pageHeader.title }}</h3>
         <div class="descripcion">
-          <div v-html="toMD(componenteSelected.descripcion)"></div>
+          <div v-html="toMD(pageHeader.description)"></div>
         </div>
       </div>
     </div>
@@ -96,6 +96,10 @@ export default {
       loading: false,
       endListMessage: 'No hay mas elementos para mostrar',
       isEndList: false,
+      pageHeader: {
+        title: '',
+        description: '',
+      },
       intersectionOptions: {
         root: null,
         rootMargin: '0px 0px 0px 0px',
@@ -194,7 +198,6 @@ export default {
   methods: {
     ...mapMutations([
       'setShowCardModal',
-      'setComponenteSelected',
       'clearComponenteSelected',
       'setOffset',
       'clearOffset',
@@ -269,6 +272,12 @@ export default {
       const { data } = await this.$axios(url)
       this.loading = false
       console.log('data: ', data)
+      if (data.pageHeader.title) {
+        this.pageHeader.title = data.pageHeader.title
+      }
+      if (data.pageHeader.description) {
+        this.pageHeader.description = data.pageHeader.description
+      }
       if (data.records.length) {
         if (append) {
           this.addCards(data.records)
