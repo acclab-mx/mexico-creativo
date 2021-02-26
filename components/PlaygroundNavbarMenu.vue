@@ -107,6 +107,18 @@
               />
             </popper>
           </div>
+          <div v-show="hayFiltros" class="limpiar-filtros">
+            <nuxt-link to="/playground">
+              <button class="limpiar-filtros-btn">
+                <div class="text">
+                  <p>Limpiar filtros</p>
+                </div>
+                <div class="icon">
+                  <img src="@/assets/icons/trash.svg" alt="limpiar" />
+                </div>
+              </button>
+            </nuxt-link>
+          </div>
         </div>
       </div>
     </div>
@@ -132,6 +144,9 @@ export default {
     }
   },
   computed: {
+    hayFiltros() {
+      return Object.keys(this.$route.query).length
+    },
     componenteSelected: {
       get() {
         return this.$store.state.componenteSelected
@@ -284,7 +299,7 @@ export default {
     .content {
       display: inline-block;
       margin: 8px;
-      padding: 16px;
+      padding: 16px 16px 0 16px;
       background-color: var(--color-light);
       border-radius: 8px;
       max-height: calc(100vh - 16px);
@@ -311,6 +326,31 @@ export default {
         }
         .campo-selector {
           margin-top: 18px;
+        }
+        .limpiar-filtros {
+          margin-top: 24px;
+          .limpiar-filtros-btn {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 16px;
+            border: 2px solid var(--color-gray-lighten);
+            background-color: transparent;
+            border-radius: 8px;
+            .text {
+              p {
+                border: 0;
+                margin: 0;
+              }
+            }
+            .icon {
+              height: 28px;
+              img {
+                max-height: 100%;
+              }
+            }
+          }
         }
       }
     }

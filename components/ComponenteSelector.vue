@@ -12,7 +12,7 @@
         {{ valor !== null ? valor.nombre : 'Selecciona una opción' }}
       </p>
       <div v-if="valor !== null" class="action">
-        <img class="trash" src="@/assets/icons/trash.svg" />
+        <img class="trash" src="@/assets/icons/sort-arrow-down.svg" />
       </div>
     </div>
     <div v-if="showOptions" class="componente-options">
@@ -99,7 +99,8 @@ export default {
       background-color: rgba(0, 0, 0, 0.05);
       border-radius: 0 8px 8px 0;
       .trash {
-        height: 32px;
+        padding-top: 4px;
+        height: 20px;
       }
     }
   }

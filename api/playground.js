@@ -28,6 +28,38 @@ export default async function (req, res) {
     }
 
     if (parsedQuery.offset !== 'end') {
+      if ('etiqueta' in parsedQuery) {
+        filterBy.push({
+          formulaType: 'regex',
+          field: 'etiquetas_orden',
+          value: parsedQuery.etiqueta,
+        })
+      }
+
+      if ('autor' in parsedQuery) {
+        filterBy.push({
+          formulaType: 'regex',
+          field: 'autoras_orden',
+          value: parsedQuery.autor,
+        })
+      }
+
+      if ('fuente' in parsedQuery) {
+        filterBy.push({
+          formulaType: 'regex',
+          field: 'fuente_orden',
+          value: parsedQuery.fuente,
+        })
+      }
+
+      if ('organizacion' in parsedQuery) {
+        filterBy.push({
+          formulaType: 'regex',
+          field: 'organizacion_orden',
+          value: parsedQuery.organizacion,
+        })
+      }
+
       if ('componente' in parsedQuery) {
         filterBy.push({
           formulaType: 'regex',

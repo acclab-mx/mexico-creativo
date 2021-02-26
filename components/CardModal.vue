@@ -103,7 +103,7 @@ export default {
                     name: 'Autores',
                     value: zipToObj(
                       'autora',
-                      this.card.autoras,
+                      this.card.autoras_orden,
                       this.card.autoras_txt
                     ),
                   }
@@ -114,7 +114,7 @@ export default {
                     name: 'Fuentes',
                     value: zipToObj(
                       'fuente',
-                      this.card.fuentes,
+                      this.card.fuentes_orden,
                       this.card.fuentes_txt
                     ),
                   }
@@ -125,7 +125,7 @@ export default {
                     name: 'Organizaciones',
                     value: zipToObj(
                       'organizacion',
-                      this.card.organizacion,
+                      this.card.organizacion_orden,
                       this.card.organizacion_txt
                     ),
                   }
@@ -168,17 +168,10 @@ export default {
       this.setShowCardModal(false)
     },
     openPill(pill) {
-      const cardId = `${pill.category}-${pill.cardId}`
-      console.log('open pill: ', cardId)
-      if (pill.category === 'etiqueta') {
-        console.log('open: ', cardId)
-        /* const queryParams = new URLSearchParams(window.location.search)
-        queryParams.set('cardId', cardId)
-        console.log('queryParams: ', queryParams)
-        history.pushState(null, null, `?${queryParams.toString()}`)
-        this.fetchCard(cardId) */
-        this.$router.push(`/playground?etiqueta=${pill.cardId}`)
-      }
+      const category = pill.category === 'autora' ? 'autor' : pill.category
+      const openUrl = `/playground?${category}=${pill.cardId}`
+      console.log('openUrl: ', openUrl)
+      this.$router.push(openUrl)
     },
   },
   beforeDestroy() {

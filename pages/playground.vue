@@ -113,6 +113,18 @@ export default {
     offset() {
       return this.$store.state.offset
     },
+    autor() {
+      return this.$route.query.autor || null
+    },
+    fuente() {
+      return this.$route.query.fuente || null
+    },
+    organizacion() {
+      return this.$route.query.organizacion || null
+    },
+    etiqueta() {
+      return this.$route.query.etiqueta || null
+    },
     componente() {
       return this.$route.query.componente || null
     },
@@ -159,14 +171,7 @@ export default {
       if (to.going === 'in' && from.going === 'out') {
         if (this.$store.state.cards[0].length) {
           console.log('cargar más items...')
-          const queryString = new URLSearchParams(location.search)
-          const etiqueta = queryString.get('etiqueta')
-          if (etiqueta) {
-            console.log('fetchByEtiqueta!')
-            this.fetchByEtiqueta(true)
-          } else {
-            this.fetchData(true)
-          }
+          this.fetchData(true)
         }
       }
     },
@@ -207,13 +212,7 @@ export default {
       this.waypoint = e
     },
     loadMore(append) {
-      const queryString = new URLSearchParams(location.search)
-      const etiqueta = queryString.get('etiqueta')
-      if (etiqueta) {
-        this.fetchByEtiqueta(append)
-      } else {
-        this.fetchData(append)
-      }
+      this.fetchData(append)
     },
     async fetchByEtiqueta(append) {
       console.log('fetchByEtiqueta: ', append)
@@ -243,11 +242,24 @@ export default {
     },
     async fetchData(append) {
       console.log('fetch offset: ', this.offset)
+      console.log('fetch etiqueta: ', this.etiqueta)
       console.log('fetch componente: ', this.componente)
       console.log('fetch camposList: ', this.camposList)
       this.loading = true
       let url = `/api/playground?`
       url = `${url}camposList=${this.camposList}`
+      if (this.autor) {
+        url = `${url}&autor=${this.autor}`
+      }
+      if (this.fuente) {
+        url = `${url}&fuente=${this.fuente}`
+      }
+      if (this.organizacion) {
+        url = `${url}&organizacion=${this.organizacion}`
+      }
+      if (this.etiqueta) {
+        url = `${url}&etiqueta=${this.etiqueta}`
+      }
       if (this.componente) {
         url = `${url}&componente=${this.componente}`
       }

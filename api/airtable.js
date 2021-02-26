@@ -4,9 +4,13 @@ const filters = (filterBy) => {
   // Input: [{ field: String, operator: String = '=', value: Any }]
   const stringFilters = filterBy
     .filter((filter) => !filter.optional) // desecha los filtros opcionales
-    .map(
-      (filter) => `{${filter.field}}${filter.operator || '='}${filter.value}`
-    )
+    .map((filter) => {
+      if (filter.formulaType || filter.formulaType === 'regex') {
+        return `REGEX_MATCH(ARRAYJOIN({${filter.field}}, ";"),"\\b${filter.value}\\b")`
+      } else {
+        return `{${filter.field}}${filter.operator || '='}${filter.value}`
+      }
+    })
     .join(',')
   return stringFilters // output: 'field1=value1,field2!=value2,...,fieldN=valueN'
 }
