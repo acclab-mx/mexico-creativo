@@ -39,7 +39,7 @@
           <ComponenteMenuMovil class="movil" />
         </div>
       </section>
-      <section id="campos">
+      <!--section id="campos">
         <h3>Descargar recursos</h3>
         <div class="campos-list">
           <a
@@ -57,7 +57,7 @@
             PDF del sondeo
           </a>
         </div>
-      </section>
+      </section-->
       <section class="logos-aliados">
         <p class="text"><b>Este proyecto se realizó con el apoyo de</b></p>
         <div class="logos-container">
