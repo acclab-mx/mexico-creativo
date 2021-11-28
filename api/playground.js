@@ -73,125 +73,138 @@ export default async function (req, res) {
     }
 
     if (parsedQuery.offset !== 'end') {
-      if ('etiqueta' in parsedQuery) {
-        filterBy.push({
-          formulaType: 'regex',
-          field: 'etiquetas_orden',
-          value: parsedQuery.etiqueta,
-        })
+      const allContentFields = [
+        'titulo',
+        'portada',
+        'descripcion',
+        'enlace',
+        'autoras',
+        'autoras_txt',
+        'fuentes',
+        'fuentes_txt',
+        'organizacion',
+        'organizacion_txt',
+        'campos',
+        'campos_txt',
+        'campos_orden_txt',
+        'componentes',
+        'componentes_txt',
+        'componentes_orden_txt',
+        'etiquetas',
+        'etiquetas_orden',
+        'etiquetas_txt',
+        'orden',
+      ]
 
-        response.pageHeader = await getPageHeader(
-          'etiquetas',
-          'orden',
-          parsedQuery.etiqueta
-        )
-      }
-
-      if ('autor' in parsedQuery) {
-        filterBy.push({
-          formulaType: 'regex',
-          field: 'autoras_orden',
-          value: parsedQuery.autor,
-        })
-
-        response.pageHeader = await getPageHeader(
-          'autoras',
-          'orden',
-          parsedQuery.autor
-        )
-      }
-
-      if ('fuente' in parsedQuery) {
-        filterBy.push({
-          formulaType: 'regex',
-          field: 'fuentes_orden',
-          value: parsedQuery.fuente,
-        })
-
-        response.pageHeader = await getPageHeader(
-          'fuentes',
-          'orden',
-          parsedQuery.fuente
-        )
-      }
-
-      if ('organizacion' in parsedQuery) {
-        console.log('is organizacion!!!')
-        filterBy.push({
-          formulaType: 'regex',
-          field: 'organizacion_orden',
-          value: parsedQuery.organizacion,
-        })
-
-        response.pageHeader = await getPageHeader(
-          'organizaciones',
-          'orden',
-          parsedQuery.organizacion
-        )
-      }
-
-      if ('camposList' in parsedQuery) {
-        const camposList = parsedQuery.camposList.split(',')
-
-        camposList.forEach((campos) => {
+      if ('search' in parsedQuery) {
+        allContentFields.map((field) =>
           filterBy.push({
-            field: 'campos_txt',
-            value: `"${campos}"`,
+            formulaType: 'regex',
+            field,
+            value: parsedQuery.search,
             optional: true,
           })
-        })
+        )
+      } else {
+        if ('etiqueta' in parsedQuery) {
+          filterBy.push({
+            formulaType: 'regex',
+            field: 'etiquetas_orden',
+            value: parsedQuery.etiqueta,
+          })
 
-        if (camposList.length === 1) {
-          console.log('camposList[0]: ', camposList[0])
           response.pageHeader = await getPageHeader(
-            'campos',
-            'id',
-            `"${camposList[0]}"`
+            'etiquetas',
+            'orden',
+            parsedQuery.etiqueta
           )
         }
-      }
 
-      if ('componente' in parsedQuery) {
-        filterBy.push({
-          formulaType: 'regex',
-          field: 'componentes_orden_txt',
-          value: parsedQuery.componente,
-          optional: true,
-        })
+        if ('autor' in parsedQuery) {
+          filterBy.push({
+            formulaType: 'regex',
+            field: 'autoras_orden',
+            value: parsedQuery.autor,
+          })
 
-        response.pageHeader = await getPageHeader(
-          'componentes',
-          'orden',
-          parsedQuery.componente
-        )
+          response.pageHeader = await getPageHeader(
+            'autoras',
+            'orden',
+            parsedQuery.autor
+          )
+        }
+
+        if ('fuente' in parsedQuery) {
+          filterBy.push({
+            formulaType: 'regex',
+            field: 'fuentes_orden',
+            value: parsedQuery.fuente,
+          })
+
+          response.pageHeader = await getPageHeader(
+            'fuentes',
+            'orden',
+            parsedQuery.fuente
+          )
+        }
+
+        if ('organizacion' in parsedQuery) {
+          console.log('is organizacion!!!')
+          filterBy.push({
+            formulaType: 'regex',
+            field: 'organizacion_orden',
+            value: parsedQuery.organizacion,
+          })
+
+          response.pageHeader = await getPageHeader(
+            'organizaciones',
+            'orden',
+            parsedQuery.organizacion
+          )
+        }
+
+        if ('camposList' in parsedQuery) {
+          const camposList = parsedQuery.camposList.split(',')
+
+          camposList.forEach((campos) => {
+            filterBy.push({
+              field: 'campos_txt',
+              value: `"${campos}"`,
+              optional: true,
+            })
+          })
+
+          if (camposList.length === 1) {
+            console.log('camposList[0]: ', camposList[0])
+            response.pageHeader = await getPageHeader(
+              'campos',
+              'id',
+              `"${camposList[0]}"`
+            )
+          }
+        }
+
+        if ('componente' in parsedQuery) {
+          filterBy.push({
+            formulaType: 'regex',
+            field: 'componentes_orden_txt',
+            value: parsedQuery.componente,
+            optional: true,
+          })
+
+          response.pageHeader = await getPageHeader(
+            'componentes',
+            'orden',
+            parsedQuery.componente
+          )
+        }
       }
 
       const contenidos = await airtable.request(
         'contenidos',
         {
           onlyPublic: true,
-          fields: [
-            'titulo',
-            'portada',
-            'descripcion',
-            'enlace',
-            'autoras',
-            'autoras_txt',
-            'fuentes',
-            'fuentes_txt',
-            'organizacion',
-            'organizacion_txt',
-            'campos',
-            'campos_txt',
-            'campos_orden_txt',
-            'componentes',
-            'componentes_txt',
-            'componentes_orden_txt',
-            'etiquetas',
-            'etiquetas_orden',
-            'etiquetas_txt',
-            'orden',
-          ],
+          fields: allContentFields,
           filterBy,
           orderBy: {
             field: 'orden',

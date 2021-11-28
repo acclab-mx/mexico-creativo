@@ -107,6 +107,14 @@
               />
             </popper>
           </div>
+          <div class="search">
+            <div class="input-search">
+              <input v-model="searchText" type="text" @keyup.enter="search" />
+              <div class="search-icon" @click="search">
+                <img src="@/assets/icons/search-white.svg" alt="buscar" />
+              </div>
+            </div>
+          </div>
           <div v-show="hayFiltros" class="limpiar-filtros">
             <nuxt-link to="/playground">
               <button class="limpiar-filtros-btn">
@@ -141,6 +149,7 @@ export default {
       showAcciones: false,
       showEstudios: false,
       showRetos: false,
+      searchText: '',
     }
   },
   computed: {
@@ -277,6 +286,20 @@ export default {
       if (Object.keys(query).includes('retos')) {
         this.showRetos = true
       }
+      if (Object.keys(query).includes('search')) {
+        this.searchText = query.search
+      }
+    },
+    search() {
+      console.log('search: ', this.searchText)
+      if (this.searchText) {
+        this.$router.replace({
+          query: {
+            ...this.$route.query,
+            search: this.searchText,
+          },
+        })
+      }
     },
   },
 }
@@ -326,6 +349,39 @@ export default {
         }
         .campo-selector {
           margin-top: 18px;
+        }
+        .search {
+          display: block;
+          width: 100%;
+          margin-top: 18px;
+          border-radius: 8px;
+          border: 2px solid var(--color-gray-lighten);
+          .input-search {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            border-radius: 8px;
+            input {
+              display: inline-block;
+              width: 100%;
+              padding: 8px 14px;
+              font-size: 18px;
+              border: none;
+              border-radius: 8px;
+            }
+            .search-icon {
+              display: inline-block;
+              height: 40px;
+              padding: 8px;
+              background-color: var(--color-gray-lighten);
+              border-radius: 0 4px 4px 0;
+              cursor: pointer;
+              img {
+                height: 100%;
+                border-radius: 8px;
+              }
+            }
+          }
         }
         .limpiar-filtros {
           margin-top: 24px;
