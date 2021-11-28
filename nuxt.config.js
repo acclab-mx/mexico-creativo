@@ -26,6 +26,7 @@ export default {
     // https://go.nuxtjs.dev/stylelint
     '@nuxtjs/stylelint-module',
     '@nuxtjs/google-fonts',
+    '@nuxtjs/google-analytics',
   ],
 
   // Modules (https://go.nuxtjs.dev/config-modules)
@@ -62,6 +63,10 @@ export default {
       Montserrat: [400, 500, 600, 700, 800],
       'Open+Sans': [200, 300, 400, 500, 600, 700, 800],
     },
+  },
+
+  googleAnalytics: {
+    id: 'G-Q9S610M03K',
   },
 
   extend(config, ctx) {
