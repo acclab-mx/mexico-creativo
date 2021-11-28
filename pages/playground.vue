@@ -150,6 +150,9 @@ export default {
     componente() {
       return this.$route.query.componente || null
     },
+    search() {
+      return this.$route.query.search || null
+    },
     componenteSelected() {
       let response =
         this.camposList.length === 1
@@ -266,6 +269,7 @@ export default {
       console.log('fetch etiqueta: ', this.etiqueta)
       console.log('fetch componente: ', this.componente)
       console.log('fetch camposList: ', this.camposList)
+      console.log('fetch search: ', this.search)
       this.loading = true
       let url = `/api/playground?`
       url = `${url}camposList=${this.camposList}`
@@ -283,6 +287,9 @@ export default {
       }
       if (this.componente) {
         url = `${url}&componente=${this.componente}`
+      }
+      if (this.search) {
+        url = `${url}&search=${this.search}`
       }
       if (this.offset) {
         url = `${url}&offset=${this.offset}`
@@ -306,11 +313,12 @@ export default {
         this.pageHeader.link = data.pageHeader.link
       }
       if (data.records.length) {
+        const records = data.records.sort(() => Math.random() - 0.5)
         if (append) {
-          this.addCards(data.records)
+          this.addCards(records)
         } else {
           this.clearOffset()
-          this.setCards(data.records)
+          this.setCards(records)
         }
         console.log('offset: ', data.offset)
         this.setOffset(data.offset)

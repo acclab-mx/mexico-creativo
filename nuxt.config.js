@@ -67,6 +67,10 @@ export default {
 
   googleAnalytics: {
     id: 'G-Q9S610M03K',
+    debug: {
+      enabled: true,
+      sendHitTask: true,
+    },
   },
 
   extend(config, ctx) {
