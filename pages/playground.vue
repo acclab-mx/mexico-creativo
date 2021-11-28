@@ -6,10 +6,25 @@
       <div
         v-if="pageHeader.title && pageHeader.title !== ''"
         class="description-content"
+        :class="{ 'flex-centered': !!pageHeader.logo }"
       >
-        <h3>{{ pageHeader.title }}</h3>
+        <img
+          v-if="pageHeader.logo"
+          class="header-logo"
+          :src="pageHeader.logo"
+          :alt="pageHeader.title"
+        />
+        <h3>
+          <span v-if="pageHeader.acronym">{{ pageHeader.acronym }} - </span
+          >{{ pageHeader.title }}
+        </h3>
         <div class="descripcion">
           <div v-html="toMD(pageHeader.description)"></div>
+        </div>
+        <div v-if="pageHeader.link">
+          <a class="header-link" :href="pageHeader.link" target="_blank">
+            Abrir sitio web
+          </a>
         </div>
       </div>
     </div>
@@ -99,6 +114,9 @@ export default {
       pageHeader: {
         title: '',
         description: '',
+        acronym: '',
+        logo: '',
+        link: '',
       },
       intersectionOptions: {
         root: null,
@@ -278,6 +296,15 @@ export default {
       if (data.pageHeader.description) {
         this.pageHeader.description = data.pageHeader.description
       }
+      if (data.pageHeader.acronym) {
+        this.pageHeader.acronym = data.pageHeader.acronym
+      }
+      if (data.pageHeader.logo) {
+        this.pageHeader.logo = data.pageHeader.logo
+      }
+      if (data.pageHeader.link) {
+        this.pageHeader.link = data.pageHeader.link
+      }
       if (data.records.length) {
         if (append) {
           this.addCards(data.records)
@@ -382,10 +409,28 @@ export default {
     margin: 0 auto;
     max-width: 1220px;
     padding: 0 24px;
+    &.flex-centered {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+    .header-logo {
+      display: block;
+      width: auto;
+      height: 80px;
+      margin-bottom: 14px;
+    }
     .descripcion {
       display: block;
       max-width: 40em;
       box-sizing: border-box;
+    }
+    .header-link {
+      margin-top: 14px;
+      font-weight: normal;
+      text-decoration: underline;
     }
   }
 }

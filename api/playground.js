@@ -31,6 +31,15 @@ const getPageHeader = async (table, field, value) => {
         }
       : {}
 
+    if (table === 'organizaciones') {
+      pageHeader = {
+        title: page.records[0].nombre,
+        acronym: page.records[0].acronimo,
+        logo: page.records[0].logo[0].url,
+        link: page.records[0].link,
+      }
+    }
+
     return pageHeader
   } catch (e) {
     console.log('getPageHeader error: ', e)
@@ -107,6 +116,7 @@ export default async function (req, res) {
       }
 
       if ('organizacion' in parsedQuery) {
+        console.log('is organizacion!!!')
         filterBy.push({
           formulaType: 'regex',
           field: 'organizacion_orden',

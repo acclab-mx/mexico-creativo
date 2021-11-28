@@ -40,7 +40,7 @@ export default async function (req, res) {
       )
     )
 
-    console.log('records: ', response)
+    // console.log('records: ', response)
 
     if (response.portada) {
       response.portada = response.portada[0].url
