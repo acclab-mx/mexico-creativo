@@ -10,21 +10,26 @@ const getPageHeader = async (table, field, value) => {
     const page = await airtable.request(
       table,
       {
-        filterBy: [{
-          field,
-          value
-        }],
+        filterBy: [
+          {
+            field,
+            value,
+          },
+        ],
       },
       false
     )
 
-    page.records = page.records
-        .map((field) => helpers.parseFields(table, field))
+    page.records = page.records.map((field) =>
+      helpers.parseFields(table, field)
+    )
 
-    pageHeader = page.records[0] ? {
-      title: page.records[0].nombre,
-      description: page.records[0].descripcion,
-    } : {}
+    pageHeader = page.records[0]
+      ? {
+          title: page.records[0].nombre,
+          description: page.records[0].descripcion,
+        }
+      : {}
 
     return pageHeader
   } catch (e) {
@@ -51,7 +56,7 @@ export default async function (req, res) {
     const filterBy = []
 
     // Se crea la respuesta, los valores por defecto son en caso de que se haya llegado al fin de la lista
-    let response = {
+    const response = {
       pageHeader: {},
       records: [],
       offset: 'end',
@@ -66,7 +71,11 @@ export default async function (req, res) {
           value: parsedQuery.etiqueta,
         })
 
-        response.pageHeader = await getPageHeader('etiquetas', 'orden', parsedQuery.etiqueta)
+        response.pageHeader = await getPageHeader(
+          'etiquetas',
+          'orden',
+          parsedQuery.etiqueta
+        )
       }
 
       if ('autor' in parsedQuery) {
@@ -76,7 +85,11 @@ export default async function (req, res) {
           value: parsedQuery.autor,
         })
 
-        response.pageHeader = await getPageHeader('autoras', 'orden', parsedQuery.autor)
+        response.pageHeader = await getPageHeader(
+          'autoras',
+          'orden',
+          parsedQuery.autor
+        )
       }
 
       if ('fuente' in parsedQuery) {
@@ -86,7 +99,11 @@ export default async function (req, res) {
           value: parsedQuery.fuente,
         })
 
-        response.pageHeader = await getPageHeader('fuentes', 'orden', parsedQuery.fuente)
+        response.pageHeader = await getPageHeader(
+          'fuentes',
+          'orden',
+          parsedQuery.fuente
+        )
       }
 
       if ('organizacion' in parsedQuery) {
@@ -96,7 +113,11 @@ export default async function (req, res) {
           value: parsedQuery.organizacion,
         })
 
-        response.pageHeader = await getPageHeader('organizaciones', 'orden', parsedQuery.organizacion)
+        response.pageHeader = await getPageHeader(
+          'organizaciones',
+          'orden',
+          parsedQuery.organizacion
+        )
       }
 
       if ('camposList' in parsedQuery) {
@@ -112,7 +133,11 @@ export default async function (req, res) {
 
         if (camposList.length === 1) {
           console.log('camposList[0]: ', camposList[0])
-          response.pageHeader = await getPageHeader('campos', 'id', `"${camposList[0]}"`)
+          response.pageHeader = await getPageHeader(
+            'campos',
+            'id',
+            `"${camposList[0]}"`
+          )
         }
       }
 
@@ -124,7 +149,11 @@ export default async function (req, res) {
           optional: true,
         })
 
-        response.pageHeader = await getPageHeader('componentes', 'orden', parsedQuery.componente)
+        response.pageHeader = await getPageHeader(
+          'componentes',
+          'orden',
+          parsedQuery.componente
+        )
       }
 
       const contenidos = await airtable.request(
