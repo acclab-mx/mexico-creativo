@@ -115,7 +115,7 @@ class Airtable {
           reject(result)
         })
         .then((data) => {
-          console.log('data: ', JSON.stringify(data, null, 2))
+          // console.log('data: ', JSON.stringify(data, null, 2))
           if (stringify) {
             console.log('stringify!')
             const stringData = JSON.stringify(data) + '\n'

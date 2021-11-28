@@ -14,7 +14,7 @@ export default async function (req, res) {
       false
     )
 
-    console.log('response: ', response)
+    // console.log('response: ', response)
 
     res.setHeader('Content-Type', 'application/json')
     res.statusCode = 200

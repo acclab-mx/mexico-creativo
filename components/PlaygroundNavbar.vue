@@ -6,6 +6,14 @@
           <img class="arrow-left" src="@/assets/icons/arrow-left.svg" />
           <p>Volver</p>
         </div>
+        <div class="back" @click="$router.push('/')">
+          <img
+            class="arrow-left"
+            style="float: left"
+            src="@/assets/icons/bars-white.svg"
+          />
+          <p>Ir al inicio</p>
+        </div>
       </div>
       <div class="burger-button">
         <img class="burger" src="@/assets/icons/filter.svg" @click="open" />
@@ -70,6 +78,8 @@ export default {
       }
     }
     &.navigation {
+      display: flex;
+      width: auto;
       padding: 8px 16px 8px 16px;
     }
     .back {
