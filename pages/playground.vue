@@ -313,11 +313,12 @@ export default {
         this.pageHeader.link = data.pageHeader.link
       }
       if (data.records.length) {
+        const records = data.records.sort(() => Math.random() - 0.5)
         if (append) {
-          this.addCards(data.records)
+          this.addCards(records)
         } else {
           this.clearOffset()
-          this.setCards(data.records)
+          this.setCards(records)
         }
         console.log('offset: ', data.offset)
         this.setOffset(data.offset)

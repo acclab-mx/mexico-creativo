@@ -7,6 +7,14 @@
         </div>
         <div class="filters">
           <h3>Explorar información</h3>
+          <div class="search">
+            <div class="input-search">
+              <input v-model="searchText" type="text" @keyup.enter="search" />
+              <div class="search-icon" @click="search">
+                <img src="@/assets/icons/search-white.svg" alt="buscar" />
+              </div>
+            </div>
+          </div>
           <div class="componente-selector">
             <ComponenteSelector
               v-model="componenteSelected"
@@ -106,14 +114,6 @@
                 @click="showRetos = !showRetos"
               />
             </popper>
-          </div>
-          <div class="search">
-            <div class="input-search">
-              <input v-model="searchText" type="text" @keyup.enter="search" />
-              <div class="search-icon" @click="search">
-                <img src="@/assets/icons/search-white.svg" alt="buscar" />
-              </div>
-            </div>
           </div>
           <div v-show="hayFiltros" class="limpiar-filtros">
             <nuxt-link to="/playground">
