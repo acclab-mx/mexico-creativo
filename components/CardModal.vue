@@ -13,7 +13,9 @@
       </div>
       <div v-else class="content">
         <div class="card-conent">
-          <p class="label">{{ card.category }}</p>
+          <div class="content-head">
+            <p class="label">{{ card.category }}</p>
+          </div>
           <div class="separator" :class="[colorClass]"></div>
           <h3>{{ title }}</h3>
           <img v-if="visualAttachment !== null" :src="visualAttachment" />
@@ -37,6 +39,40 @@
               @click="openPill(pill)"
             >
               {{ pill.label }}
+            </div>
+          </div>
+          <div class="actions-group">
+            <p>Compartir enlace</p>
+            <div class="actions">
+              <a
+                class="icon"
+                :href="`https://twitter.com/intent/tweet?url=${cardLink}`"
+                target="_blank"
+              >
+                <img src="@/assets/icons/twitter.svg" alt="twitter" />
+              </a>
+              <a
+                class="icon"
+                :href="`https://api.whatsapp.com/send?text=${cardLink}`"
+                target="_blank"
+              >
+                <img src="@/assets/icons/whatsapp.svg" alt="whatsapp" />
+              </a>
+              <a
+                class="icon"
+                :href="`https://www.facebook.com/sharer/sharer.php?u=${cardLink}`"
+                target="_blank"
+              >
+                <img src="@/assets/icons/facebook-black.svg" alt="facebook" />
+              </a>
+              <div class="icon" @click="copyLinkToClipboard()">
+                <img src="@/assets/icons/copy.svg" alt="copy" />
+              </div>
+            </div>
+          </div>
+          <div class="actions-group" style="display: none">
+            <div class="actions">
+              <div class="btn">Descargar cómo PDF</div>
             </div>
           </div>
         </div>
@@ -147,6 +183,10 @@ export default {
       console.log('pillGroups: ', pillGroups)
       return pillGroups
     },
+    cardLink() {
+      const link = window.location.href
+      return encodeURIComponent(link)
+    },
   },
   mounted() {
     console.log('card modal mounted')
@@ -172,6 +212,11 @@ export default {
       const openUrl = `/playground?${category}=${pill.cardId}`
       console.log('openUrl: ', openUrl)
       this.$router.push(openUrl)
+    },
+    copyLinkToClipboard() {
+      navigator.clipboard.writeText(window.location.href).then(function () {
+        alert('¡Se copió el enlace!')
+      })
     },
   },
   beforeDestroy() {
@@ -228,6 +273,28 @@ export default {
           align-items: center;
           .icon {
             max-width: 60px;
+          }
+        }
+        .actions-group {
+          .actions {
+            display: flex;
+            align-items: center;
+            .icon {
+              width: 32px;
+              margin-right: 8px;
+            }
+            .btn {
+              cursor: pointer;
+              display: flex;
+              margin-left: 8px;
+              padding: 8px 16px;
+              color: var(--color-light);
+              background-color: var(--color-dark);
+              border-radius: 8px;
+              &:nth-child(1) {
+                margin-left: 0;
+              }
+            }
           }
         }
       }
