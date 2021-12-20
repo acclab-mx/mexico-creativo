@@ -66,7 +66,7 @@ export default {
   },
 
   googleAnalytics: {
-    id: 'G-Q9S610M03K',
+    id: 'UA-215692504-1',
     debug: {
       enabled: true,
       sendHitTask: true,
