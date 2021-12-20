@@ -2,17 +2,13 @@
   <div class="mx-navbar">
     <div class="container header">
       <div class="container navigation">
+        <div class="back" @click="$router.push('/')">
+          <img class="home" style="float: left" src="@/assets/icons/home.svg" />
+          <p>Inicio</p>
+        </div>
         <div class="back" @click="$router.back()">
           <img class="arrow-left" src="@/assets/icons/arrow-left.svg" />
-          <p>Volver</p>
-        </div>
-        <div class="back" @click="$router.push('/')">
-          <img
-            class="arrow-left"
-            style="float: left"
-            src="@/assets/icons/bars-white.svg"
-          />
-          <p>Ir al inicio</p>
+          <p>Página anterior</p>
         </div>
       </div>
       <div class="burger-button">
@@ -87,7 +83,11 @@ export default {
       justify-content: flex-start;
       align-items: center;
       .arrow-left {
+        margin-left: 24px;
         width: 32px;
+      }
+      .home {
+        width: 38px;
       }
       p {
         display: inline-block;

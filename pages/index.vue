@@ -59,7 +59,6 @@
         </div>
       </section-->
       <section class="logos-aliados">
-        <p class="text"><b>Este proyecto se realizó con el apoyo de</b></p>
         <div class="logos-container">
           <p class="txt">
             La iniciativa Resonancias fue realizada con el apoyo del Laboratorio
@@ -74,11 +73,6 @@
             class="logo-pnud"
             src="@/assets/img/pnud-acclab.jpg"
             alt="Logo de la PNUD y AccLab"
-          />
-          <img
-            class="logo-oei"
-            src="@/assets/img/logo-oei.png"
-            alt="Logo de la OEI"
           />
         </div>
       </section>

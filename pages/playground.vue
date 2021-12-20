@@ -436,9 +436,13 @@ export default {
       box-sizing: border-box;
     }
     .header-link {
+      display: block;
       margin-top: 14px;
+      padding: 8px 24px;
       font-weight: normal;
-      text-decoration: underline;
+      color: var(--color-light);
+      background-color: var(--color-dark);
+      border-radius: 32px;
     }
   }
 }
