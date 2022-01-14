@@ -70,9 +70,9 @@
               </div>
             </div>
           </div>
-          <div class="actions-group" style="display: none">
+          <div class="actions-group">
             <div class="actions">
-              <div class="btn">Descargar cómo PDF</div>
+              <div class="btn" @click="downloadCard">Descargar cómo PDF</div>
             </div>
           </div>
         </div>
@@ -84,6 +84,7 @@
 <script>
 import MarkdownIt from 'markdown-it'
 import { mapMutations, mapActions } from 'vuex'
+import downloadPdf from '@/plugins/download-pdf'
 
 const md = new MarkdownIt({
   breaks: true,
@@ -216,6 +217,17 @@ export default {
     copyLinkToClipboard() {
       navigator.clipboard.writeText(window.location.href).then(function () {
         alert('¡Se copió el enlace!')
+      })
+    },
+    downloadCard() {
+      console.log('downloadCard!')
+      downloadPdf(this.title, {
+        title: this.title,
+        image: this.visualAttachment,
+        description: this.description,
+        links: [this.card?.enlace],
+        pills: this.pillGroups,
+        cardLink: window.location.href,
       })
     },
   },
