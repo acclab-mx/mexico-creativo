@@ -24,7 +24,11 @@
           valor. Y como buena caja de reverberación, siempre está dispuesta a
           sumar nuevas voces. <nuxt-link to="/nosotros">Saber más</nuxt-link>.
         </p>
-        <p>Te invitamos a que explores este repositorio vivo.</p>
+        <p>
+          Te invitamos a que explores este repositorio vivo. 
+          ¿Te gustaría proponer que se incluya algún material a Resonancias? 
+          Complementa <a href="https://forms.gle/h3ar4aDqqYfJxkZd9">este formulario</a> o envía un correo a resonancias@cultura.gob.mx
+        </p>
         <p>
           Para consultar y alimentar el sitio, hemos abierto una serie de
           conjuntos: estudios, propuestas, retos, acciones, ecosistema cultural
