@@ -33,6 +33,13 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
+    [
+      '@nuxtjs/google-tag-manager',
+      {
+        id: 'G-Q23R8FHWZR',
+        pageTracking: true
+      },
+    ],
   ],
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
@@ -62,14 +69,6 @@ export default {
     families: {
       Montserrat: [400, 500, 600, 700, 800],
       'Open+Sans': [200, 300, 400, 500, 600, 700, 800],
-    },
-  },
-
-  googleAnalytics: {
-    id: 'G-Q23R8FHWZR',
-    debug: {
-      enabled: true,
-      sendHitTask: true,
     },
   },
 
