@@ -15,12 +15,6 @@
     "*.{js,vue}": "eslint",
     "*.{css,vue}": "stylelint"
   },
-  "husky": {
-    "hooks": {
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
-      "pre-commit": "lint-staged"
-    }
-  },
   "dependencies": {
     "@nuxtjs/axios": "^5.12.2",
     "animejs": "^3.2.1",
@@ -58,8 +52,5 @@
     "stylelint": "^13.7.2",
     "stylelint-config-prettier": "^8.0.2",
     "stylelint-config-standard": "^20.0.0"
-  },
-  "engines": {
-    "node": "12.20.0"
   }
 }
