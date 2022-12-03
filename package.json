@@ -60,6 +60,6 @@
     "stylelint-config-standard": "^20.0.0"
   }, 
   "engines": {
-    "node": "18.12.1"
+    "node": "16.x"
   }
 }
