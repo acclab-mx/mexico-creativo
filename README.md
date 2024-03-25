@@ -1,4 +1,5 @@
-# México Creativo
+# Resonancias
+Resonancias es una herramienta de construcción colectiva, pensada para reunir información relevante para construir política cultural, ya sea pública, privada o emanada del sector de la sociedad civil organizada y que apunte a fortalecer el ecosistema cultural y sus cadenas de valor.
 
 ## Build Setup
 
